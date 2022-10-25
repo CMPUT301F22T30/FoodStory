@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "401692723347",
+    "project_id": "foodstory-1c952",
+    "storage_bucket": "foodstory-1c952.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401692723347:android:fd23bad0a9a5480c5da566",
+        "android_client_info": {
+          "package_name": "com.example.foodstory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401692723347-pvhujf63c2vsabgb7pk0sl4iodtg5l2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4wAOkV3-zEPO3EduleLo8dQ8bsA9SCQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401692723347-pvhujf63c2vsabgb7pk0sl4iodtg5l2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
