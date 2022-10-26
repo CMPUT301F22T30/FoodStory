@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.foodstory.HomeFragment"
+        android:label="@string/Main_Activity_Label"
+        tools:layout="@layout/home_fragment">
+
+        <action
+            android:id="@+id/action_HomeFragment_to_IngredientFragment"
+            app:destination="@id/IngredientFragment">
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/IngredientFragment"
+        android:name="com.example.foodstory.IngredientsFragment"
+        android:label="@string/Ingredient_fragment_label"
+        tools:layout="@layout/ingredient_fragment">
+
+    </fragment>
+</navigation>
