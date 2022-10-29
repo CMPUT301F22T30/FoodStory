@@ -2,11 +2,20 @@ package com.example.foodstory;
 
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,15 +27,19 @@ import com.example.foodstory.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
