@@ -16,6 +16,11 @@
             app:destination="@id/IngredientFragment">
 
         </action>
+        <action
+            android:id="@+id/action_HomeFragment_to_RecipeFragment"
+            app:destination="@id/RecipeFragment">
+
+        </action>
 
     </fragment>
 
@@ -24,6 +29,18 @@
         android:name="com.example.foodstory.IngredientsFragment"
         android:label="@string/Ingredient_fragment_label"
         tools:layout="@layout/ingredient_fragment">
+
+    </fragment>
+    <fragment
+        android:id="@+id/RecipeFragment"
+        android:name="com.example.foodstory.RecipeFragment"
+        android:label="@string/Recipe_fragment_label"
+        tools:layout="@layout/recipe_fragment">
+        <action
+            android:id="@+id/action_RecipeFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment">
+
+        </action>
 
     </fragment>
 </navigation>

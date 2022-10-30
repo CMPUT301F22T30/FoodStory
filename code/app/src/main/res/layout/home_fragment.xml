@@ -41,7 +41,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/Recipe"
+        android:id="@+id/Recipes"
         android:layout_width="135dp"
         android:layout_height="117dp"
         android:layout_marginTop="236dp"
