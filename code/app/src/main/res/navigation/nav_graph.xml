@@ -34,13 +34,30 @@
     <fragment
         android:id="@+id/RecipeFragment"
         android:name="com.example.foodstory.RecipeFragment"
-        android:label="@string/Recipe_fragment_label"
+        android:label="Recipes"
         tools:layout="@layout/recipe_fragment">
         <action
             android:id="@+id/action_RecipeFragment_to_HomeFragment"
             app:destination="@id/HomeFragment">
 
         </action>
+        <action
+            android:id="@+id/action_RecipeFragment_to_AddRecipeFragment"
+            app:destination="@id/AddRecipeFragment">
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/AddRecipeFragment"
+        android:name="com.example.foodstory.AddRecipeFragment"
+        android:label="Add/Edit Recipe"
+        tools:layout="@layout/add_recipe_fragment">
+        <action
+            android:id="@+id/action_AddRecipeFragment_to_RecipeFragment"
+            app:destination="@id/RecipeFragment">
+        </action>
+
 
     </fragment>
 </navigation>
