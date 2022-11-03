@@ -73,6 +73,15 @@ public class AddRecipeFragment extends Fragment {
             }
         });
 
+        addIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AddIngredientFragment().show(getSupportFragmentManager(), "Add_Ingredient");
+
+            }
+
+        });
+
         Date date = new Date();
         Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
         ingredients.add(testIngredient);
