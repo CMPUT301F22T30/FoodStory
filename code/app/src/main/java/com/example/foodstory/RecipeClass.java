@@ -18,7 +18,7 @@ public class RecipeClass {
         this.recipeCategory = recipeCategory;
         this.comments = comments;
         this.photo = photo;
-        //this.ingredients = ingredients;
+        this.ingredients = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -35,5 +35,17 @@ public class RecipeClass {
 
     public void setRecipeCategory(String recipeCategory) {
         this.recipeCategory = recipeCategory;
+    }
+
+    protected ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
     }
 }

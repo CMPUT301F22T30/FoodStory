@@ -5,22 +5,32 @@
     android:layout_width="match_parent"
     android:orientation="horizontal">
     <TextView
-        android:id="@+id/title_text"
+        android:id="@+id/ingredient_title"
+        android:layout_width="0dp"
+        android:layout_height= "wrap_content"
+        android:layout_marginLeft="10sp"
+        android:textSize="15sp"
+        android:text="Title"
+        android:layout_weight="3"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/ingredient_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="10sp"
-        android:text="Title"
         android:textSize="15sp"
+        android:layout_marginLeft="10sp"
+        android:text="Amount"
         android:layout_weight="1">
     </TextView>
     <TextView
-        android:id="@+id/category_text"
+        android:id="@+id/ingredient_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:padding="10sp"
+        android:layout_marginLeft="10sp"
         android:text="Category"
-        android:layout_weight="1">
+        android:layout_weight="2">
     </TextView>
 
 </LinearLayout>

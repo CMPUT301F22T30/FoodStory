@@ -17,10 +17,12 @@ import com.example.foodstory.databinding.AddRecipeFragmentBinding;
 import com.example.foodstory.databinding.RecipeFragmentBinding;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AddRecipeFragment extends Fragment {
     private AddRecipeFragmentBinding binding;
     Button saveRecipe;
+    Button addIngredient;
     EditText title_recipe;
     EditText prep_time_recipe;
     EditText category_recipe;
@@ -44,6 +46,12 @@ public class AddRecipeFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+        ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
+        ListView ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
+        ingredientList.setAdapter(ingredient_Adapter);
+
+        addIngredient = getView().findViewById(R.id.addIngredientButton);
         saveRecipe = getView().findViewById(R.id.saveRecipeButton);
         saveRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +72,11 @@ public class AddRecipeFragment extends Fragment {
                 
             }
         });
+
+        Date date = new Date();
+        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
+        ingredients.add(testIngredient);
+        ingredient_Adapter.notifyDataSetChanged();
     }
 
     @Override
