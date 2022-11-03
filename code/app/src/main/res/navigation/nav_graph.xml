@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/HomeFragment"
         android:name="com.example.foodstory.HomeFragment"
-        android:label="@string/Main_Activity_Label"
+        android:label="Food Story"
         tools:layout="@layout/home_fragment">
 
         <action

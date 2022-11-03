@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.foodstory.databinding.RecipeFragmentBinding;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecipeFragment extends Fragment {
@@ -63,6 +64,9 @@ public class RecipeFragment extends Fragment {
         });
 
         RecipeClass testRecipe = new RecipeClass("abcd", "cd", 12, "efg", "de", "xyz");
+        Date date = new Date();
+        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
+        testRecipe.addIngredient(testIngredient);
         recipe_List.add(testRecipe);
         recipe_Adapter.notifyDataSetChanged();
     }

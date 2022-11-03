@@ -6,77 +6,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddRecipeFragment">
+    tools:context=".AddRecipeFragment"
+    >
 
 
     <EditText
         android:id="@+id/recipe_title_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
         android:maxLength="30"
         android:hint="Recipe Title"
+        android:layout_weight="1"
         />
 
     <EditText
         android:id="@+id/recipe_preptime_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Preparation time(minutes)"
+        android:layout_weight="1"
         />
 
     <EditText
         android:id="@+id/recipe_num_servings_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
         android:inputType="number"
         android:hint="Number of Servings"
+        android:layout_weight="1"
         />
 
     <EditText
         android:id="@+id/recipe_category_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Category"
+        android:layout_weight="1"
         />
 
     <EditText
         android:id="@+id/recipe_comments_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Comments"/>
+        android:hint="Comments"
+        android:layout_weight="1"/>
 
     <EditText
         android:id="@+id/recipe_photos_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Photo"/>
+        android:hint="Photo"
+        android:layout_weight="1"/>
 
+<!--Need to populate this area with ingredients    -->
     <ListView
         android:id="@+id/recipe_ingredients_list"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="0dp"
+        android:layout_weight="4"/>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+<!--Have this button open a fragment to add an ingredient    -->
     <Button
-        android:id="@+id/saveRecipeButton"
-        android:layout_width="fill_parent"
+        android:id="@+id/addIngredientButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="5sp"
+        android:text="Add Ingredient"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_weight="5"/>
+
+    <Button
+        android:id="@+id/saveRecipeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="10sp"
         android:text="Save"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_weight="2"/>
+    </LinearLayout>
 <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/addRecipeButton"-->
 <!--        android:layout_width="match_parent"-->
