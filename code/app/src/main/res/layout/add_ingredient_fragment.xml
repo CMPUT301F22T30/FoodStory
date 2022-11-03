@@ -104,7 +104,6 @@
             android:clickable="true"
             android:focusableInTouchMode="true"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:autofillHints="ingredient unit"
             android:ems="10"
             android:textAlignment="center" />
@@ -123,6 +122,7 @@
         android:autofillHints="ingredient cost"
         android:ems="10"
         android:textAlignment="center" />
+
 
 
 
