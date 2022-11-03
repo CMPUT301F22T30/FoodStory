@@ -49,13 +49,13 @@ public class IngredientsFragment extends Fragment {
             }
         });
 
-//        binding.addRecipeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(RecipeFragment.this)
-//                        .navigate(R.id.action_RecipeFragment_to_AddRecipeFragment);
-//            }
-//        });
+        binding.addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(IngredientsFragment.this)
+                        .navigate(R.id.action_IngredientFragment_to_AddIngredientFragment);
+            }
+        });
     }
 
     @Override

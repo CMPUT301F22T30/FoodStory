@@ -14,17 +14,17 @@
         android:layout_height="0dp"
         android:layout_weight="10"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/addRecipeButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:text="Add Recipe"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="15sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_weight="1"/>-->
+    <Button
+        android:id="@+id/addIngredientButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:text="@string/Add_ingredient"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>
