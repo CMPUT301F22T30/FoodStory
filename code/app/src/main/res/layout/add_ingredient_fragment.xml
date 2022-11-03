@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddIngredientFragment"
+    >
+
+    <EditText
+        android:id = "@+id/ingredient_name"
+        android:text="@string/Add_ingredient"
+        android:autofillHints="food item name"
+        app:errorEnabled="true"
+        android:inputType="textMultiLine"
+        android:maxLength="30"
+        android:ems = "10"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+
+    <EditText
+        android:id = "@+id/ingredient_description"
+        android:text="@string/description_message"
+        android:autofillHints="food item description"
+        android:inputType="textMultiLine"
+        android:maxLength="30"
+        android:ems = "10"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+
+    <EditText
+        android:id = "@+id/ingredient_location"
+        android:text="@string/location_message"
+        android:autofillHints="food item description"
+        android:inputType="textMultiLine"
+        android:maxLength="30"
+        android:ems = "10"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/dateHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:ems="10"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Best Before Date" />
+
+        <DatePicker
+            android:id="@+id/ingredient_best_before_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ingredient_amount"
+            android:focusable="true"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints="ingredient amount"
+            android:ems="10"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/ingredient_unit"
+            android:layout_width="wrap_content"
+            android:focusable="true"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:autofillHints="ingredient unit"
+            android:ems="10"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/ingredient_cost"
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:autofillHints="ingredient cost"
+        android:ems="10"
+        android:textAlignment="center" />
+
+
+
+
+
+
+
+
+</LinearLayout>
