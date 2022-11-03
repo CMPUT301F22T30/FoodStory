@@ -36,21 +36,18 @@ public class IngredientsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<Ingredient> ingredients_List = new ArrayList<Ingredient>();
         ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(),ingredients_List);
-        ListView IngredientList = getView().findViewById(R.id.ingredient_list);
+        ListView ingredientList= getView().findViewById(R.id.ingredient_list);
         Date date = new Date();
         Ingredient mying = new Ingredient("milk", "chocolate", date, "fridge" , 2, "3" ,"cat");
         ingredients_List.add(mying);
-        IngredientList.setAdapter(ingredient_Adapter);
-
-//        binding.recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                //Intent viewItem = new Intent(RecipeFragment.this, showActivity.class);
-//                //viewItem.putExtra(EXTRA_MESSAGE, recipe_Adapter.getItem(i));
-//                NavHostFragment.findNavController(RecipeFragment.this)
-//                        .navigate(R.id.action_RecipeFragment_to_AddRecipeFragment);
-//            }
-//        });
+        ingredientList.setAdapter(ingredient_Adapter);
+        binding.ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                NavHostFragment.findNavController(IngredientsFragment.this)
+                        .navigate(R.id.action_IngredientFragment_to_AddIngredientFragment);
+            }
+        });
 
 //        binding.addRecipeButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

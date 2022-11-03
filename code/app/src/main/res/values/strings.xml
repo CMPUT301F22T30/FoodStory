@@ -4,4 +4,7 @@
     <string name="Main_Activity_Label">Main Activity</string>
     <string name="Home_Fragment_Label">Home Fragment</string>
     <string name="Recipe_fragment_label">recipe_fragment_label</string>
+    <string name="Add_ingredient">Add Ingredient</string>
+    <string name="description_message">Ingredient Description</string>
+    <string name="location_message">Ingredient Location</string>
 </resources>
