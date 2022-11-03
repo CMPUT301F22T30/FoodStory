@@ -1,6 +1,7 @@
 package com.example.foodstory;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,15 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.AddRecipeFragmentBinding;
 import com.example.foodstory.databinding.RecipeFragmentBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class AddRecipeFragment extends Fragment {
     private AddRecipeFragmentBinding binding;
@@ -29,6 +36,8 @@ public class AddRecipeFragment extends Fragment {
     EditText servings_recipe;
     EditText comments_recipe;
     EditText photo_recipe;
+    FirebaseFirestore recipeDb;
+    String TAG = "Sample";
 
     public AddRecipeFragment(){
     }
@@ -50,6 +59,11 @@ public class AddRecipeFragment extends Fragment {
         ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
         ListView ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
         ingredientList.setAdapter(ingredient_Adapter);
+        recipeDb = FirebaseFirestore.getInstance();
+        CollectionReference collectionReference = recipeDb.collection("Recipes");
+//        DocumentReference messageRef = recipeDb
+//                .collection("rooms").document("roomA")
+//                .collection("messages").document("message1");
 
         addIngredient = getView().findViewById(R.id.addIngredientButton);
         saveRecipe = getView().findViewById(R.id.saveRecipeButton);
@@ -64,23 +78,54 @@ public class AddRecipeFragment extends Fragment {
                 photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
                 String rec_name = title_recipe.getText().toString();
                 String rec_prep = prep_time_recipe.getText().toString();
-                int rec_serv = Integer.valueOf(servings_recipe.getText().toString());
+                String rec_serv = String.valueOf(servings_recipe.getText());
+                //int rec_serv = Integer.valueOf(servings_recipe.getText().toString());
                 String rec_cate = category_recipe.getText().toString();
                 String rec_comm = comments_recipe.getText().toString();
                 String rec_phot = photo_recipe.getText().toString();
-                RecipeClass recipe = new RecipeClass(rec_name, rec_prep, rec_serv, rec_cate, rec_comm, rec_phot);
-                
+//                RecipeClass recipe = new RecipeClass(rec_name, rec_prep, rec_serv, rec_cate, rec_comm, rec_phot);
+                HashMap<String, String> data = new HashMap<>();
+                if (rec_name.length()>0 && rec_prep.length()>0 && rec_serv.length()>0){
+                    data.put("Recipe Prep", rec_prep);
+                    data.put("Recipe Servings", rec_serv);
+                    data.put("Recipe Category", rec_cate);
+                    data.put("Recipe Comments", rec_comm);
+                    data.put("Recipe Photo", rec_phot);
+                    collectionReference
+                            .document(rec_name)
+                            .set(data)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+// These are a method which gets executed when the task is succeeded
+                                    Log.d(TAG, "Data has been added successfully!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+// These are a method which gets executed if there’s any problem
+                                    Log.d(TAG, "Data could not be added!" + e.toString());
+                                }
+                            });
+                    title_recipe.setText("");
+                    prep_time_recipe.setText("");
+                    category_recipe.setText("");
+                    servings_recipe.setText("");
+                    comments_recipe.setText("");
+                    photo_recipe.setText("");
+                }
             }
         });
 
-        addIngredient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AddIngredientFragment().show(getSupportFragmentManager(), "Add_Ingredient");
-
-            }
-
-        });
+//        addIngredient.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new AddIngredientFragment().show(getSupportFragmentManager(), "Add_Ingredient");
+//
+//            }
+//
+//        });
 
         Date date = new Date();
         Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
