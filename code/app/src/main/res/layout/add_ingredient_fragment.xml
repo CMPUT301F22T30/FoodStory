@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddIngredientFragment"
+    >
+
+    <EditText
+        android:id="@+id/ingredient_name_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:maxLength="30"
+        android:hint="Ingredient Name"
+        android:layout_weight="1"
+        />
+
+    <EditText
+        android:id="@+id/ingredient_description_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Description"
+        android:layout_weight="1"
+        />
+
+    <EditText
+        android:id="@+id/ingredient_bb_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Best Before Date"
+        android:layout_weight="1"
+        />
+
+    <EditText
+        android:id="@+id/ingredient_location_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Location"
+        android:layout_weight="1"
+        />
+
+    <EditText
+        android:id="@+id/ingredient_amount_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Amount"
+        android:layout_weight="1"/>
+
+    <EditText
+        android:id="@+id/ingredient_unit_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Units"
+        android:layout_weight="1"/>
+
+    <EditText
+        android:id="@+id/ingredient_category_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Category"
+        android:layout_weight="1"/>
+
+<!--    <LinearLayout-->
+<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        xmlns:tools="http://schemas.android.com/tools"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_weight="1">-->
+<!--        <Button-->
+<!--            android:id="@+id/deleteIngredientButton"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_marginLeft="10sp"-->
+<!--            android:layout_marginRight="5sp"-->
+<!--            android:text="Delete Ingredient"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_weight="5"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/saveRecipeButton"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_marginLeft="5sp"-->
+<!--            android:layout_marginRight="10sp"-->
+<!--            android:text="Save"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_weight="2"/>-->
+<!--    </LinearLayout>-->
+
+
+</LinearLayout>

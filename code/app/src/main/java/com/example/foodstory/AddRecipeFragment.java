@@ -1,5 +1,6 @@
 package com.example.foodstory;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.app.Fragment;
+import android.app.DialogFragment;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.AddRecipeFragmentBinding;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class AddRecipeFragment extends Fragment {
+public class AddRecipeFragment extends Fragment implements AddIngredientFragment.OnFragmentInteractionListener{
     private AddRecipeFragmentBinding binding;
     Button saveRecipe;
     Button addIngredient;
@@ -38,8 +40,11 @@ public class AddRecipeFragment extends Fragment {
     EditText photo_recipe;
     FirebaseFirestore recipeDb;
     String TAG = "Sample";
-
+    ArrayList<Ingredient> ingredients;
+    ArrayAdapter<Ingredient> ingredient_Adapter;
+    Context context;
     public AddRecipeFragment(){
+
     }
 
     @Override
@@ -55,12 +60,14 @@ public class AddRecipeFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-        ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
+        ingredients = new ArrayList<Ingredient>();
+        ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
+//        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+//        ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
         ListView ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
         ingredientList.setAdapter(ingredient_Adapter);
         recipeDb = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = recipeDb.collection("Recipes");
+        final CollectionReference collectionReference = recipeDb.collection("Recipes");
 //        DocumentReference messageRef = recipeDb
 //                .collection("rooms").document("roomA")
 //                .collection("messages").document("message1");
@@ -76,13 +83,13 @@ public class AddRecipeFragment extends Fragment {
                 servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
                 comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
                 photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
-                String rec_name = title_recipe.getText().toString();
-                String rec_prep = prep_time_recipe.getText().toString();
-                String rec_serv = String.valueOf(servings_recipe.getText());
+                final String rec_name = title_recipe.getText().toString();
+                final String rec_prep = prep_time_recipe.getText().toString();
+                final String rec_serv = String.valueOf(servings_recipe.getText());
                 //int rec_serv = Integer.valueOf(servings_recipe.getText().toString());
-                String rec_cate = category_recipe.getText().toString();
-                String rec_comm = comments_recipe.getText().toString();
-                String rec_phot = photo_recipe.getText().toString();
+                final String rec_cate = category_recipe.getText().toString();
+                final String rec_comm = comments_recipe.getText().toString();
+                final String rec_phot = photo_recipe.getText().toString();
 //                RecipeClass recipe = new RecipeClass(rec_name, rec_prep, rec_serv, rec_cate, rec_comm, rec_phot);
                 HashMap<String, String> data = new HashMap<>();
                 if (rec_name.length()>0 && rec_prep.length()>0 && rec_serv.length()>0){
@@ -91,23 +98,37 @@ public class AddRecipeFragment extends Fragment {
                     data.put("Recipe Category", rec_cate);
                     data.put("Recipe Comments", rec_comm);
                     data.put("Recipe Photo", rec_phot);
-                    collectionReference
-                            .document(rec_name)
+                    recipeDb.collection("Recipes").document(rec_name)
                             .set(data)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-// These are a method which gets executed when the task is succeeded
-                                    Log.d(TAG, "Data has been added successfully!");
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-// These are a method which gets executed if there’s any problem
-                                    Log.d(TAG, "Data could not be added!" + e.toString());
+                                    Log.w(TAG, "Error writing document", e);
                                 }
                             });
+//                    collectionReference
+//                            .document(rec_name)
+//                            .set(data)
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//// These are a method which gets executed when the task is succeeded
+//                                    Log.d(TAG, "Data has been added successfully!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//// These are a method which gets executed if there’s any problem
+//                                    Log.d(TAG, "Data could not be added!" + e.toString());
+//                                }
+//                            });
                     title_recipe.setText("");
                     prep_time_recipe.setText("");
                     category_recipe.setText("");
@@ -118,14 +139,16 @@ public class AddRecipeFragment extends Fragment {
             }
         });
 
-//        addIngredient.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new AddIngredientFragment().show(getSupportFragmentManager(), "Add_Ingredient");
-//
-//            }
-//
-//        });
+        addIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddIngredientFragment dialogFragment = new AddIngredientFragment ();
+                dialogFragment.show(getChildFragmentManager(), "Add Ingredient");
+                //new AddIngredientFragment().show(, "Add_Ingredient");
+
+            }
+
+        });
 
         Date date = new Date();
         Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
@@ -137,5 +160,16 @@ public class AddRecipeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onOkPressed(Ingredient newIngredient) {
+        ingredient_Adapter.add(newIngredient);
+    }
+
+    @Override
+    public void onOkPressed(Ingredient editIngredient, int i) {
+//        dataList.remove(i);
+//        cityAdapter.insert(editCity, i);
     }
 }
