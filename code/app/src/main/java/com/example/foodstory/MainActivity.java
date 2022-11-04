@@ -29,12 +29,19 @@ import android.view.MenuItem;
 
 import java.util.HashMap;
 
+/**
+ * Defining the MainActivity
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     FirebaseFirestore db;
 
+    /**
+     * Creating a new Bundle
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     // For back button
+
+    /**
+     * Defining the NavController
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

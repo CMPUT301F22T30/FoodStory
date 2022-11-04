@@ -31,6 +31,9 @@ import java.util.Date;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Defining AddIngredientFragment class
+ */
 public class AddIngredientFragment extends DialogFragment{
     private EditText ingredientName;
     private EditText ingredientDescription;
@@ -61,6 +64,12 @@ public class AddIngredientFragment extends DialogFragment{
 //        }
 //    }
 
+    /**
+     * Creating a new instance of type AddIngredientFragment
+     * @param ingredient
+     * @param position
+     * @return
+     */
     public static AddIngredientFragment newInstance(Ingredient ingredient, int position) {
         Bundle args = new Bundle();
         args.putSerializable("Ingredient",  ingredient);
@@ -73,7 +82,9 @@ public class AddIngredientFragment extends DialogFragment{
     @NonNull
 
     @Override
-
+    /**
+     * Defining a new Dialog
+     */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_ingredient_fragment, null);
         ingredientName = view.findViewById(R.id.ingredient_name_editText);

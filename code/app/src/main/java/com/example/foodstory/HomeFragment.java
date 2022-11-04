@@ -11,9 +11,19 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.HomeFragmentBinding;
 
+/**
+ * Defining a class for the HomeFragment
+ */
 public class HomeFragment extends Fragment {
     private HomeFragmentBinding binding;
 
+    /**
+     * Creating a new view for the fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState
@@ -41,6 +51,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    /**
+     * Destroy viw function
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

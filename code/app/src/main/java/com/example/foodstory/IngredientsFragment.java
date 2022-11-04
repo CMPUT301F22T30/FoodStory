@@ -17,10 +17,19 @@ import com.example.foodstory.databinding.IngredientFragmentBinding;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ * Defining a new class for IngredientsFragment
+ */
 public class IngredientsFragment extends Fragment {
     private IngredientFragmentBinding binding;
 
+    /**
+     * Defining a new view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -32,6 +41,11 @@ public class IngredientsFragment extends Fragment {
 
     }
 
+    /**
+     * Defining a new ingredient list
+     * @param view
+     * @param savedInstanceState
+     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<Ingredient> ingredients_List = new ArrayList<Ingredient>();

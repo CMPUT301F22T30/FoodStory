@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Defining a RecipeAdapterClass
+ */
 public class RecipeAdapter extends ArrayAdapter<RecipeClass> {
     private ArrayList<RecipeClass> recipes;
     private Context context;
@@ -21,6 +24,13 @@ public class RecipeAdapter extends ArrayAdapter<RecipeClass> {
         this.context = context;
     }
 
+    /**
+     * Defining a new view
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
