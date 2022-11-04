@@ -10,124 +10,114 @@
     >
 
     <EditText
-        android:id = "@+id/ingredient_name"
-        android:text="@string/Add_ingredient"
-        android:autofillHints="food item name"
-        app:errorEnabled="true"
-        android:inputType="textMultiLine"
-        android:maxLength="30"
-        android:ems = "10"
-        android:textAlignment="center"
+        android:id="@+id/ingredient_name_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </EditText>
-
-    <EditText
-        android:id = "@+id/ingredient_description"
-        android:text="@string/description_message"
-        android:autofillHints="food item description"
-        android:inputType="textMultiLine"
-        android:maxLength="30"
-        android:ems = "10"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </EditText>
-
-    <EditText
-        android:id = "@+id/ingredient_location"
-        android:text="@string/location_message"
-        android:autofillHints="food item description"
-        android:inputType="textMultiLine"
-        android:maxLength="30"
-        android:ems = "10"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </EditText>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/dateHeading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="Best Before Date" />
-
-        <DatePicker
-            android:id="@+id/ingredient_best_before_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="4dp"
-            android:layout_weight="1"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/ingredient_amount"
-            android:focusable="true"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            android:inputType="number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints="ingredient amount"
-            android:ems="10"
-            android:textAlignment="center" />
-
-        <EditText
-            android:id="@+id/ingredient_unit"
-            android:layout_width="wrap_content"
-            android:focusable="true"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            android:layout_height="wrap_content"
-            android:autofillHints="ingredient unit"
-            android:ems="10"
-            android:textAlignment="center" />
-
-    </LinearLayout>
-
-
-    <EditText
-        android:id="@+id/ingredient_cost"
-        android:layout_width="match_parent"
-        android:focusable="true"
-        android:clickable="true"
-        android:focusableInTouchMode="true"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:autofillHints="ingredient cost"
+        android:layout_height="0dp"
+        android:textSize="15sp"
         android:ems="10"
-        android:textAlignment="center" />
+        android:inputType="textPersonName"
+        android:maxLength="30"
+        android:hint="Ingredient Name"
+        android:layout_weight="1"
+        />
 
+    <EditText
+        android:id="@+id/ingredient_description_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Description"
+        android:layout_weight="1"
+        />
 
+    <EditText
+        android:id="@+id/ingredient_bb_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Best Before Date"
+        android:layout_weight="1"
+        />
 
+    <EditText
+        android:id="@+id/ingredient_location_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Location"
+        android:layout_weight="1"
+        />
 
+    <EditText
+        android:id="@+id/ingredient_amount_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Amount"
+        android:layout_weight="1"/>
 
+    <EditText
+        android:id="@+id/ingredient_unit_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Units"
+        android:layout_weight="1"/>
 
+    <EditText
+        android:id="@+id/ingredient_category_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Category"
+        android:layout_weight="1"/>
+
+<!--    <LinearLayout-->
+<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        xmlns:tools="http://schemas.android.com/tools"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_weight="1">-->
+<!--        <Button-->
+<!--            android:id="@+id/deleteIngredientButton"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_marginLeft="10sp"-->
+<!--            android:layout_marginRight="5sp"-->
+<!--            android:text="Delete Ingredient"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_weight="5"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/saveRecipeButton"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_marginLeft="5sp"-->
+<!--            android:layout_marginRight="10sp"-->
+<!--            android:text="Save"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_weight="2"/>-->
+<!--    </LinearLayout>-->
 
 
 
