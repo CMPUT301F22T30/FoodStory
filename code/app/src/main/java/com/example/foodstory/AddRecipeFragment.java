@@ -37,7 +37,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+
+/**
+ * Defining a AddRecipeFragment class that extends the Fragment class
+ */
 public class AddRecipeFragment extends Fragment{
+
     private AddRecipeFragmentBinding binding;
     Button saveRecipe;
     Button addIngredient;
@@ -53,6 +58,10 @@ public class AddRecipeFragment extends Fragment{
     ArrayList<Ingredient> ingredients;
     ArrayAdapter<Ingredient> ingredient_Adapter;
     Context context;
+
+    /**
+     * Declaring the constructor for AddRecipeFragment class
+     */
     public AddRecipeFragment(){
 
     }
@@ -130,7 +139,13 @@ public class AddRecipeFragment extends Fragment{
         });
 
     }
-
+    /**
+     * Creating a new view for the class
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -142,6 +157,12 @@ public class AddRecipeFragment extends Fragment{
 
     }
 
+    /**
+     * Creating new Arraylist of the ingredient class that will store all the
+     * ingredients of a particular recipe.
+     * @param view
+     * @param savedInstanceState
+     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -278,6 +299,9 @@ public class AddRecipeFragment extends Fragment{
         ingredient_Adapter.notifyDataSetChanged();
     }
 
+    /**
+     *Function to destroy the view
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
