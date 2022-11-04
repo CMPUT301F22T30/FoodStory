@@ -104,15 +104,6 @@ public class RecipeFragment extends Fragment {
                 recipe_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
         });
-
-
-        //Test objects add
-        RecipeClass testRecipe = new RecipeClass("abcd", "cd", 12, "efg", "de", "xyz");
-        Date date = new Date();
-        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-        testRecipe.addIngredient(testIngredient);
-        recipe_List.add(testRecipe);
-        recipe_Adapter.notifyDataSetChanged();
     }
 
     @Override

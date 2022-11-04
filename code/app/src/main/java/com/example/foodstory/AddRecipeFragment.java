@@ -39,9 +39,7 @@ import java.util.HashMap;
 
 public class AddRecipeFragment extends Fragment{
     private AddRecipeFragmentBinding binding;
-    Button saveRecipe;
     Button addIngredient;
-    Button deleteRecipe;
     EditText title_recipe;
     EditText prep_time_recipe;
     EditText category_recipe;
@@ -67,9 +65,10 @@ public class AddRecipeFragment extends Fragment{
                 //bundle key = "recipe"
                 //recipe.putSerializable("recipe", passedRecipe);
                 //request key = "recipeKey"
+                //RecipeClass recipe = (RecipeClass) bundle.getBundle("recipe");
                 //getParentFragmentManager().setFragmentResult("recipeKey", recipe);
                 String recipeName = bundle.getString("recipeTitle");
-                //RecipeClass recipe = (RecipeClass) bundle.getBundle("recipe");
+
                 // Do something with the result
                 recipeDb = FirebaseFirestore.getInstance();
                 //https://cloud.google.com/firestore/docs/query-data/get-data#javaandroid
@@ -106,26 +105,7 @@ public class AddRecipeFragment extends Fragment{
                         }
                     }
                 });
-//                if (cityName.length()>0) {
-//                    //data.put("Province Name", provinceName);
-//                    db.collection("Cities").document(cityName)
-//                            .delete()
-//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void aVoid) {
 
-//                                    Log.d(TAG, "Data has been removed successfully!");
-//                                }
-//                            })
-//                            .addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-
-//                                    Log.d(TAG, "Data could not be removed!" + e.toString());
-//                                }
-//                            });
-//                    deleteCityEditText.setText("");
-//                }
             }
         });
 
@@ -175,7 +155,7 @@ public class AddRecipeFragment extends Fragment{
                 final String rec_cate = category_recipe.getText().toString();
                 final String rec_comm = comments_recipe.getText().toString();
                 final String rec_phot = photo_recipe.getText().toString();
-//                RecipeClass recipe = new RecipeClass(rec_name, rec_prep, rec_serv, rec_cate, rec_comm, rec_phot);
+
                 HashMap<String, String> data = new HashMap<>();
                 if (rec_name.length()>0 && rec_prep.length()>0 && rec_serv.length()>0){
                     data.put("Recipe Prep", rec_prep);
@@ -204,6 +184,7 @@ public class AddRecipeFragment extends Fragment{
                     comments_recipe.setText("");
                     photo_recipe.setText("");
                 }
+
                 NavHostFragment.findNavController(AddRecipeFragment.this)
                         .navigate(R.id.action_AddRecipeFragment_to_RecipeFragment);
             }
@@ -249,19 +230,17 @@ public class AddRecipeFragment extends Fragment{
         binding.addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle caller = new Bundle();
+                //bundle key = "recipe"
+                //recipe.putSerializable("recipe", passedRecipe);
+                //request key = "recipeKey"
+                // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
+                caller.putString("parentFragment", "AddRecipeFragment");
+                getParentFragmentManager().setFragmentResult("callerKey", caller);
                 NavHostFragment.findNavController(AddRecipeFragment.this)
                         .navigate(R.id.action_AddRecipeFragment_to_AddIngredientFragment);
             }
         });
-
-//        addIngredient.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new AddIngredientFragment().show(getChildFragmentManager(), TAG);
-//            }
-//
-//        });
-
 
         //Populate AddIngredientFragment with clicked upon item here
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -272,10 +251,6 @@ public class AddRecipeFragment extends Fragment{
                 //new AddIngredientFragment().newInstance(ingredients.get(i), i).show(getChildFragmentManager(), "Edit Ingredient");
             }
         });
-        Date date = new Date();
-        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-        ingredients.add(testIngredient);
-        ingredient_Adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -284,23 +259,4 @@ public class AddRecipeFragment extends Fragment{
         binding = null;
     }
 
-//    @Override
-//    public void onOkPressed(){
-//
-//    }
-
-//    @Override
-//    public void onOkPressed(Ingredient newIngredient) {
-//        //Date date = new Date();
-//        //Ingredient testIngredient = new Ingredient("Potato", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-////        ingredients.add(testIngredient);
-////        //ingredients.add(newIngredient);
-////        ingredient_Adapter.notifyDataSetChanged();
-//    }
-//
-//    @Override
-//    public void onOkPressed(Ingredient editIngredient, int i) {
-////        dataList.remove(i);
-////        cityAdapter.insert(editCity, i);
-//    }
 }
