@@ -142,9 +142,7 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddIngredientFragment dialogFragment = new AddIngredientFragment ();
-                dialogFragment.show(getChildFragmentManager(), "Add Ingredient");
-                //new AddIngredientFragment().show(, "Add_Ingredient");
+                new AddIngredientFragment().show(getChildFragmentManager(), AddIngredientFragment.TAG);
 
             }
 

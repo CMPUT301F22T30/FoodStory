@@ -26,6 +26,7 @@ public class AddIngredientFragment extends DialogFragment{
     private EditText ingredientAmount;
     private EditText ingredientUnit;
     private EditText ingredientCategory;
+    public static String TAG = "Add/Edit Fragment";
 
     private OnFragmentInteractionListener listener;
     private Ingredient editIngredient;
