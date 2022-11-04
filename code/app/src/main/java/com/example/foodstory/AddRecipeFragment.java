@@ -13,10 +13,12 @@ import android.widget.ListView;
 //import android.app.Fragment;
 import android.app.DialogFragment;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.AddRecipeFragmentBinding;
@@ -47,6 +49,41 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
     ArrayAdapter<Ingredient> ingredient_Adapter;
     Context context;
     public AddRecipeFragment(){
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("recipeKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                // We use a String here, but any type that can be put in a Bundle is supported
+                //RecipeClass recipe = (RecipeClass) bundle.getClass();
+                // Do something with the result
+//                if (cityName.length()>0) {
+//                    //data.put("Province Name", provinceName);
+//                    db.collection("Cities").document(cityName)
+//                            .delete()
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+
+//                                    Log.d(TAG, "Data has been removed successfully!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+
+//                                    Log.d(TAG, "Data could not be removed!" + e.toString());
+//                                }
+//                            });
+//                    deleteCityEditText.setText("");
+//                }
+            }
+        });
 
     }
 
@@ -150,6 +187,20 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
 
         });
 
+
+        //Populate AddIngredientFragment with clicked upon item here
+//        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                //position = i;
+//                //cityList.getItemAtPosition(i);
+//                // use bundle to pass the city
+//                //City clicked_city = (dataList.get(i));
+//                new AddCityFragment().newInstance(dataList.get(i), i).show(getSupportFragmentManager(), "Modify_City");
+////                Toast t =  Toast.makeText(context, "This is a test",Toast.LENGTH_LONG);
+////                t.show();
+//            }
+//        });
 //        Date date = new Date();
 //        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
 //        ingredients.add(testIngredient);

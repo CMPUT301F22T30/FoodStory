@@ -82,6 +82,18 @@
         android:layout_height="0dp"
         android:layout_weight="2"/>
 
+    <Button
+        android:id="@+id/addIngredientButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:text="Add Ingredient"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_weight="0.5"/>
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -93,17 +105,17 @@
         android:layout_weight="1">
 <!--Have this button open a fragment to add an ingredient    -->
     <Button
-        android:id="@+id/addIngredientButton"
+        android:id="@+id/deleteRecipeButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="5sp"
-        android:text="Add Ingredient"
+        android:text="Delete Recipe"
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_weight="5"/>
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/saveRecipeButton"
@@ -116,7 +128,7 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_weight="2"/>
+        android:layout_weight="1"/>
     </LinearLayout>
 <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/addRecipeButton"-->
