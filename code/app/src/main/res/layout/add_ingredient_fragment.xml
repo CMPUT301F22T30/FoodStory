@@ -84,41 +84,78 @@
         android:hint="Category"
         android:layout_weight="1"/>
 
-<!--    <LinearLayout-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--        xmlns:tools="http://schemas.android.com/tools"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_weight="1">-->
-<!--        <Button-->
-<!--            android:id="@+id/deleteIngredientButton"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_marginLeft="10sp"-->
-<!--            android:layout_marginRight="5sp"-->
-<!--            android:text="Delete Ingredient"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_weight="5"/>-->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <!--Have this button open a fragment to add an ingredient    -->
+        <Button
+            android:id="@+id/deleteIngrButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="5sp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
 
-<!--        <Button-->
-<!--            android:id="@+id/saveRecipeButton"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_marginLeft="5sp"-->
-<!--            android:layout_marginRight="10sp"-->
-<!--            android:text="Save"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_weight="2"/>-->
-<!--    </LinearLayout>-->
+        <Button
+            android:id="@+id/saveIngrButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="10sp"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <!--Have this button open a fragment to add an ingredient    -->
+        <Button
+            android:id="@+id/deleteIngrRecButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="5sp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:layout_weight="1"/>
 
+        <Button
+            android:id="@+id/saveIngrRecButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="10sp"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 </LinearLayout>

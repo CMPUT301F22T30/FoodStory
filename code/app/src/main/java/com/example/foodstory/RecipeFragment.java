@@ -99,7 +99,7 @@ public class RecipeFragment extends Fragment {
                     String recipeCategory = (String) doc.getData().get("Recipe Category");
                     String comments = (String) doc.getData().get("Recipe Comments");
                     String photo = (String) doc.getData().get("Recipe Photo");
-                    recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo)); // Adding the cities and provinces from FireStore
+                    recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo));
                 }
                 recipe_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
