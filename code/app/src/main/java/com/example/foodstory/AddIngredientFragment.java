@@ -107,7 +107,8 @@ public class AddIngredientFragment extends DialogFragment{
                                     listener.onOkPressed(new Ingredient(name, description, date, location, amount, unit, category));
                                     //listener.onOkPressed(new City(city, province), argsCity.getInt("position"));
                                 }
-                    }).create();
+                    }
+                    ).create();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             return builder
