@@ -1,8 +1,9 @@
 package com.example.foodstory;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class RecipeClass {
+public class RecipeClass implements Serializable{
     private String title;
     private String prepTime;
     private int numServings;

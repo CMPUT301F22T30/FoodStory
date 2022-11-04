@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,10 +24,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.AddRecipeFragmentBinding;
 import com.example.foodstory.databinding.RecipeFragmentBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -37,6 +41,7 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
     private AddRecipeFragmentBinding binding;
     Button saveRecipe;
     Button addIngredient;
+    Button deleteRecipe;
     EditText title_recipe;
     EditText prep_time_recipe;
     EditText category_recipe;
@@ -59,9 +64,48 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
         getParentFragmentManager().setFragmentResultListener("recipeKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                // We use a String here, but any type that can be put in a Bundle is supported
-                //RecipeClass recipe = (RecipeClass) bundle.getClass();
+                //bundle key = "recipe"
+                //recipe.putSerializable("recipe", passedRecipe);
+                //request key = "recipeKey"
+                //getParentFragmentManager().setFragmentResult("recipeKey", recipe);
+                String recipeName = bundle.getString("recipeTitle");
+                //RecipeClass recipe = (RecipeClass) bundle.getBundle("recipe");
                 // Do something with the result
+                recipeDb = FirebaseFirestore.getInstance();
+                //https://cloud.google.com/firestore/docs/query-data/get-data#javaandroid
+                DocumentReference docRef = recipeDb.collection("Recipes").document(recipeName);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                title_recipe = getView().findViewById(R.id.recipe_title_editText);
+                                prep_time_recipe = getView().findViewById(R.id.recipe_preptime_editText);
+                                category_recipe = getView().findViewById(R.id.recipe_category_editText);
+                                servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
+                                comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
+                                photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
+                                String prepTime = document.getString("Recipe Prep");
+                                String nServings = document.getString("Recipe Servings");
+                                String recipeCategory = document.getString("Recipe Category");
+                                String comments = document.getString("Recipe Comments");
+                                String photo = document.getString("Recipe Photo");
+                                title_recipe.setText(recipeName);
+                                prep_time_recipe.setText(prepTime);
+                                category_recipe.setText(recipeCategory);
+                                servings_recipe.setText(nServings);
+                                comments_recipe.setText(comments);
+                                photo_recipe.setText(photo);
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
 //                if (cityName.length()>0) {
 //                    //data.put("Province Name", provinceName);
 //                    db.collection("Cities").document(cityName)
@@ -113,8 +157,8 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
 //                .collection("messages").document("message1");
 
         addIngredient = getView().findViewById(R.id.addIngredientButton);
-        saveRecipe = getView().findViewById(R.id.saveRecipeButton);
-        saveRecipe.setOnClickListener(new View.OnClickListener() {
+
+        binding.saveRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 title_recipe = getView().findViewById(R.id.recipe_title_editText);
@@ -176,6 +220,45 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
                     comments_recipe.setText("");
                     photo_recipe.setText("");
                 }
+                NavHostFragment.findNavController(AddRecipeFragment.this)
+                        .navigate(R.id.action_AddRecipeFragment_to_RecipeFragment);
+            }
+        });
+
+        binding.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                title_recipe = getView().findViewById(R.id.recipe_title_editText);
+                prep_time_recipe = getView().findViewById(R.id.recipe_preptime_editText);
+                category_recipe = getView().findViewById(R.id.recipe_category_editText);
+                servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
+                comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
+                photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
+                final String rec_name = title_recipe.getText().toString();
+                if (rec_name.length()>0){
+                    recipeDb.collection("Recipes").document(rec_name)
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "Data has been removed successfully!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Data could not be removed!", e);
+                                }
+                            });
+                    title_recipe.setText("");
+                    prep_time_recipe.setText("");
+                    category_recipe.setText("");
+                    servings_recipe.setText("");
+                    comments_recipe.setText("");
+                    photo_recipe.setText("");
+                }
+                NavHostFragment.findNavController(AddRecipeFragment.this)
+                        .navigate(R.id.action_AddRecipeFragment_to_RecipeFragment);
             }
         });
 
@@ -189,22 +272,18 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
 
 
         //Populate AddIngredientFragment with clicked upon item here
-//        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                //position = i;
-//                //cityList.getItemAtPosition(i);
-//                // use bundle to pass the city
-//                //City clicked_city = (dataList.get(i));
-//                new AddCityFragment().newInstance(dataList.get(i), i).show(getSupportFragmentManager(), "Modify_City");
-////                Toast t =  Toast.makeText(context, "This is a test",Toast.LENGTH_LONG);
-////                t.show();
-//            }
-//        });
-//        Date date = new Date();
-//        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-//        ingredients.add(testIngredient);
-//        ingredient_Adapter.notifyDataSetChanged();
+        ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // use bundle to pass the city
+                //new AddIngredientFragment().show(getChildFragmentManager(), TAG);
+                new AddIngredientFragment().newInstance(ingredients.get(i), i).show(getChildFragmentManager(), "Edit Ingredient");
+            }
+        });
+        Date date = new Date();
+        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
+        ingredients.add(testIngredient);
+        ingredient_Adapter.notifyDataSetChanged();
     }
 
     @Override

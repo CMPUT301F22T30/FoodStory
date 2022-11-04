@@ -1,8 +1,9 @@
 package com.example.foodstory;
 
 import java.util.Date;
+import java.io.Serializable;
 
-public class Ingredient {
+public class Ingredient implements Serializable{
 
     // initialize the attributes for the FoodItem
     private String name;
