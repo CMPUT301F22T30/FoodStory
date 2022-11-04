@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.app.Fragment;
+//import android.app.Fragment;
 import android.app.DialogFragment;
 
+import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.AddRecipeFragmentBinding;
@@ -142,16 +145,15 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AddIngredientFragment().show(getChildFragmentManager(), AddIngredientFragment.TAG);
-
+                new AddIngredientFragment().show(getChildFragmentManager(), TAG);
             }
 
         });
 
-        Date date = new Date();
-        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-        ingredients.add(testIngredient);
-        ingredient_Adapter.notifyDataSetChanged();
+//        Date date = new Date();
+//        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
+//        ingredients.add(testIngredient);
+//        ingredient_Adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -162,7 +164,7 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
 
     @Override
     public void onOkPressed(Ingredient newIngredient) {
-        ingredient_Adapter.add(newIngredient);
+        //ingredient_Adapter.add(newIngredient);
     }
 
     @Override
