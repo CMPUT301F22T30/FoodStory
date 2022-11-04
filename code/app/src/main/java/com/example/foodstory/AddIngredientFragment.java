@@ -31,12 +31,17 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.RecipeFragmentBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -71,6 +76,37 @@ public class AddIngredientFragment extends Fragment{
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("callerKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                //bundle key = "recipe"
+                //recipe.putSerializable("recipe", passedRecipe);
+                //request key = "recipeKey"
+                //RecipeClass recipe = (RecipeClass) bundle.getBundle("recipe");
+                //getParentFragmentManager().setFragmentResult("recipeKey", recipe);
+                String fragCaller = bundle.getString("parentFragment");
+//                String expected = "AddRecipeFragment";
+                // Do something with the result
+                if(fragCaller == "AddRecipeFragment"){
+                    Button addIngredient = getView().findViewById(R.id.saveIngrRecButton);
+                    Button delIngredient = getView().findViewById(R.id.deleteIngrRecButton);
+                    addIngredient.setVisibility(View.VISIBLE);
+                    delIngredient.setVisibility(View.VISIBLE);
+                } else if (fragCaller == "AddIngredientFragment"){
+                    Button addIngredient = getView().findViewById(R.id.saveIngrButton);
+                    Button delIngredient = getView().findViewById(R.id.deleteIngrButton);
+                    addIngredient.setVisibility(View.VISIBLE);
+                    delIngredient.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+    }
+
+    @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
@@ -85,11 +121,6 @@ public class AddIngredientFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         //AddIngredientFragment needs to retrieve recipe name to add the ingredient to appropriate recipe.
-
-        //ArrayList<RecipeClass> recipe_List = new ArrayList<RecipeClass>();
-        //ArrayAdapter<RecipeClass> recipe_Adapter = new RecipeAdapter(getActivity(),recipe_List);
-        //ListView recipeList = getView().findViewById(R.id.recipe_list);
-        //recipeList.setAdapter(recipe_Adapter);
         dbAddIngr = FirebaseFirestore.getInstance();
         CollectionReference ingrReference = dbAddIngr.collection("Recipes");
 
@@ -201,36 +232,6 @@ public class AddIngredientFragment extends Fragment{
                         .navigate(R.id.action_AddIngredientFragment_to_AddRecipeFragment);
             }
         });
-        //This method refreshes the Recipe List soon as an event is recorded in the firestore data base
-//        recipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-//                    FirebaseFirestoreException error) {
-//                recipe_List.clear();
-//                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-//                {
-//                    //Log.d(TAG, String.valueOf(doc.getData().get("Province Name")));
-//                    String title = doc.getId();
-//                    String prepTime = (String) doc.getData().get("Recipe Prep");
-//                    String nServings = (String) doc.getData().get("Recipe Servings");
-//                    int numServings = Integer.valueOf(nServings);
-//                    String recipeCategory = (String) doc.getData().get("Recipe Category");
-//                    String comments = (String) doc.getData().get("Recipe Comments");
-//                    String photo = (String) doc.getData().get("Recipe Photo");
-//                    recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo)); // Adding the cities and provinces from FireStore
-//                }
-//                recipe_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-//            }
-//        });
-
-
-        //Test objects add
-//        RecipeClass testRecipe = new RecipeClass("abcd", "cd", 12, "efg", "de", "xyz");
-//        Date date = new Date();
-//        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-//        testRecipe.addIngredient(testIngredient);
-//        recipe_List.add(testRecipe);
-//        recipe_Adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -239,115 +240,3 @@ public class AddIngredientFragment extends Fragment{
         binding = null;
     }
 }
-
-//public class AddIngredientFragment extends DialogFragment{
-//    private EditText ingredientName;
-//    private EditText ingredientDescription;
-//    private EditText ingredientBestBefore;
-//    private EditText ingredientLocation;
-//    private EditText ingredientAmount;
-//    private EditText ingredientUnit;
-//    private EditText ingredientCategory;
-//    public static String TAG = "Add/Edit Fragment";
-//
-//    private OnFragmentInteractionListener listener;
-//    private Ingredient editIngredient;
-//    private Bundle argsIngredient;
-//
-//    public interface OnFragmentInteractionListener {
-//
-//        void onOkPressed();
-//
-//        void onOkPressed(Ingredient newIngredient);
-//        void onOkPressed(Ingredient editIngredient, int i);
-//    }
-//
-////    @Override
-////    public void onAttach(Context context) {
-////        super.onAttach(context);
-////        if(context instanceof OnFragmentInteractionListener) {
-////            listener = (OnFragmentInteractionListener) context;
-////        } else {
-////            throw new RuntimeException(context.toString() + "This is not the correct fragment!");
-////        }
-////    }
-//
-//    public static AddIngredientFragment newInstance(Ingredient ingredient, int position) {
-//        Bundle args = new Bundle();
-//        args.putSerializable("Ingredient",  ingredient);
-//        args.putInt("position", position);
-//        AddIngredientFragment fragment = new AddIngredientFragment();
-//        fragment.setArguments(args);
-//        return fragment;
-//
-//    }
-//    @NonNull
-//
-//    @Override
-//
-//    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_ingredient_fragment, null);
-//        ingredientName = view.findViewById(R.id.ingredient_name_editText);
-//        ingredientDescription = view.findViewById(R.id.ingredient_description_editText);
-//        ingredientBestBefore = view.findViewById(R.id.ingredient_bb_editText);
-//        ingredientLocation = view.findViewById(R.id.ingredient_location_editText);
-//        ingredientAmount = view.findViewById(R.id.ingredient_amount);
-//        ingredientUnit = view.findViewById(R.id.ingredient_unit_editText);
-//        ingredientCategory = view.findViewById(R.id.ingredient_category_editText);
-//        argsIngredient = getArguments();
-//        if(argsIngredient != null) {
-//            editIngredient = (Ingredient) argsIngredient.getSerializable("Ingredient");
-//            ingredientName.setText(editIngredient.getName().toString());
-//            ingredientName.setText(editIngredient.getDescription().toString());
-//            ingredientName.setText(editIngredient.getBestBefore().toString());
-//            ingredientName.setText(editIngredient.getLocation().toString());
-//            ingredientName.setText(Integer.toString(editIngredient.getAmount()));
-//            ingredientName.setText(editIngredient.getUnit().toString());
-//            ingredientName.setText(editIngredient.getCategory().toString());
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//            return builder
-//                    .setView(view)
-//                    .setTitle("Edit Ingredient")
-//                    .setNegativeButton("Cancel", null)
-//                    .setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialogInterface, int i) {
-//                                    String name = ingredientName.getText().toString();
-//                                    String description =  ingredientDescription.getText().toString();
-//                                    String bestBefore =  ingredientBestBefore.getText().toString();
-//                                    String location =  ingredientLocation.getText().toString();
-//                                    int amount = Integer.parseInt(ingredientAmount.getText().toString());
-//                                    String unit =  ingredientUnit.getText().toString();
-//                                    String category =  ingredientCategory.getText().toString();
-//                                    Date date = new Date();
-//                                    listener.onOkPressed(new Ingredient(name, description, date, location, amount, unit, category));
-//                                    //listener.onOkPressed(new City(city, province), argsCity.getInt("position"));
-//                                }
-//                    }
-//                    ).create();
-//        } else {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//            return builder
-//                    .setView(view)
-//                    .setTitle("Add Ingredient")
-//                    .setNegativeButton("Cancel", null)
-//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-////                            String name = ingredientName.getText().toString();
-////                            String description =  ingredientDescription.getText().toString();
-////                            String bestBefore =  ingredientBestBefore.getText().toString();
-////                            String location =  ingredientLocation.getText().toString();
-////                            int amount = Integer.parseInt(ingredientAmount.getText().toString());
-////                            String unit =  ingredientUnit.getText().toString();
-////                            String category =  ingredientCategory.getText().toString();
-////                            Date date = new Date();
-//                            //listener.onOkPressed();
-//                            //listener.onOkPressed(new Ingredient(name, description, date, location, amount, unit, category));
-//                        }
-//                    }
-//        ).create();
-//
-//        }
-//    }
-//}
