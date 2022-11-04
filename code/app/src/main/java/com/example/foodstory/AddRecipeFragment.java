@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class AddRecipeFragment extends Fragment implements AddIngredientFragment.OnFragmentInteractionListener{
+public class AddRecipeFragment extends Fragment{
     private AddRecipeFragmentBinding binding;
     Button saveRecipe;
     Button addIngredient;
@@ -144,10 +144,11 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //AddRecipeFragment needs to pass name of recipe to AddIngredientFragment to allow addition to firestore db
+
         ingredients = new ArrayList<Ingredient>();
         ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
-//        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-//        ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
         ListView ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
         ingredientList.setAdapter(ingredient_Adapter);
         recipeDb = FirebaseFirestore.getInstance();
@@ -196,23 +197,6 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
-//                    collectionReference
-//                            .document(rec_name)
-//                            .set(data)
-//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void aVoid) {
-//// These are a method which gets executed when the task is succeeded
-//                                    Log.d(TAG, "Data has been added successfully!");
-//                                }
-//                            })
-//                            .addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//// These are a method which gets executed if there’s any problem
-//                                    Log.d(TAG, "Data could not be added!" + e.toString());
-//                                }
-//                            });
                     title_recipe.setText("");
                     prep_time_recipe.setText("");
                     category_recipe.setText("");
@@ -262,13 +246,21 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
             }
         });
 
-        addIngredient.setOnClickListener(new View.OnClickListener() {
+        binding.addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AddIngredientFragment().show(getChildFragmentManager(), TAG);
+                NavHostFragment.findNavController(AddRecipeFragment.this)
+                        .navigate(R.id.action_AddRecipeFragment_to_AddIngredientFragment);
             }
-
         });
+
+//        addIngredient.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new AddIngredientFragment().show(getChildFragmentManager(), TAG);
+//            }
+//
+//        });
 
 
         //Populate AddIngredientFragment with clicked upon item here
@@ -277,7 +269,7 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // use bundle to pass the city
                 //new AddIngredientFragment().show(getChildFragmentManager(), TAG);
-                new AddIngredientFragment().newInstance(ingredients.get(i), i).show(getChildFragmentManager(), "Edit Ingredient");
+                //new AddIngredientFragment().newInstance(ingredients.get(i), i).show(getChildFragmentManager(), "Edit Ingredient");
             }
         });
         Date date = new Date();
@@ -292,14 +284,23 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
         binding = null;
     }
 
-    @Override
-    public void onOkPressed(Ingredient newIngredient) {
-        //ingredient_Adapter.add(newIngredient);
-    }
+//    @Override
+//    public void onOkPressed(){
+//
+//    }
 
-    @Override
-    public void onOkPressed(Ingredient editIngredient, int i) {
-//        dataList.remove(i);
-//        cityAdapter.insert(editCity, i);
-    }
+//    @Override
+//    public void onOkPressed(Ingredient newIngredient) {
+//        //Date date = new Date();
+//        //Ingredient testIngredient = new Ingredient("Potato", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
+////        ingredients.add(testIngredient);
+////        //ingredients.add(newIngredient);
+////        ingredient_Adapter.notifyDataSetChanged();
+//    }
+//
+//    @Override
+//    public void onOkPressed(Ingredient editIngredient, int i) {
+////        dataList.remove(i);
+////        cityAdapter.insert(editCity, i);
+//    }
 }
