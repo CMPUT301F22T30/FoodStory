@@ -63,7 +63,7 @@ public class AddIngredientFragment extends DialogFragment{
 
     public static AddIngredientFragment newInstance(Ingredient ingredient, int position) {
         Bundle args = new Bundle();
-        args.putSerializable("Ingredient", (Serializable) ingredient);
+        args.putSerializable("Ingredient",  ingredient);
         args.putInt("position", position);
         AddIngredientFragment fragment = new AddIngredientFragment();
         fragment.setArguments(args);
@@ -85,9 +85,14 @@ public class AddIngredientFragment extends DialogFragment{
         ingredientCategory = view.findViewById(R.id.ingredient_category_editText);
         argsIngredient = getArguments();
         if(argsIngredient != null) {
-            //editCity = (City) argsCity.getSerializable("city");
-            //cityName.setText(editCity.getCity().toString());
-            //provinceName.setText(editCity.getProvince().toString());
+            editIngredient = (Ingredient) argsIngredient.getSerializable("Ingredient");
+            ingredientName.setText(editIngredient.getName().toString());
+            ingredientName.setText(editIngredient.getDescription().toString());
+            ingredientName.setText(editIngredient.getBestBefore().toString());
+            ingredientName.setText(editIngredient.getLocation().toString());
+            ingredientName.setText(Integer.toString(editIngredient.getAmount()));
+            ingredientName.setText(editIngredient.getUnit().toString());
+            ingredientName.setText(editIngredient.getCategory().toString());
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             return builder
                     .setView(view)

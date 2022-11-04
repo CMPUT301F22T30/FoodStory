@@ -24,10 +24,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.AddRecipeFragmentBinding;
 import com.example.foodstory.databinding.RecipeFragmentBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -61,9 +64,48 @@ public class AddRecipeFragment extends Fragment implements AddIngredientFragment
         getParentFragmentManager().setFragmentResultListener("recipeKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                // We use a String here, but any type that can be put in a Bundle is supported
-                //RecipeClass recipe = (RecipeClass) bundle.getClass();
+                //bundle key = "recipe"
+                //recipe.putSerializable("recipe", passedRecipe);
+                //request key = "recipeKey"
+                //getParentFragmentManager().setFragmentResult("recipeKey", recipe);
+                String recipeName = bundle.getString("recipeTitle");
+                //RecipeClass recipe = (RecipeClass) bundle.getBundle("recipe");
                 // Do something with the result
+                recipeDb = FirebaseFirestore.getInstance();
+                //https://cloud.google.com/firestore/docs/query-data/get-data#javaandroid
+                DocumentReference docRef = recipeDb.collection("Recipes").document(recipeName);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                title_recipe = getView().findViewById(R.id.recipe_title_editText);
+                                prep_time_recipe = getView().findViewById(R.id.recipe_preptime_editText);
+                                category_recipe = getView().findViewById(R.id.recipe_category_editText);
+                                servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
+                                comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
+                                photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
+                                String prepTime = document.getString("Recipe Prep");
+                                String nServings = document.getString("Recipe Servings");
+                                String recipeCategory = document.getString("Recipe Category");
+                                String comments = document.getString("Recipe Comments");
+                                String photo = document.getString("Recipe Photo");
+                                title_recipe.setText(recipeName);
+                                prep_time_recipe.setText(prepTime);
+                                category_recipe.setText(recipeCategory);
+                                servings_recipe.setText(nServings);
+                                comments_recipe.setText(comments);
+                                photo_recipe.setText(photo);
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
 //                if (cityName.length()>0) {
 //                    //data.put("Province Name", provinceName);
 //                    db.collection("Cities").document(cityName)

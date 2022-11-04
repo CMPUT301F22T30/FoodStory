@@ -59,11 +59,15 @@ public class RecipeFragment extends Fragment {
         binding.recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Intent viewItem = new Intent(RecipeFragment.this, showActivity.class);
-                //viewItem.putExtra(EXTRA_MESSAGE, recipe_Adapter.getItem(i));
                 //https://developer.android.com/guide/fragments/communicate
+
+                RecipeClass passedRecipe = recipe_List.get(i);
                 Bundle recipe = new Bundle();
-                recipe.putString("bundleKey", "recipe");
+                //bundle key = "recipe"
+                //recipe.putSerializable("recipe", passedRecipe);
+                //request key = "recipeKey"
+
+                recipe.putString("recipeTitle", passedRecipe.getTitle());
                 getParentFragmentManager().setFragmentResult("recipeKey", recipe);
                 NavHostFragment.findNavController(RecipeFragment.this)
                         .navigate(R.id.action_RecipeFragment_to_AddRecipeFragment);
@@ -103,12 +107,12 @@ public class RecipeFragment extends Fragment {
 
 
         //Test objects add
-//        RecipeClass testRecipe = new RecipeClass("abcd", "cd", 12, "efg", "de", "xyz");
-//        Date date = new Date();
-//        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
-//        testRecipe.addIngredient(testIngredient);
-//        recipe_List.add(testRecipe);
-//        recipe_Adapter.notifyDataSetChanged();
+        RecipeClass testRecipe = new RecipeClass("abcd", "cd", 12, "efg", "de", "xyz");
+        Date date = new Date();
+        Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
+        testRecipe.addIngredient(testIngredient);
+        recipe_List.add(testRecipe);
+        recipe_Adapter.notifyDataSetChanged();
     }
 
     @Override
