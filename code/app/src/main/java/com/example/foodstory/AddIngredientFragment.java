@@ -54,11 +54,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
-
-/**
- * Defining AddIngredientFragment class
- */
-  public class AddIngredientFragment extends Fragment{
+public class AddIngredientFragment extends Fragment{
     private AddIngredientFragmentBinding binding;
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbAddIngr;
@@ -70,7 +66,6 @@ import java.util.HashMap;
     EditText ingredientAmount;
     EditText ingredientUnit;
     EditText ingredientCategory;
-
 
     public AddIngredientFragment(){
     }
@@ -89,23 +84,7 @@ import java.util.HashMap;
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-//     /**
-//      * Creating a new instance of type AddIngredientFragment
-//      * @param ingredient
-//      * @param position
-//      * @return
-//      */
-//     public static AddIngredientFragment newInstance(Ingredient ingredient, int position) {
-//         Bundle args = new Bundle();
-//         args.putSerializable("Ingredient",  ingredient);
-//         args.putInt("position", position);
-//         AddIngredientFragment fragment = new AddIngredientFragment();
-//         fragment.setArguments(args);
-//         return fragment;
-
         //AddIngredientFragment needs to retrieve recipe name to add the ingredient to appropriate recipe.
-
 
         //ArrayList<RecipeClass> recipe_List = new ArrayList<RecipeClass>();
         //ArrayAdapter<RecipeClass> recipe_Adapter = new RecipeAdapter(getActivity(),recipe_List);
@@ -113,7 +92,6 @@ import java.util.HashMap;
         //recipeList.setAdapter(recipe_Adapter);
         dbAddIngr = FirebaseFirestore.getInstance();
         CollectionReference ingrReference = dbAddIngr.collection("Recipes");
-
 
 
         binding.saveIngrButton.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +184,6 @@ import java.util.HashMap;
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
-
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.w(TAG, "Data could not be removed!", e);

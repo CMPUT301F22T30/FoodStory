@@ -1,14 +1,14 @@
 package com.example.foodstory;
 
-
+import android.content.Intent;
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -26,30 +26,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-
-/**
- * Defining the RecipeFragment which extends Fragment class
- */
 public class RecipeFragment extends Fragment {
     private RecipeFragmentBinding binding;
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbRecipeDisp;
     public static String TAG = "";
-
-    /**
-     * Defining the constructor for RecipeFragment class
-     */
     public RecipeFragment(){
     }
 
-    /**
-     * Creating view for the recipe fragment
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -61,11 +47,6 @@ public class RecipeFragment extends Fragment {
 
     }
 
-    /**
-     * On creating the view defining a recipe_list which stores all the recipes
-     * @param view
-     * @param savedInstanceState
-     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<RecipeClass> recipe_List = new ArrayList<RecipeClass>();
@@ -76,9 +57,6 @@ public class RecipeFragment extends Fragment {
         CollectionReference recipeReference = dbRecipeDisp.collection("Recipes");
 
         binding.recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            /**
-             * Defining NavController to take the sure to AddRecipeFragment from RecipeFragment
-             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //https://developer.android.com/guide/fragments/communicate
@@ -129,9 +107,6 @@ public class RecipeFragment extends Fragment {
 
 
         //Test objects add
-        /**
-         * Creating test recipe and test ingredients
-         */
         RecipeClass testRecipe = new RecipeClass("abcd", "cd", 12, "efg", "de", "xyz");
         Date date = new Date();
         Ingredient testIngredient = new Ingredient("Rice", "Describe Rice", date, "Pantry", 20, "Medium", "Perishables");
