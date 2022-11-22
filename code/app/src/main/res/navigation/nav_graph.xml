@@ -36,6 +36,12 @@
 
         </action>
 
+        <action
+            android:id="@+id/action_IngredientFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment">
+
+        </action>
+
     </fragment>
 
 

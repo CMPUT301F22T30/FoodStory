@@ -8,6 +8,18 @@
     android:orientation="vertical"
     tools:context=".IngredientsFragment">
 
+    <Button
+        android:id="@+id/IngredienttoHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="left"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_weight="1"/>
+
     <ListView
         android:id="@+id/ingredient_list"
         android:layout_width="match_parent"
@@ -25,6 +37,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_weight="1"/>
+
 
 
 </LinearLayout>

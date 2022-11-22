@@ -23,11 +23,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class IngredientsFragment extends Fragment {
     private IngredientFragmentBinding binding;
     FirebaseFirestore dbIngrDisp;
+
+    public IngredientsFragment(){
+    }
 
     @Override
     public View onCreateView(
@@ -45,11 +49,10 @@ public class IngredientsFragment extends Fragment {
         ArrayList<Ingredient> ingredients_List = new ArrayList<Ingredient>();
         ArrayAdapter<Ingredient> ingredient_Adapter = new IngredientAdapter(getActivity(),ingredients_List);
         ListView ingredientList= getView().findViewById(R.id.ingredient_list);
-        Date date = new Date();
         ingredientList.setAdapter(ingredient_Adapter);
-
         dbIngrDisp = FirebaseFirestore.getInstance();
         CollectionReference ingredientReference = dbIngrDisp.collection("Ingredients");
+        Date date = new Date();
 
         binding.ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,6 +84,15 @@ public class IngredientsFragment extends Fragment {
             }
         });
 
+        binding.IngredienttoHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(IngredientsFragment.this)
+                        .navigate(R.id.action_IngredientFragment_to_HomeFragment);
+            }
+        });
+
+        
         ingredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -93,7 +105,11 @@ public class IngredientsFragment extends Fragment {
                     String ingr_bb = (String) doc.getData().get("Ingredient BestBefore");
                     String ingr_loca = (String) doc.getData().get("Ingredient Location");
                     String nAmount = (String) doc.getData().get("Ingredient Amount");
-                    int ingr_amount = Integer.valueOf(nAmount);
+                    int ingr_amount = 0;
+                    if(Objects.equals(nAmount, "")) {
+                    } else {
+                        ingr_amount = Integer.valueOf(nAmount);
+                    }
                     Date date = new Date();
                     String ingr_unit = (String) doc.getData().get("Ingredient Unit");
                     String ingr_cate = (String) doc.getData().get("Ingredient Category");

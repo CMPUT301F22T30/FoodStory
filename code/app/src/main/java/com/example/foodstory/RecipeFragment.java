@@ -82,6 +82,14 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        binding.RecipetoHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(RecipeFragment.this)
+                        .navigate(R.id.action_RecipeFragment_to_HomeFragment);
+            }
+        });
+
 
         //This method refreshes the Recipe List soon as an event is recorded in the firestore data base
         recipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
