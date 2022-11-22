@@ -57,12 +57,15 @@ public class IngredientsFragment extends Fragment {
         binding.ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Ingredient passedIngredient = ingredients_List.get(i);
+
                 Bundle caller = new Bundle();
                 //bundle key = "recipe"
                 //recipe.putSerializable("recipe", passedRecipe);
                 //request key = "recipeKey"
                 // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
                 caller.putString("parentFragment", "AddIngredientFragment");
+                caller.putString("ingredientName", passedIngredient.getName());
                 getParentFragmentManager().setFragmentResult("callerKey", caller);
                 NavHostFragment.findNavController(IngredientsFragment.this)
                         .navigate(R.id.action_IngredientFragment_to_AddIngredientFragment);
@@ -78,6 +81,7 @@ public class IngredientsFragment extends Fragment {
                 //request key = "recipeKey"
                 // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
                 caller.putString("parentFragment", "AddIngredientFragment");
+                caller.putString("ingredientName", "00000000");
                 getParentFragmentManager().setFragmentResult("callerKey", caller);
                 NavHostFragment.findNavController(IngredientsFragment.this)
                         .navigate(R.id.action_IngredientFragment_to_AddIngredientFragment);
@@ -92,7 +96,7 @@ public class IngredientsFragment extends Fragment {
             }
         });
 
-        
+
         ingredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
