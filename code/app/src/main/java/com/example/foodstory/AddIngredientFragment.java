@@ -100,6 +100,48 @@ public class AddIngredientFragment extends Fragment{
                     Button delIngredient = getView().findViewById(R.id.deleteIngrButton);
                     addIngredient.setVisibility(View.VISIBLE);
                     delIngredient.setVisibility(View.VISIBLE);
+                    String ingredient_name = bundle.getString("ingredientName");
+                    dbAddIngr = FirebaseFirestore.getInstance();
+                    DocumentReference docRef = dbAddIngr.collection("Ingredients").document(ingredient_name);
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    ingredientName = getView().findViewById(R.id.ingredient_name_editText);
+                                    ingredientDescription = getView().findViewById(R.id.ingredient_description_editText);
+                                    ingredientBestBefore = getView().findViewById(R.id.ingredient_bb_editText);
+                                    ingredientLocation = getView().findViewById(R.id.ingredient_location_editText);
+                                    ingredientAmount = getView().findViewById(R.id.ingredient_amount_editText);
+                                    ingredientUnit = getView().findViewById(R.id.ingredient_unit_editText);
+                                    ingredientCategory = getView().findViewById(R.id.ingredient_category_editText);
+
+                                    String ingr_desc = document.getString("Ingredient Description");
+                                    String ingr_bb = document.getString("Ingredient BestBefore");
+                                    String ingr_loca = document.getString("Ingredient Category");
+                                    String ingr_amount = document.getString("Ingredient Amount");
+                                    String ingr_unit = document.getString("Ingredient Unit");
+                                    String ingr_cate = document.getString("Ingredient Category");
+
+                                    ingredientName.setText(ingredient_name);
+                                    ingredientDescription.setText(ingr_desc);
+                                    ingredientBestBefore.setText(ingr_bb);
+                                    ingredientLocation.setText(ingr_loca);
+                                    ingredientAmount.setText(ingr_amount);
+                                    ingredientUnit.setText(ingr_unit);
+                                    ingredientCategory.setText(ingr_cate);
+
+                                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                } else {
+                                    Log.d(TAG, "No such document");
+                                }
+                            } else {
+                                Log.d(TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
+
                 }
             }
         });
@@ -181,6 +223,37 @@ public class AddIngredientFragment extends Fragment{
         binding.deleteIngrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ingredientName = getView().findViewById(R.id.ingredient_name_editText);
+                ingredientDescription = getView().findViewById(R.id.ingredient_description_editText);
+                ingredientBestBefore = getView().findViewById(R.id.ingredient_bb_editText);
+                ingredientLocation = getView().findViewById(R.id.ingredient_location_editText);
+                ingredientAmount = getView().findViewById(R.id.ingredient_amount_editText);
+                ingredientUnit = getView().findViewById(R.id.ingredient_unit_editText);
+                ingredientCategory = getView().findViewById(R.id.ingredient_category_editText);
+                final String ingr_name = ingredientName.getText().toString();
+                if (ingr_name.length()>0){
+                    dbAddIngr.collection("Ingredients").document(ingr_name)
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "Data has been removed successfully!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Data could not be removed!", e);
+                                }
+                            });
+                    ingredientName.setText("");
+                    ingredientDescription.setText("");
+                    ingredientBestBefore.setText("");
+                    ingredientLocation.setText("");
+                    ingredientAmount.setText("");
+                    ingredientUnit.setText("");
+                    ingredientCategory.setText("");
+                }
                 NavHostFragment.findNavController(AddIngredientFragment.this)
                         .navigate(R.id.action_AddIngredientFragment_to_IngredientFragment);
             }
