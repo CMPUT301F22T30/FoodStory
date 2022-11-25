@@ -11,6 +11,7 @@
         android:padding="10sp"
         android:text="Title"
         android:textSize="15sp"
+        android:layout_marginLeft="4sp"
         android:layout_weight="1">
     </TextView>
     <TextView
@@ -19,7 +20,28 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:padding="10sp"
+        android:layout_marginLeft="4sp"
         android:text="Category"
+        android:layout_weight="1">
+    </TextView>
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:padding="10sp"
+        android:layout_marginLeft="4sp"
+        android:text="Time"
+        android:layout_weight="1">
+    </TextView>
+    <TextView
+        android:id="@+id/servings_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:padding="10sp"
+        android:layout_marginLeft="4sp"
+        android:text="Servings"
         android:layout_weight="1">
     </TextView>
 

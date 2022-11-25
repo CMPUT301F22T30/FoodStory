@@ -20,6 +20,50 @@
         android:textStyle="bold"
         android:layout_weight="1"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4sp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/sort_titleButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_marginLeft="3sp"
+            android:text="Title^" />
+
+        <Button
+            android:id="@+id/sort_categoryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4sp"
+            android:text="Cat^" />
+
+        <Button
+            android:id="@+id/sort_PreptimeButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4sp"
+            android:text="Time^" />
+
+        <Button
+            android:id="@+id/sort_ServingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="3sp"
+            android:text="Serve^" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/recipe_list"
         android:layout_width="match_parent"
