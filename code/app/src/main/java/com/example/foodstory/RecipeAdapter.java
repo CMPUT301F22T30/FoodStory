@@ -32,8 +32,12 @@ public class RecipeAdapter extends ArrayAdapter<RecipeClass> {
         RecipeClass recipe = recipes.get(position);
         TextView recipeTitle = view.findViewById(R.id.title_text);
         TextView recipeCategory = view.findViewById(R.id.category_text);
+        TextView recipeTime = view.findViewById(R.id.time_text);
+        TextView recipeServings = view.findViewById(R.id.servings_text);
         recipeTitle.setText(recipe.getTitle());
         recipeCategory.setText(recipe.getRecipeCategory());
+        recipeTime.setText(recipe.getRecipePrepTime());
+        recipeServings.setText(recipe.getRecipeServingsStr());
         return view;
     }
 }

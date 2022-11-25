@@ -41,6 +41,10 @@ public class RecipeClass implements Serializable{
         return numServings;
     }
 
+    public String getRecipeServingsStr(){
+        return String.valueOf(numServings);
+    }
+
     public void setRecipeServings(int numServings) {
         this.numServings = numServings;
     }

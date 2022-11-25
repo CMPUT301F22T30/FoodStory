@@ -125,7 +125,7 @@ public class RecipeFragment extends Fragment {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
                     @Override
                     public int compare(RecipeClass recipe, RecipeClass t1) {
-                        return String.valueOf(recipe.getRecipeServings()).compareTo(String.valueOf(t1.getRecipeServings()));
+                        return (recipe.getRecipeServingsStr().compareTo(t1.getRecipeServingsStr()));
                     }
                 });
                 recipe_Adapter.notifyDataSetChanged();
