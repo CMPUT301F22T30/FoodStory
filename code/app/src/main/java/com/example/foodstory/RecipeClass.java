@@ -30,6 +30,21 @@ public class RecipeClass implements Serializable{
         this.title = title;
     }
 
+    public String getRecipePrepTime() {
+        return prepTime;
+    }
+
+    public void setRecipePrepTime(String prepTime) {
+        this.prepTime = prepTime;
+    }
+    public int getRecipeServings() {
+        return numServings;
+    }
+
+    public void setRecipeServings(int numServings) {
+        this.numServings = numServings;
+    }
+
     public String getRecipeCategory() {
         return recipeCategory;
     }

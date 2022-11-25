@@ -104,6 +104,34 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        Button Sort_prepTime = getView().findViewById(R.id.sort_PreptimeButton);
+        Sort_prepTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(recipe_List, new Comparator<RecipeClass>() {
+                    @Override
+                    public int compare(RecipeClass recipe, RecipeClass t1) {
+                        return recipe.getRecipePrepTime().compareTo(t1.getRecipePrepTime());
+                    }
+                });
+                recipe_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button Sort_servings = getView().findViewById(R.id.sort_ServingsButton);
+        Sort_servings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(recipe_List, new Comparator<RecipeClass>() {
+                    @Override
+                    public int compare(RecipeClass recipe, RecipeClass t1) {
+                        return String.valueOf(recipe.getRecipeServings()).compareTo(String.valueOf(t1.getRecipeServings()));
+                    }
+                });
+                recipe_Adapter.notifyDataSetChanged();
+            }
+        });
+
         binding.addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
