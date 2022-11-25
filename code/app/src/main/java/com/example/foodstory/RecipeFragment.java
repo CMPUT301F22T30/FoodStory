@@ -25,6 +25,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +73,34 @@ public class RecipeFragment extends Fragment {
                 getParentFragmentManager().setFragmentResult("recipeKey", recipe);
                 NavHostFragment.findNavController(RecipeFragment.this)
                         .navigate(R.id.action_RecipeFragment_to_AddRecipeFragment);
+            }
+        });
+
+        Button Sort_title = getView().findViewById(R.id.sort_titleButton);
+        Sort_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(recipe_List, new Comparator<RecipeClass>() {
+                    @Override
+                    public int compare(RecipeClass recipe, RecipeClass t1) {
+                        return recipe.getTitle().compareTo(t1.getTitle());
+                    }
+                });
+                recipe_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button Sort_Category = getView().findViewById(R.id.sort_categoryButton);
+        Sort_Category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(recipe_List, new Comparator<RecipeClass>() {
+                    @Override
+                    public int compare(RecipeClass recipe, RecipeClass t1) {
+                        return recipe.getRecipeCategory().compareTo(t1.getRecipeCategory());
+                    }
+                });
+                recipe_Adapter.notifyDataSetChanged();
             }
         });
 
