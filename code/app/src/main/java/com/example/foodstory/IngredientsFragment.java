@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
@@ -71,6 +77,61 @@ public class IngredientsFragment extends Fragment {
                         .navigate(R.id.action_IngredientFragment_to_AddIngredientFragment);
             }
         });
+        Button Sort_title = getView().findViewById(R.id.sort_descButton);
+        Sort_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(ingredients_List, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient t1) {
+                        return ingredient.getName().compareTo(t1.getName());
+                    }
+                });
+                ingredient_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button Sort_date = getView().findViewById(R.id.sort_dateButton);
+        Sort_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(ingredients_List, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient t1) {
+                        return ingredient.getBBDString().compareTo(t1.getBBDString());
+                    }
+                });
+                ingredient_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button Sort_location = getView().findViewById(R.id.sort_locButton);
+        Sort_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(ingredients_List, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient t1) {
+                        return ingredient.getLocation().compareTo(t1.getLocation());
+                    }
+                });
+                ingredient_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button Sort_category = getView().findViewById(R.id.sort_catButton);
+        Sort_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(ingredients_List, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient t1) {
+                        return ingredient.getCategory().compareTo(t1.getCategory());
+                    }
+                });
+                ingredient_Adapter.notifyDataSetChanged();
+            }
+        });
 
         binding.addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +175,12 @@ public class IngredientsFragment extends Fragment {
                     } else {
                         ingr_amount = Integer.valueOf(nAmount);
                     }
-                    Date date = new Date();
+                    Date date= null;
+                    try {
+                        date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     String ingr_unit = (String) doc.getData().get("Ingredient Unit");
                     String ingr_cate = (String) doc.getData().get("Ingredient Category");
                     ingredients_List.add(new Ingredient(ingr_name, ingr_desc, date, ingr_loca, ingr_amount, ingr_unit, ingr_cate));
@@ -123,6 +189,7 @@ public class IngredientsFragment extends Fragment {
             }
         });
     }
+
 
     @Override
     public void onDestroyView() {

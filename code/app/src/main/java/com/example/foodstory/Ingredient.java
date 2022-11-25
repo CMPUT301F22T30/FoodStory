@@ -1,5 +1,8 @@
 package com.example.foodstory;
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -53,7 +56,11 @@ public class Ingredient implements Serializable{
     public Date getBestBefore() {
         return bestBefore;
     }
-
+    
+    public String getBBDString(){
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(this.getBestBefore());
+    }
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
     }

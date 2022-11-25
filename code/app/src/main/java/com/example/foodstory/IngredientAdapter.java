@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.text.DateFormat;
 
 public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     private ArrayList<Ingredient> ingredients;
@@ -33,10 +36,12 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         }
         Ingredient ingredient = ingredients.get(position);
         TextView ingredientTitle= view.findViewById(R.id.ingredient_title);
-        TextView ingredientAmount= view.findViewById(R.id.ingredient_amount);
+        TextView ingredientBbd= view.findViewById(R.id.ingredient_bbd);
+        TextView ingredientLocation= view.findViewById(R.id.ingredient_location);
         TextView ingredientCategory = view.findViewById(R.id.ingredient_category);
         ingredientTitle.setText(ingredient.getName());
-        ingredientAmount.setText(String.valueOf(ingredient.getAmount()));
+        ingredientBbd.setText(ingredient.getBBDString());
+        ingredientLocation.setText(ingredient.getLocation());
         ingredientCategory.setText(ingredient.getCategory());
         return view;
     }
