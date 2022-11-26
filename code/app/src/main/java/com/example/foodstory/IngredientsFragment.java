@@ -35,6 +35,7 @@ import java.util.Objects;
 public class IngredientsFragment extends Fragment {
     private IngredientFragmentBinding binding;
     FirebaseFirestore dbIngrDisp;
+    Ingredient ingredient;
 
     public IngredientsFragment(){
     }
@@ -165,25 +166,27 @@ public class IngredientsFragment extends Fragment {
                 ingredients_List.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    String ingr_name = doc.getId();
-                    String ingr_desc = (String) doc.getData().get("Ingredient Description");
-                    String ingr_bb = (String) doc.getData().get("Ingredient BestBefore");
-                    String ingr_loca = (String) doc.getData().get("Ingredient Location");
-                    String nAmount = (String) doc.getData().get("Ingredient Amount");
-                    int ingr_amount = 0;
-                    if(Objects.equals(nAmount, "")) {
-                    } else {
-                        ingr_amount = Integer.valueOf(nAmount);
-                    }
-                    Date date= null;
-                    try {
-                        date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    String ingr_unit = (String) doc.getData().get("Ingredient Unit");
-                    String ingr_cate = (String) doc.getData().get("Ingredient Category");
-                    ingredients_List.add(new Ingredient(ingr_name, ingr_desc, date, ingr_loca, ingr_amount, ingr_unit, ingr_cate));
+//                    String ingr_name = doc.getId();
+                    ingredient = doc.toObject(Ingredient.class);
+//                    String ingr_desc = (String) doc.getData().get("Ingredient Description");
+//                    String ingr_bb = (String) doc.getData().get("Ingredient BestBefore");
+//                    String ingr_loca = (String) doc.getData().get("Ingredient Location");
+//                    String nAmount = (String) doc.getData().get("Ingredient Amount");
+//                    int ingr_amount = 0;
+//                    if(Objects.equals(nAmount, "")) {
+//                    } else {
+//                        ingr_amount = Integer.valueOf(nAmount);
+//                    }
+//                    Date date= null;
+//                    try {
+//                        date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    String ingr_unit = (String) doc.getData().get("Ingredient Unit");
+//                    String ingr_cate = (String) doc.getData().get("Ingredient Category");
+                    // ingredients_List.add(new Ingredient(ingr_name, ingr_desc, date, ingr_loca, ingr_amount, ingr_unit, ingr_cate));
+                    ingredients_List.add(ingredient);
                 }
                 ingredient_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }

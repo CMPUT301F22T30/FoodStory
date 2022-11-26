@@ -111,7 +111,7 @@ public class RecipeFragment extends Fragment {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
                     @Override
                     public int compare(RecipeClass recipe, RecipeClass t1) {
-                        return recipe.getRecipePrepTime().compareTo(t1.getRecipePrepTime());
+                        return recipe.getPrepTime().compareTo(t1.getPrepTime());
                     }
                 });
                 recipe_Adapter.notifyDataSetChanged();
@@ -158,14 +158,16 @@ public class RecipeFragment extends Fragment {
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     //Log.d(TAG, String.valueOf(doc.getData().get("Province Name")));
-                    String title = doc.getId();
-                    String prepTime = (String) doc.getData().get("Recipe Prep");
-                    String nServings = (String) doc.getData().get("Recipe Servings");
-                    int numServings = Integer.valueOf(nServings);
-                    String recipeCategory = (String) doc.getData().get("Recipe Category");
-                    String comments = (String) doc.getData().get("Recipe Comments");
-                    String photo = (String) doc.getData().get("Recipe Photo");
-                    recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo));
+                    RecipeClass recipe = doc.toObject(RecipeClass.class);
+                    //String title = doc.getId();
+                    //String prepTime = (String) doc.getData().get("prepTime");
+                    //String nServings = (String) doc.getData().get("recipeServingsStr");
+                    //int numServings = Integer.valueOf(nServings);
+                    //String recipeCategory = (String) doc.getData().get("recipeCategory");
+                    //String comments = (String) doc.getData().get("comments");
+                    //String photo = (String) doc.getData().get("photo");
+                    recipe_List.add(recipe);
+                    //recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo));
                 }
                 recipe_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
