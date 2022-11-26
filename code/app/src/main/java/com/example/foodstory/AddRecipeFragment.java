@@ -47,10 +47,19 @@ public class AddRecipeFragment extends Fragment{
     EditText comments_recipe;
     EditText photo_recipe;
     FirebaseFirestore recipeDb;
+    DocumentReference docRef;
     String TAG = "Sample";
     ArrayList<Ingredient> ingredients;
     ArrayAdapter<Ingredient> ingredient_Adapter;
+    ListView ingredientList;
     Context context;
+    String rec_name = "";
+    String rec_prep = "";
+    String rec_serv = "";
+    int rec_serv2 = 0;
+    String rec_cate = "";
+    String rec_comm = "";
+    String rec_phot = "";
     public AddRecipeFragment(){
 
     }
@@ -72,7 +81,7 @@ public class AddRecipeFragment extends Fragment{
                 // Do something with the result
                 recipeDb = FirebaseFirestore.getInstance();
                 //https://cloud.google.com/firestore/docs/query-data/get-data#javaandroid
-                DocumentReference docRef = recipeDb.collection("Recipes").document(recipeName);
+                docRef = recipeDb.collection("Recipes").document(recipeName);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -85,17 +94,26 @@ public class AddRecipeFragment extends Fragment{
                                 servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
                                 comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
                                 photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
-                                String prepTime = document.getString("Recipe Prep");
-                                String nServings = document.getString("Recipe Servings");
-                                String recipeCategory = document.getString("Recipe Category");
-                                String comments = document.getString("Recipe Comments");
-                                String photo = document.getString("Recipe Photo");
+                                String prepTime = document.getString("prepTime");
+                                String nServings = document.getString("recipeServingsStr");
+                                String recipeCategory = document.getString("recipeCategory");
+                                String comments = document.getString("comments");
+                                String photo = document.getString("photo");
                                 title_recipe.setText(recipeName);
                                 prep_time_recipe.setText(prepTime);
                                 category_recipe.setText(recipeCategory);
                                 servings_recipe.setText(nServings);
                                 comments_recipe.setText(comments);
                                 photo_recipe.setText(photo);
+                                ingredients = new ArrayList<Ingredient>();
+                                Date date = new Date();
+                                Ingredient ingr = new Ingredient("Name", "Description", date,
+                                        "Location", 5, "Unit", "Category");
+                                ingredients.add(ingr);
+                                //ingredients = (ArrayList<Ingredient>) document.get("ingredients");
+                                ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
+                                ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
+                                ingredientList.setAdapter(ingredient_Adapter);
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             } else {
                                 Log.d(TAG, "No such document");
@@ -129,15 +147,15 @@ public class AddRecipeFragment extends Fragment{
 
         ingredients = new ArrayList<Ingredient>();
         ingredient_Adapter = new IngredientAdapter(getActivity(), ingredients);
-        ListView ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
+        ingredientList = getView().findViewById(R.id.recipe_ingredients_list);
         ingredientList.setAdapter(ingredient_Adapter);
         recipeDb = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = recipeDb.collection("Recipes");
-//        DocumentReference messageRef = recipeDb
+        CollectionReference collectionReference = recipeDb.collection("Recipes");
+        //docRef = collectionReference.document();
 //                .collection("rooms").document("roomA")
 //                .collection("messages").document("message1");
 
-        addIngredient = getView().findViewById(R.id.addIngredientButton);
+        addIngredient = getView().findViewById(R.id.addIngrButton);
 
         binding.saveRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,42 +166,62 @@ public class AddRecipeFragment extends Fragment{
                 servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
                 comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
                 photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
-                final String rec_name = title_recipe.getText().toString();
-                final String rec_prep = prep_time_recipe.getText().toString();
-                final String rec_serv = String.valueOf(servings_recipe.getText());
-                //int rec_serv = Integer.valueOf(servings_recipe.getText().toString());
-                final String rec_cate = category_recipe.getText().toString();
-                final String rec_comm = comments_recipe.getText().toString();
-                final String rec_phot = photo_recipe.getText().toString();
-
-                HashMap<String, String> data = new HashMap<>();
-                if (rec_name.length()>0 && rec_prep.length()>0 && rec_serv.length()>0){
-                    data.put("Recipe Prep", rec_prep);
-                    data.put("Recipe Servings", rec_serv);
-                    data.put("Recipe Category", rec_cate);
-                    data.put("Recipe Comments", rec_comm);
-                    data.put("Recipe Photo", rec_phot);
-                    recipeDb.collection("Recipes").document(rec_name)
-                            .set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "DocumentSnapshot successfully written!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error writing document", e);
-                                }
-                            });
-                    title_recipe.setText("");
-                    prep_time_recipe.setText("");
-                    category_recipe.setText("");
-                    servings_recipe.setText("");
-                    comments_recipe.setText("");
-                    photo_recipe.setText("");
+                rec_name = title_recipe.getText().toString();
+                //if (prep_time_recipe.getText().toString().equals("")) {
+                //} else {
+                rec_prep = prep_time_recipe.getText().toString();
+                //}
+                if (String.valueOf(servings_recipe.getText()).equals("")) {
+                } else {
+                    rec_serv = String.valueOf(servings_recipe.getText());
+                    rec_serv2 = Integer.valueOf(servings_recipe.getText().toString());
                 }
+                //if (category_recipe.getText().toString().equals("")) {
+                //} else {
+                rec_cate = category_recipe.getText().toString();
+                //}
+                //if (comments_recipe.getText().toString().equals("")) {
+                //} else {
+                rec_comm = comments_recipe.getText().toString();
+                //}
+                //if(photo_recipe.getText().toString().equals("")){
+                //} else {
+                rec_phot = photo_recipe.getText().toString();
+                //}
+
+
+                RecipeClass recipe = new RecipeClass(rec_name,rec_prep, rec_serv2,
+                        rec_cate, rec_comm, rec_phot);
+                Date date = new Date();
+                recipe.addIngredient(new Ingredient("Name", "Description", date,
+                        "Location", 5, "Unit", "Category"));
+                if (rec_name.length()>0) {
+                    collectionReference.document(rec_name).set(recipe);
+                }
+
+
+//                HashMap<String, String> data = new HashMap<>();
+//                if (rec_name.length()>0 && rec_prep.length()>0 && rec_serv.length()>0){
+//                    data.put("Recipe Prep", rec_prep);
+//                    data.put("Recipe Servings", rec_serv);
+//                    data.put("Recipe Category", rec_cate);
+//                    data.put("Recipe Comments", rec_comm);
+//                    data.put("Recipe Photo", rec_phot);
+//                    recipeDb.collection("Recipes").document(rec_name)
+//                            .set(data)
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.w(TAG, "Error writing document", e);
+//                                }
+//                            });
+//                }
 
                 NavHostFragment.findNavController(AddRecipeFragment.this)
                         .navigate(R.id.action_AddRecipeFragment_to_RecipeFragment);
@@ -194,12 +232,7 @@ public class AddRecipeFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 title_recipe = getView().findViewById(R.id.recipe_title_editText);
-                prep_time_recipe = getView().findViewById(R.id.recipe_preptime_editText);
-                category_recipe = getView().findViewById(R.id.recipe_category_editText);
-                servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
-                comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
-                photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
-                final String rec_name = title_recipe.getText().toString();
+                rec_name = title_recipe.getText().toString();
                 if (rec_name.length()>0){
                     recipeDb.collection("Recipes").document(rec_name)
                             .delete()
@@ -215,30 +248,39 @@ public class AddRecipeFragment extends Fragment{
                                     Log.w(TAG, "Data could not be removed!", e);
                                 }
                             });
-                    title_recipe.setText("");
-                    prep_time_recipe.setText("");
-                    category_recipe.setText("");
-                    servings_recipe.setText("");
-                    comments_recipe.setText("");
-                    photo_recipe.setText("");
                 }
                 NavHostFragment.findNavController(AddRecipeFragment.this)
                         .navigate(R.id.action_AddRecipeFragment_to_RecipeFragment);
             }
         });
 
-        binding.addIngredientButton.setOnClickListener(new View.OnClickListener() {
+        binding.addIngrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle caller = new Bundle();
-                //bundle key = "recipe"
-                //recipe.putSerializable("recipe", passedRecipe);
-                //request key = "recipeKey"
-                // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
-                caller.putString("parentFragment", "AddRecipeFragment");
-                getParentFragmentManager().setFragmentResult("callerKey", caller);
-                NavHostFragment.findNavController(AddRecipeFragment.this)
-                        .navigate(R.id.action_AddRecipeFragment_to_AddIngredientFragment);
+                title_recipe = getView().findViewById(R.id.recipe_title_editText);
+                rec_name = title_recipe.getText().toString();
+
+                // might be existing recipe
+                if (rec_name.length()>0){
+                    Bundle caller = new Bundle();
+                    // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
+                    caller.putString("parentFragment", "AddRecipeFragment");
+                    caller.putString("isRecipe", "No");
+                    docRef = collectionReference.document(rec_name);
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            RecipeClass recipe = documentSnapshot.toObject(RecipeClass.class);
+                            // Pass recipe to AddIngredientFragment
+                            caller.putSerializable("RecipeObj", recipe);
+                            caller.putString("isRecipe", "Yes");
+                        }
+                    });
+                    caller.putString("recipeName", rec_name);
+                    getParentFragmentManager().setFragmentResult("callerKey", caller);
+                    NavHostFragment.findNavController(AddRecipeFragment.this)
+                            .navigate(R.id.action_AddRecipeFragment_to_AddIngredientFragment);
+                }
             }
         });
 

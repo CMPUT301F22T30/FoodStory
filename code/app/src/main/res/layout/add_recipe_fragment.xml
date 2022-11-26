@@ -83,7 +83,7 @@
         android:layout_weight="2"/>
 
     <Button
-        android:id="@+id/addIngredientButton"
+        android:id="@+id/addIngrButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_centerInParent="true"

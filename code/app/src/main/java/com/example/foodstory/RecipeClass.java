@@ -12,7 +12,10 @@ public class RecipeClass implements Serializable{
     private String photo;
     private ArrayList<Ingredient> ingredients;
 
-    public RecipeClass(String title, String prepTime, int numServings, String recipeCategory, String comments, String photo) {
+    public RecipeClass(){}
+
+    public RecipeClass(String title, String prepTime, int numServings, String recipeCategory,
+                       String comments, String photo) {
         this.title = title;
         this.prepTime = prepTime;
         this.numServings = numServings;
@@ -20,6 +23,32 @@ public class RecipeClass implements Serializable{
         this.comments = comments;
         this.photo = photo;
         this.ingredients = new ArrayList<>();
+    }
+
+    public RecipeClass(String title){
+        this.title = title;
+        this.prepTime = "";
+        this.numServings = 0;
+        this.recipeCategory = "";
+        this.comments = "";
+        this.photo = "";
+        this.ingredients = new ArrayList<>();
+    }
+
+    public String getPrepTime() {
+        return prepTime;
+    }
+
+    public int getNumServings() {
+        return numServings;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public String getPhoto() {
+        return photo;
     }
 
     public String getTitle() {
@@ -30,15 +59,8 @@ public class RecipeClass implements Serializable{
         this.title = title;
     }
 
-    public String getRecipePrepTime() {
-        return prepTime;
-    }
-
     public void setRecipePrepTime(String prepTime) {
         this.prepTime = prepTime;
-    }
-    public int getRecipeServings() {
-        return numServings;
     }
 
     public String getRecipeServingsStr(){
@@ -57,7 +79,7 @@ public class RecipeClass implements Serializable{
         this.recipeCategory = recipeCategory;
     }
 
-    protected ArrayList<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
