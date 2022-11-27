@@ -146,7 +146,7 @@ public class AddIngredientFragment extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // Button btPickDate = getView().findViewById(R.id.btPickDate);
         //AddIngredientFragment needs to retrieve recipe name to add the ingredient to appropriate recipe.
         dbAddIngr = FirebaseFirestore.getInstance();
         CollectionReference ingrReference = dbAddIngr.collection("Recipes");
@@ -300,6 +300,9 @@ public class AddIngredientFragment extends Fragment{
                         .navigate(R.id.action_AddIngredientFragment_to_AddRecipeFragment);
             }
         });
+
+
+
     }
 
     @Override

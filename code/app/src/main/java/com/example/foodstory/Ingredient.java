@@ -58,9 +58,15 @@ public class Ingredient implements Serializable{
     }
     
     public String getBBDString(){
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(this.getBestBefore());
+        if (bestBefore != null) {
+            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            return formatter.format(this.getBestBefore());
+        } else {
+            String placeHolder = "";
+            return placeHolder;
+        }
     }
+
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
     }
