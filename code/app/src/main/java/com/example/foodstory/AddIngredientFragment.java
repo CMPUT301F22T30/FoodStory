@@ -104,28 +104,29 @@ public class AddIngredientFragment extends Fragment{
                     addIngredient.setVisibility(View.VISIBLE);
                     delIngredient.setVisibility(View.VISIBLE);
                     recipe = (RecipeClass) bundle.getSerializable("RecipeObj");
+                    ingredient = (Ingredient) bundle.getSerializable("IngredientObj");
                 } else if (fragCaller == "AddIngredientFragment"){
                     Button addIngredient = getView().findViewById(R.id.saveIngrButton);
                     Button delIngredient = getView().findViewById(R.id.deleteIngrButton);
                     addIngredient.setVisibility(View.VISIBLE);
                     delIngredient.setVisibility(View.VISIBLE);
                     ingredient = (Ingredient) bundle.getSerializable("IngredientObj");
-                    if (ingredient != null) {
-                        ingredientName = getView().findViewById(R.id.ingredient_name_editText);
-                        ingredientDescription = getView().findViewById(R.id.ingredient_description_editText);
-                        ingredientBestBefore = getView().findViewById(R.id.ingredient_bb_editText);
-                        ingredientLocation = getView().findViewById(R.id.ingredient_location_editText);
-                        ingredientAmount = getView().findViewById(R.id.ingredient_amount_editText);
-                        ingredientUnit = getView().findViewById(R.id.ingredient_unit_editText);
-                        ingredientCategory = getView().findViewById(R.id.ingredient_category_editText);
-                        ingredientName.setText(ingredient.getName());
-                        ingredientDescription.setText(ingredient.getDescription());
-                        ingredientBestBefore.setText(ingredient.getBBDString());
-                        ingredientLocation.setText(ingredient.getLocation());
-                        ingredientAmount.setText(Integer.toString(ingredient.getAmount()));
-                        ingredientUnit.setText(ingredient.getUnit());
-                        ingredientCategory.setText(ingredient.getCategory());
-                    }
+                }
+                if (ingredient != null) {
+                    ingredientName = getView().findViewById(R.id.ingredient_name_editText);
+                    ingredientDescription = getView().findViewById(R.id.ingredient_description_editText);
+                    ingredientBestBefore = getView().findViewById(R.id.ingredient_bb_editText);
+                    ingredientLocation = getView().findViewById(R.id.ingredient_location_editText);
+                    ingredientAmount = getView().findViewById(R.id.ingredient_amount_editText);
+                    ingredientUnit = getView().findViewById(R.id.ingredient_unit_editText);
+                    ingredientCategory = getView().findViewById(R.id.ingredient_category_editText);
+                    ingredientName.setText(ingredient.getName());
+                    ingredientDescription.setText(ingredient.getDescription());
+                    ingredientBestBefore.setText(ingredient.getBBDString());
+                    ingredientLocation.setText(ingredient.getLocation());
+                    ingredientAmount.setText(Integer.toString(ingredient.getAmount()));
+                    ingredientUnit.setText(ingredient.getUnit());
+                    ingredientCategory.setText(ingredient.getCategory());
                 }
             }
         });
@@ -292,11 +293,9 @@ public class AddIngredientFragment extends Fragment{
         binding.deleteIngrRecButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (recipe != null) {
-                    if (ingredient != null) {
-                        recipe.deleteIngredient(ingredient);
-                    }
-                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("recipeObj", recipe);
+                getParentFragmentManager().setFragmentResult("recipeKey", bundle);
                 NavHostFragment.findNavController(AddIngredientFragment.this)
                         .navigate(R.id.action_AddIngredientFragment_to_AddRecipeFragment);
             }
