@@ -1,6 +1,7 @@
 package com.example.foodstory;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -9,13 +10,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.DatePicker;
+import java.text.DateFormat;
+import java.util.Calendar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.os.Bundle;
@@ -53,15 +57,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.foodstory.databinding.AddIngredientFragmentBinding;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
-public class AddIngredientFragment extends Fragment{
+public class AddIngredientFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
     private AddIngredientFragmentBinding binding;
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbAddIngr;
@@ -92,20 +99,21 @@ public class AddIngredientFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         getParentFragmentManager().setFragmentResultListener("callerKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 String fragCaller = bundle.getString("parentFragment");
                 // Do something with the result
                 dbAddIngr = FirebaseFirestore.getInstance();
-                if(fragCaller == "AddRecipeFragment"){
+                if(Objects.equals(fragCaller, "AddRecipeFragment")){
                     Button addIngredient = getView().findViewById(R.id.saveIngrRecButton);
                     Button delIngredient = getView().findViewById(R.id.deleteIngrRecButton);
                     addIngredient.setVisibility(View.VISIBLE);
                     delIngredient.setVisibility(View.VISIBLE);
                     recipe = (RecipeClass) bundle.getSerializable("RecipeObj");
                     ingredient = (Ingredient) bundle.getSerializable("IngredientObj");
-                } else if (fragCaller == "AddIngredientFragment"){
+                } else if (Objects.equals(fragCaller, "AddIngredientFragment")){
                     Button addIngredient = getView().findViewById(R.id.saveIngrButton);
                     Button delIngredient = getView().findViewById(R.id.deleteIngrButton);
                     addIngredient.setVisibility(View.VISIBLE);
@@ -146,7 +154,6 @@ public class AddIngredientFragment extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Button btPickDate = getView().findViewById(R.id.btPickDate);
         //AddIngredientFragment needs to retrieve recipe name to add the ingredient to appropriate recipe.
         dbAddIngr = FirebaseFirestore.getInstance();
         CollectionReference ingrReference = dbAddIngr.collection("Recipes");
@@ -301,7 +308,16 @@ public class AddIngredientFragment extends Fragment{
             }
         });
 
-
+        ImageButton btPickDate = getView().findViewById(R.id.btPickDate);
+        // https://www.geeksforgeeks.org/datepickerdialog-in-android/
+        btPickDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setTargetFragment(AddIngredientFragment.this, 0);
+                datePicker.show(getFragmentManager(), "date picker");
+            }
+        });
 
     }
 
@@ -309,5 +325,17 @@ public class AddIngredientFragment extends Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Calendar mCalendar = Calendar.getInstance();
+        mCalendar.set(Calendar.YEAR, year);
+        mCalendar.set(Calendar.MONTH, month);
+        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        String selectedDate = format.format(mCalendar.getTime());
+        ingredientBestBefore = getView().findViewById(R.id.ingredient_bb_editText);
+        ingredientBestBefore.setText(selectedDate);
     }
 }
