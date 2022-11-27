@@ -1,7 +1,11 @@
 package com.example.foodstory;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +14,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 //import android.app.Fragment;
 import android.app.DialogFragment;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -46,6 +57,8 @@ public class AddRecipeFragment extends Fragment{
     EditText servings_recipe;
     EditText comments_recipe;
     EditText photo_recipe;
+    ImageButton img_recipe;
+    ImageView img_view_recipe;
     FirebaseFirestore recipeDb;
     CollectionReference collectionReference;
     DocumentReference docRef;
@@ -130,8 +143,37 @@ public class AddRecipeFragment extends Fragment{
         servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
         comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
         photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
+        img_recipe = getView().findViewById(R.id.imageButton);
+        img_view_recipe = getView().findViewById(R.id.recipe_image);
 
         addIngredient = getView().findViewById(R.id.addIngrButton);
+
+        // https://developer.android.com/training/basics/intents/result
+        ActivityResultLauncher<Intent> getPhoto = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            if (result.getData() != null) {
+                                Bitmap bitMap;
+                                bitMap = (Bitmap) result.getData().getExtras().get("data");
+                                img_view_recipe.setImageBitmap(bitMap);
+
+                            }
+                        }
+                    }
+                }
+        );
+
+        // https://stackoverflow.com/questions/2314958/using-the-camera-activity-in-android
+        img_recipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                getPhoto.launch(Intent.createChooser(camera, "Take Recipe picture"));
+
+            }
+        });
 
         binding.saveRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,6 +300,27 @@ public class AddRecipeFragment extends Fragment{
             }
         });
     }
+
+    // https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+//    public Bitmap StringToBitMap(String encodedString) {
+//        try {
+//            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+//                    encodeByte.length);
+//            return bitmap;
+//        } catch (Exception e) {
+//            e.getMessage();
+//            return null;
+//        }
+//    }
+//
+//    public String BitMapToString(Bitmap bitmap) {
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//        byte[] b = baos.toByteArray();
+//        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+//        return temp;
+//    }
 
     @Override
     public void onDestroyView() {

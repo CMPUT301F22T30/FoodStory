@@ -9,6 +9,29 @@
     tools:context=".AddRecipeFragment"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="2">
+        <ImageView
+            android:id = "@+id/recipe_image"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_margin="10sp"
+
+        />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_camera"
+            android:layout_margin="10sp"
+            />
+
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/recipe_title_editText"
@@ -73,7 +96,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Photo"
-        android:layout_weight="1"/>
+        android:visibility="invisible"
+        android:layout_weight="0.1"/>
 
 <!--Need to populate this area with ingredients    -->
     <ListView
@@ -93,7 +117,7 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_weight="0.5"/>
+        android:layout_weight="1"/>
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
