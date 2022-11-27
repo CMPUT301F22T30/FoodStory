@@ -66,7 +66,7 @@ public class RecipeFragment extends Fragment {
                 RecipeClass passedRecipe = recipe_List.get(i);
                 Bundle recipe = new Bundle();
                 //bundle key = "recipe"
-                //recipe.putSerializable("recipe", passedRecipe);
+                recipe.putSerializable("recipeObj", passedRecipe);
                 //request key = "recipeKey"
 
                 recipe.putString("recipeTitle", passedRecipe.getTitle());
