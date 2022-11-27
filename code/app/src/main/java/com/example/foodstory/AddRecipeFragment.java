@@ -239,13 +239,19 @@ public class AddRecipeFragment extends Fragment{
             }
         });
 
-        //Populate AddIngredientFragment with clicked upon item here
-        ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        binding.recipeIngredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // use bundle to pass the city
-                //new AddIngredientFragment().show(getChildFragmentManager(), TAG);
-                //new AddIngredientFragment().newInstance(ingredients.get(i), i).show(getChildFragmentManager(), "Edit Ingredient");
+                //Populate AddIngredientFragment with clicked upon item here
+                if (curr_Recipe != null) {
+                    Ingredient passedIngredient = ingredients.get(i);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("RecipeObj", curr_Recipe);
+                    bundle.putSerializable("IngredientObj", passedIngredient);
+                    getParentFragmentManager().setFragmentResult("callerKey", bundle);
+                    NavHostFragment.findNavController(AddRecipeFragment.this)
+                            .navigate(R.id.action_AddRecipeFragment_to_AddIngredientFragment);
+                }
             }
         });
     }
