@@ -22,6 +22,12 @@
 
         </action>
 
+        <action
+            android:id="@+id/action_HomeFragment_to_ShoppingListFragment"
+            app:destination="@id/ShoppingListFragment">
+
+        </action>
+
     </fragment>
 
     <fragment
@@ -62,6 +68,24 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/ShoppingListFragment"
+        android:name="com.example.foodstory.ShoppingListFragment"
+        android:label="ShoppingList"
+        tools:layout="@layout/shopping_list_fragment">
+        <action
+            android:id="@+id/action_ShoppingListFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment">
+        </action>
+<!--        <action-->
+<!--            android:id="@+id/action_ShoppingListFragment_to_DisplayIngredientFragment"-->
+<!--            app:destination="@id/DisplayIngredientFragment">-->
+<!--        </action>-->
+
+
+    </fragment>
+
     <fragment
         android:id="@+id/AddRecipeFragment"
         android:name="com.example.foodstory.AddRecipeFragment"
@@ -96,4 +120,16 @@
 
 
     </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/DisplayIngredientFragment"-->
+<!--        android:name="com.example.foodstory.DisplayShoppingListFragment"-->
+<!--        android:label="Ingredients Details"-->
+<!--        tools:layout="@layout/display_shopping_list_fragment">-->
+<!--        <action-->
+<!--            android:id="@+id/action_DisplayIngredientFragment_to_ShoppingListFragment"-->
+<!--            app:destination="@id/ShoppingListFragment">-->
+<!--        </action>-->
+<!--    </fragment>-->
+
 </navigation>
