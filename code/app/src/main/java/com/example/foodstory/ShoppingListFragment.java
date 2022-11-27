@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class ShoppingListFragment extends Fragment {
@@ -93,6 +96,42 @@ public class ShoppingListFragment extends Fragment {
                     ingredients_List.add(ingredient);
                 }
 
+            }
+        });
+
+        Button shopping_c = getView().findViewById(R.id.shopping_sort_c);
+        shopping_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(shopping_ingredients_List, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient t1) {
+                        if(ingredient.getCategory() == "" || t1.getCategory() == ""){
+                            return 0;
+                        } else {
+                            return ingredient.getCategory().compareTo(t1.getCategory());
+                        }
+                    }
+                });
+                shopping_ingredient_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button shopping_d = getView().findViewById(R.id.shopping_sort_d);
+        shopping_d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(shopping_ingredients_List, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient t1) {
+                        if(ingredient.getDescription() == "" || t1.getDescription() == ""){
+                            return 0;
+                        } else {
+                            return ingredient.getDescription().compareTo(t1.getDescription());
+                        }
+                    }
+                });
+                shopping_ingredient_Adapter.notifyDataSetChanged();
             }
         });
 
