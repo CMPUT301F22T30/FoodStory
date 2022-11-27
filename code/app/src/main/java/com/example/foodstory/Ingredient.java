@@ -102,4 +102,6 @@ public class Ingredient implements Serializable{
     public void setCategory(String category) {
         this.category = category;
     }
+
+
 }

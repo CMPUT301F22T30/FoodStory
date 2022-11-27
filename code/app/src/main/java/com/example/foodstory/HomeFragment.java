@@ -39,6 +39,14 @@ public class HomeFragment extends Fragment {
                         .navigate(R.id.action_HomeFragment_to_RecipeFragment);
             }
         });
+
+        binding.ShoppingList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_HomeFragment_to_ShoppingListFragment);
+            }
+        });
     }
 
     @Override
