@@ -293,11 +293,9 @@ public class AddIngredientFragment extends Fragment{
         binding.deleteIngrRecButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (recipe != null) {
-                    if (ingredient != null) {
-                        recipe.deleteIngredient(ingredient);
-                    }
-                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("recipeObj", recipe);
+                getParentFragmentManager().setFragmentResult("recipeKey", bundle);
                 NavHostFragment.findNavController(AddIngredientFragment.this)
                         .navigate(R.id.action_AddIngredientFragment_to_AddRecipeFragment);
             }

@@ -245,7 +245,9 @@ public class AddRecipeFragment extends Fragment{
                 //Populate AddIngredientFragment with clicked upon item here
                 if (curr_Recipe != null) {
                     Ingredient passedIngredient = ingredients.get(i);
+                    ingredients.remove(i);
                     Bundle bundle = new Bundle();
+                    bundle.putString("parentFragment", "AddRecipeFragment");
                     bundle.putSerializable("RecipeObj", curr_Recipe);
                     bundle.putSerializable("IngredientObj", passedIngredient);
                     getParentFragmentManager().setFragmentResult("callerKey", bundle);
