@@ -53,6 +53,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.foodstory.databinding.AddIngredientFragmentBinding;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
@@ -71,6 +73,17 @@ public class AddIngredientFragment extends Fragment{
     EditText ingredientAmount;
     EditText ingredientUnit;
     EditText ingredientCategory;
+    String ingr_name;
+    String ingr_desc;
+    String ingr_bb;
+    String ingr_loca;
+    String ingr_amount;
+    String ingr_unit;
+    String ingr_cate;
+    int ingr_amt;
+    Date ingr_date;
+    RecipeClass recipe;
+    Ingredient ingredient;
 
     public AddIngredientFragment(){
     }
@@ -90,18 +103,25 @@ public class AddIngredientFragment extends Fragment{
                 String fragCaller = bundle.getString("parentFragment");
 //                String expected = "AddRecipeFragment";
                 // Do something with the result
+                dbAddIngr = FirebaseFirestore.getInstance();
                 if(fragCaller == "AddRecipeFragment"){
                     Button addIngredient = getView().findViewById(R.id.saveIngrRecButton);
                     Button delIngredient = getView().findViewById(R.id.deleteIngrRecButton);
                     addIngredient.setVisibility(View.VISIBLE);
                     delIngredient.setVisibility(View.VISIBLE);
+                    if (bundle.getString("isRecipe").equals("Yes")){
+                        recipe = (RecipeClass) bundle.getSerializable("RecipeObj");
+                    } else {
+                        String rec_name = bundle.getString("recipeName");
+                        recipe = new RecipeClass(rec_name);
+                    }
                 } else if (fragCaller == "AddIngredientFragment"){
                     Button addIngredient = getView().findViewById(R.id.saveIngrButton);
                     Button delIngredient = getView().findViewById(R.id.deleteIngrButton);
                     addIngredient.setVisibility(View.VISIBLE);
                     delIngredient.setVisibility(View.VISIBLE);
                     String ingredient_name = bundle.getString("ingredientName");
-                    dbAddIngr = FirebaseFirestore.getInstance();
+//                    dbAddIngr = FirebaseFirestore.getInstance();
                     DocumentReference docRef = dbAddIngr.collection("Ingredients").document(ingredient_name);
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -177,24 +197,36 @@ public class AddIngredientFragment extends Fragment{
                 ingredientAmount = getView().findViewById(R.id.ingredient_amount_editText);
                 ingredientUnit = getView().findViewById(R.id.ingredient_unit_editText);
                 ingredientCategory = getView().findViewById(R.id.ingredient_category_editText);
-                final String ingr_name = ingredientName.getText().toString();
-                final String ingr_desc = ingredientDescription.getText().toString();
-                final String ingr_bb = ingredientBestBefore.getText().toString();
-                final String ingr_loca = ingredientLocation.getText().toString();
-                final String ingr_amount = String.valueOf(ingredientAmount.getText());
-                final String ingr_unit = ingredientUnit.getText().toString();
-                final String ingr_cate = ingredientCategory.getText().toString();
-//                RecipeClass recipe = new RecipeClass(rec_name, rec_prep, rec_serv, rec_cate, rec_comm, rec_phot);
-                HashMap<String, String> data = new HashMap<>();
+                ingr_name = ingredientName.getText().toString();
+                ingr_desc = ingredientDescription.getText().toString();
+                ingr_bb = ingredientBestBefore.getText().toString();
+                ingr_loca = ingredientLocation.getText().toString();
+                ingr_amount = String.valueOf(ingredientAmount.getText());
+                ingr_unit = ingredientUnit.getText().toString();
+                ingr_cate = ingredientCategory.getText().toString();
+//                HashMap<String, String> data = new HashMap<>();
+                ingr_date = new Date();
                 if (ingr_name.length()>0){
-                    data.put("Ingredient Description", ingr_desc);
-                    data.put("Ingredient BestBefore", ingr_bb);
-                    data.put("Ingredient Location", ingr_loca);
-                    data.put("Ingredient Amount", ingr_amount);
-                    data.put("Ingredient Unit", ingr_unit);
-                    data.put("Ingredient Category", ingr_cate);
+                    try {
+                        ingr_date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (String.valueOf(ingr_amount).equals("")) {
+                        ingr_amt = 0;
+                    } else {
+                        ingr_amt = Integer.valueOf(ingr_amount);
+                    }
+                    ingredient = new Ingredient(ingr_name, ingr_desc, ingr_date, ingr_loca,
+                            ingr_amt, ingr_unit, ingr_cate);
+//                    data.put("Ingredient Description", ingr_desc);
+//                    data.put("Ingredient BestBefore", ingr_bb);
+//                    data.put("Ingredient Location", ingr_loca);
+//                    data.put("Ingredient Amount", ingr_amount);
+//                    data.put("Ingredient Unit", ingr_unit);
+//                    data.put("Ingredient Category", ingr_cate);
                     dbAddIngr.collection("Ingredients").document(ingr_name)
-                            .set(data)
+                            .set(ingredient)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -207,13 +239,6 @@ public class AddIngredientFragment extends Fragment{
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
-                    ingredientName.setText("");
-                    ingredientDescription.setText("");
-                    ingredientBestBefore.setText("");
-                    ingredientLocation.setText("");
-                    ingredientAmount.setText("");
-                    ingredientUnit.setText("");
-                    ingredientCategory.setText("");
                 }
                 NavHostFragment.findNavController(AddIngredientFragment.this)
                         .navigate(R.id.action_AddIngredientFragment_to_IngredientFragment);
@@ -262,6 +287,9 @@ public class AddIngredientFragment extends Fragment{
         binding.saveIngrRecButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 NavHostFragment.findNavController(AddIngredientFragment.this)
                         .navigate(R.id.action_AddIngredientFragment_to_AddRecipeFragment);
             }
