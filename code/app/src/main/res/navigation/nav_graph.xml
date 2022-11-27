@@ -21,6 +21,11 @@
             app:destination="@id/RecipeFragment">
 
         </action>
+        <action
+            android:id="@+id/action_HomeFragment_to_MealPlanFragment"
+            app:destination="@id/MealPlanFragment">
+
+        </action>
 
     </fragment>
 
@@ -93,6 +98,46 @@
             android:id="@+id/action_AddIngredientFragment_to_AddRecipeFragment"
             app:destination="@id/AddRecipeFragment">
         </action>
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/MealPlanFragment"
+        android:name="com.example.foodstory.MealPlanFragment"
+        android:label="Meal Plans"
+        tools:layout="@layout/meal_plan_fragment">
+        <action
+            android:id="@+id/action_MealPlanFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment">
+
+        </action>
+        <action
+            android:id="@+id/action_MealPlanFragment_to_AddMealPlanFragment"
+            app:destination="@id/AddMealPlanFragment">
+        </action>
+        <action
+            android:id="@+id/action_MealPlanFragment_to_ViewMealPlanFragment"
+            app:destination="@id/ViewMealPlanFragment">
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/AddMealPlanFragment"
+        android:name="com.example.foodstory.AddMealPlanFragment"
+        android:label="Add Meal Plan"
+        tools:layout="@layout/add_meal_plan_fragment">
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ViewMealPlanFragment"
+        android:name="com.example.foodstory.ViewMealPlanFragment"
+        android:label="View Meal Plan"
+        tools:layout="@layout/view_meal_plan_fragment">
 
 
     </fragment>
