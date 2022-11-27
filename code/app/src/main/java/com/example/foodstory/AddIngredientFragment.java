@@ -279,12 +279,12 @@ public class AddIngredientFragment extends Fragment{
                         recipe.addIngredient(ingredient);
                         ingrReference.document(recipe.getTitle()).set(recipe);
                     }
-                    if (recipe != null) {
-                        bundle.putSerializable("recipeObj", recipe);
-                        getParentFragmentManager().setFragmentResult("recipeKey", bundle);
-                    }
-                }
 
+                }
+                if (recipe != null) {
+                    bundle.putSerializable("recipeObj", recipe);
+                    getParentFragmentManager().setFragmentResult("recipeKey", bundle);
+                }
                 NavHostFragment.findNavController(AddIngredientFragment.this)
                         .navigate(R.id.action_AddIngredientFragment_to_AddRecipeFragment);
             }

@@ -136,6 +136,7 @@ public class AddRecipeFragment extends Fragment{
         binding.saveRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                rec_name = title_recipe.getText().toString();
                 rec_prep = prep_time_recipe.getText().toString();
                 if (String.valueOf(servings_recipe.getText()).equals("")) {
                 } else {
