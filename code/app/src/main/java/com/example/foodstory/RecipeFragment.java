@@ -97,7 +97,11 @@ public class RecipeFragment extends Fragment {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
                     @Override
                     public int compare(RecipeClass recipe, RecipeClass t1) {
-                        return recipe.getRecipeCategory().compareTo(t1.getRecipeCategory());
+                        if (recipe.getRecipeCategory() == "" || t1.getRecipeCategory() == "") {
+                            return 0;
+                        } else {
+                            return recipe.getRecipeCategory().compareTo(t1.getRecipeCategory());
+                        }
                     }
                 });
                 recipe_Adapter.notifyDataSetChanged();
@@ -111,7 +115,15 @@ public class RecipeFragment extends Fragment {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
                     @Override
                     public int compare(RecipeClass recipe, RecipeClass t1) {
-                        return recipe.getPrepTime().compareTo(t1.getPrepTime());
+                        int preptime1 = Integer.valueOf(recipe.getPrepTime());
+                        int preptime2 = Integer.valueOf(t1.getPrepTime());
+                        if (preptime1 ==preptime2 || recipe.getPrepTime() == "" || t1.getPrepTime() == ""){
+                            return 0;
+                        } else if (preptime1 > preptime2){
+                            return 1;
+                        } else {
+                            return -1;
+                        }
                     }
                 });
                 recipe_Adapter.notifyDataSetChanged();
@@ -125,7 +137,15 @@ public class RecipeFragment extends Fragment {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
                     @Override
                     public int compare(RecipeClass recipe, RecipeClass t1) {
-                        return (recipe.getRecipeServingsStr().compareTo(t1.getRecipeServingsStr()));
+                        int serve1 = recipe.getNumServings();
+                        int serve2 = t1.getNumServings();
+                        if (serve1 ==serve2 || recipe.getRecipeServingsStr() == "" || t1.getRecipeServingsStr() == ""){
+                            return 0;
+                        } else if (serve1 > serve2){
+                            return 1;
+                        } else {
+                            return -1;
+                        }
                     }
                 });
                 recipe_Adapter.notifyDataSetChanged();
