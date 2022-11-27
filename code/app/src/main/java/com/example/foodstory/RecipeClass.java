@@ -106,4 +106,8 @@ public class RecipeClass implements Serializable{
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
+
+    public void deleteIngredient(Ingredient ingredient) {
+        this.ingredients.remove(ingredient);
+    }
 }
