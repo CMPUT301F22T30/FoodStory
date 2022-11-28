@@ -24,6 +24,16 @@ public class Ingredient implements Serializable{
     public Ingredient(){
     }
 
+    public Ingredient(Ingredient ingredient){
+        this.setName(ingredient.getName());
+        this.setAmount(ingredient.getAmount());
+        this.setBestBefore(ingredient.getBestBefore());
+        this.setLocation(ingredient.getLocation());
+        this.setDescription(ingredient.getDescription());
+        this.setUnit(ingredient.getUnit());
+        this.setCategory(ingredient.getCategory());
+    }
+
 
     /**
      * Constructor with the arguments
@@ -106,9 +116,10 @@ public class Ingredient implements Serializable{
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (!(o instanceof Ingredient)) return false;
         Ingredient that = (Ingredient) o;
-        return Objects.equals(name, that.name);
+        return name.equals(that.name);
     }
 
     @Override
