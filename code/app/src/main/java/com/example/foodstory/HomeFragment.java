@@ -11,6 +11,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.foodstory.databinding.HomeFragmentBinding;
 
+/**
+ * This is the home fragment
+ */
 public class HomeFragment extends Fragment {
     private HomeFragmentBinding binding;
 
@@ -22,6 +25,11 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Using binding to establish connections between home fragment and other respective fragments
+     * @param view
+     * @param savedInstanceState
+     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

@@ -3,6 +3,10 @@ package com.example.foodstory;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+/**
+ * This is the Recipe class
+ * It defines all the properties of recipes
+ */
 public class RecipeClass implements Serializable{
     private String title;
     private String prepTime;
@@ -14,6 +18,15 @@ public class RecipeClass implements Serializable{
 
     public RecipeClass(){}
 
+    /**
+     * Constructor for recipe class
+     * @param title
+     * @param prepTime
+     * @param numServings
+     * @param recipeCategory
+     * @param comments
+     * @param photo
+     */
     public RecipeClass(String title, String prepTime, int numServings, String recipeCategory,
                        String comments, String photo) {
         this.title = title;
@@ -35,6 +48,10 @@ public class RecipeClass implements Serializable{
         this.ingredients = new ArrayList<>();
     }
 
+    /**
+     * Getters and setters for the recipe attributes
+     * @return
+     */
     public String getPrepTime() {
         return prepTime;
     }

@@ -30,6 +30,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This fragment is defined to a Recipe
+ */
 public class RecipeFragment extends Fragment {
     private RecipeFragmentBinding binding;
     public static final String EXTRA_MESSAGE = "";

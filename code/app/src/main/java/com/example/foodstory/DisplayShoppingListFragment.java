@@ -16,6 +16,9 @@ import androidx.fragment.app.FragmentResultListener;
 import com.example.foodstory.databinding.DisplayShoppingListFragmentBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * This fragment is used to display the Shopping List
+ */
 public class DisplayShoppingListFragment extends Fragment {
     private DisplayShoppingListFragmentBinding binding;
     public static final String EXTRA_MESSAGE = "";
@@ -30,9 +33,16 @@ public class DisplayShoppingListFragment extends Fragment {
     TextView ingredientCategory;
     Ingredient ingredient;
 
+    /**
+     * Constructor for the fragment
+     */
     public DisplayShoppingListFragment(){
     }
 
+    /**
+     * Defining all the fields that are to be displayed
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

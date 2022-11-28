@@ -68,6 +68,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * This is a fragment that is used to Add an ingredient
+ */
 public class AddIngredientFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
     private AddIngredientFragmentBinding binding;
     public static final String EXTRA_MESSAGE = "";
@@ -92,9 +95,16 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
     RecipeClass recipe;
     Ingredient ingredient;
 
+    /**
+     * Constructor for the fragment
+     */
     public AddIngredientFragment(){
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -152,6 +162,14 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
 
     }
 
+    /**
+     * Defining all the fields of Ingredient class and checking if those fields are in suitable
+     * formats.
+     * Getting and setting the values of those fields
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //AddIngredientFragment needs to retrieve recipe name to add the ingredient to appropriate recipe.

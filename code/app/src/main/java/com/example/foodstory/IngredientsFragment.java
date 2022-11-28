@@ -31,7 +31,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
-
+/**
+ * This fragment defines and displays all the properties of Ingredient
+ */
 public class IngredientsFragment extends Fragment {
     private IngredientFragmentBinding binding;
     FirebaseFirestore dbIngrDisp;

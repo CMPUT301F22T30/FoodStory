@@ -37,6 +37,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * This is a fragment that is used to define a new recipe
+ */
 public class AddRecipeFragment extends Fragment{
     private AddRecipeFragmentBinding binding;
     Button addIngredient;
@@ -63,10 +66,17 @@ public class AddRecipeFragment extends Fragment{
     String rec_phot = "";
     RecipeClass curr_Recipe;
 
+    /**
+     * Constructor for the fragment
+     */
     public AddRecipeFragment(){
 
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -113,6 +123,11 @@ public class AddRecipeFragment extends Fragment{
 
     }
 
+    /**
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

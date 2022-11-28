@@ -25,6 +25,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * This is a fragment to define a Shopping List
+ */
 public class ShoppingListFragment extends Fragment {
     private ShoppingListFragmentBinding binding;
     FirebaseFirestore dbShopDisp;

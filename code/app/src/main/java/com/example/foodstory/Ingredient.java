@@ -37,6 +37,10 @@ public class Ingredient implements Serializable{
         this.category = category;
     }
 
+    /**
+     * Getters and Setters for attributes of food items
+     * @return
+     */
     public String getName() {
         return name;
     }
