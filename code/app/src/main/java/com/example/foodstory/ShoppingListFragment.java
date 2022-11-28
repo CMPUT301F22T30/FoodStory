@@ -1,5 +1,6 @@
 package com.example.foodstory;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class ShoppingListFragment extends Fragment {
     Ingredient ingredient;
     Ingredient recipe_ingredient;
     RecipeClass recipeClass;
+    int currentPos = -1;
 
     public ShoppingListFragment(){
     }
@@ -91,6 +93,38 @@ public class ShoppingListFragment extends Fragment {
                     shopping_ingredients_List.add(ingredient);
                 }
                 shopping_ingredient_Adapter.notifyDataSetChanged();
+            }
+        });
+
+        binding.shoppingIngredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                currentPos = i;
+            }
+        });
+        Button delete = getView().findViewById(R.id.shopping_delete_btn);
+
+        binding.shoppingDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentPos != -1){
+                    shopping_ingredient = shopping_ingredients_List.get(currentPos);
+                    dbShopDisp.collection("ShoppingList").document(shopping_ingredient.getName())
+                            .delete();
+
+                    shopping_ingredients_List.remove(currentPos);
+                    shopping_ingredient_Adapter.notifyDataSetChanged();
+                    shoppingIngredientList.setAdapter(shopping_ingredient_Adapter);
+                    dbShopDisp.collection("Ingredients").document(shopping_ingredient.getName())
+                            .set(shopping_ingredient);
+
+                    AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
+                    builder.setTitle("Notification");
+                    builder.setMessage("Please go to the ingredients tab to fill the correct details for the shopped for ingredients. Click anywhere to continue");
+                    builder.show();
+                    currentPos = -1;
+                }
+
             }
         });
 
