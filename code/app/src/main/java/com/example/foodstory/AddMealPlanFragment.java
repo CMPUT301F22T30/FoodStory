@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.fragment.NavHostFragment;
 
 
@@ -31,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +53,7 @@ public class AddMealPlanFragment extends Fragment {
     ArrayList<MealPlan> mealplans;
     ArrayAdapter<MealPlan> mealPlan_Adapter;
 
+    MealPlan incomingMealPlan;
 
     String[] recipeArray ;
     RecipeClass recipefromdb;
@@ -87,6 +93,56 @@ public class AddMealPlanFragment extends Fragment {
         binding = AddMealPlanFragmentBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("callerKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                incomingMealPlan = (MealPlan) bundle.getSerializable("MealPlanObj");
+                if (incomingMealPlan != null){
+                    mealPlanName = getView().findViewById(R.id.meal_plan_name);
+                    mealPlanName.setText(incomingMealPlan.getMealPlanName());
+                    // set the date to the spinner
+//                    CalendarView cv = mealPlanDate.getCalendarView();
+//                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+//                    try {
+//                        Date date = format.parse(incomingMealPlan.getMealPlanDate());
+//                        cv.setDate(date);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+
+
+                    // set servings number textview
+                    numberOfServings = getView().findViewById(R.id.num_of_servings);
+                    numberOfServings.setText(String.valueOf(incomingMealPlan.getNumOfPeople()));
+
+                    // breakfast textview
+                    StringBuilder br_rec = createStringForTextView(incomingMealPlan.getBreakfastRecipeArray());
+                    breakfast_recipe_select.setText(br_rec);
+                    StringBuilder br_ing = createStringForTextView(incomingMealPlan.getBreakfastIngredientArray());
+                    breakfast_ingredient_select.setText(br_ing);
+
+                    // lunch textview
+                    StringBuilder lun_rec = createStringForTextView(incomingMealPlan.getLunchRecipeArray());
+                    breakfast_recipe_select.setText(lun_rec);
+                    StringBuilder lun_ing = createStringForTextView(incomingMealPlan.getLunchIngredientArray());
+                    breakfast_ingredient_select.setText(lun_ing);
+
+                    // dinner textview
+                    StringBuilder din_rec = createStringForTextView(incomingMealPlan.getDinnerRecipeArray());
+                    breakfast_recipe_select.setText(din_rec);
+                    StringBuilder din_ing = createStringForTextView(incomingMealPlan.getDinnerIngredientArray());
+                    breakfast_ingredient_select.setText(din_ing);
+
+                }
+            }
+        });
 
     }
 
@@ -205,6 +261,26 @@ public class AddMealPlanFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public StringBuilder createStringForTextView(ArrayList<String> arr){
+        // Initialize string builder
+        StringBuilder stringBuilder = new StringBuilder();
+        // use for loop
+        for (int j = 0; j < arr.size(); j++) {
+            // concat array value
+            stringBuilder.append(arr.get(j));
+            // check condition
+            if (j != arr.size() - 1) {
+                // When j value  not equal
+                // to lang list size - 1
+                // add comma
+                stringBuilder.append(", ");
+            }
+        }
+
+        return stringBuilder;
+
     }
 
     public ArrayList<String> createRecipeDropdown(TextView breakfast_recipe_select, ArrayList<String> recipeNames){

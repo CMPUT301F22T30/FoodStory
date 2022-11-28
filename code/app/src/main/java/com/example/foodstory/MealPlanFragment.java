@@ -64,11 +64,12 @@ public class MealPlanFragment extends Fragment {
                 MealPlan passedMealPlan = mealPlan_List.get(i);
                 Bundle meal_plan = new Bundle();
 
-                meal_plan.putString("parentFragment", "ViewMealPlanFragment");
+//                meal_plan.putString("parentFragment", "ViewMealPlanFragment");
+                meal_plan.putSerializable("MealPlanObj", passedMealPlan);
                 meal_plan.putString("mealPlanName", passedMealPlan.getMealPlanName());
                 getParentFragmentManager().setFragmentResult("callerKey", meal_plan);
                 NavHostFragment.findNavController(MealPlanFragment.this)
-                        .navigate(R.id.action_MealPlanFragment_to_ViewMealPlanFragment);
+                        .navigate(R.id.action_MealPlanFragment_to_AddMealPlanFragment);
             }
         });
 
