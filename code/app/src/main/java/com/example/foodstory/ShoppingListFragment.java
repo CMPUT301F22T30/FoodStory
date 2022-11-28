@@ -81,67 +81,20 @@ public class ShoppingListFragment extends Fragment {
         });
         int num = 4;
 
-
-        IngredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ShoppingListReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                ingredients_List.clear();
+                shopping_ingredients_List.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     ingredient = doc.toObject(Ingredient.class);
-                    ingredients_List.add(ingredient);
+                    shopping_ingredients_List.add(ingredient);
                 }
-
-            }
-        });
-        RecipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                recipe_ingredient_List.clear();
-                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                {
-                    recipeClass = doc.toObject(RecipeClass.class);
-                    int amount = (int)Math.ceil((double)num / recipeClass.getNumServings());
-                    recipe_ingredient_List.addAll(recipeClass.getIngredients());
-                    recipe_List.add(recipeClass);
-                    for (int i = 0; i < recipe_ingredient_List.size(); i++){
-                        recipe_ingredient_List.get(i).setAmount(amount * recipe_ingredient_List.get(i).getAmount());
-                    }
-
-                }
+                shopping_ingredient_Adapter.notifyDataSetChanged();
             }
         });
 
-        ShoppingListReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-                    FirebaseFirestoreException error) {
-                shopping_ingredients_List.clear();
-                for (int i = 0; i < recipe_ingredient_List.size(); i++){
-                    if (ingredients_List.contains(recipe_ingredient_List.get(i))){
-                        int index = ingredients_List.indexOf(recipe_ingredient_List.get(i));
-                        int amount = recipe_ingredient_List.get(i).getAmount() - ingredients_List.get(index).getAmount();
-                        if(amount > 0 ){
-                            shopping_ingredients_List.add(ingredients_List.get(index));
-                        }
-                    }
-                    else{
-                        shopping_ingredients_List.add(recipe_ingredient_List.get(i));
-                    }
 
-                }
-                for (int i = 0; i < shopping_ingredients_List.size(); i++){
-                    shopping_ingredients_List.get(i).setLocation("NULL");
-                    Date date = new Date(0);
-                    shopping_ingredients_List.get(i).setBestBefore(date);
-                    dbShopDisp.collection("ShoppingList").document(shopping_ingredients_List.get(i).getName())
-                            .set(shopping_ingredients_List.get(i));
-                }
-                //shopping_ingredients_List.addAll(recipe_ingredient_List);
-                shopping_ingredient_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
-
-            }
-        });
 
         Button shopping_c = getView().findViewById(R.id.shopping_sort_c);
         shopping_c.setOnClickListener(new View.OnClickListener() {
