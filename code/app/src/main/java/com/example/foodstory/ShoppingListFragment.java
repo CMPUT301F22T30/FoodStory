@@ -126,9 +126,11 @@ public class ShoppingListFragment extends Fragment {
                             .set(shopping_ingredient);
                     AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
                     builder.setTitle("Notification");
-                    builder.setMessage("Please go to the ingredients tab to fill the correct details for the shopped for ingredients. Click anywhere to continue");
+                    builder.setMessage("Transferring to ingredients tab. Please fill the correct details for the shopped for ingredients. Click anywhere to continue");
                     builder.show();
                     currentPos = -1;
+                    NavHostFragment.findNavController(ShoppingListFragment.this)
+                            .navigate(R.id.action_ShoppingListFragment_to_IngredientFragment);
                 }
 
             }
