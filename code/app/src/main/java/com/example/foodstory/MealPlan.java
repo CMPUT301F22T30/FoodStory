@@ -10,14 +10,33 @@ import java.util.UUID;
 
 public class MealPlan implements Serializable {
 
-    private String mealPlanHeading = "Meal Plan";
+    private String mealPlanHeading;
     private String mealPlanDate;
-    private UUID mealPlanId = UUID.randomUUID();
-    private ArrayList<String> breakfastArray;
-    private ArrayList<String> lunchArray;
-    private ArrayList<String> dinnerArray;
+    private String mealPlanName ;
+    private ArrayList<String> breakfastIngredientArray;
+    private ArrayList<String> breakfastRecipeArray;
+    private ArrayList<String> lunchIngredientArray;
+    private ArrayList<String> lunchRecipeArray;
+    private ArrayList<String> dinnerIngredientArray;
+    private ArrayList<String> dinnerRecipeArray;
     private int numOfPeople;
 
+    public MealPlan(){
+
+    }
+
+    public MealPlan(String mealPlanName,String mealPlanDate, ArrayList<String> breakfastIngredientArray, ArrayList<String> breakfastRecipeArray, ArrayList<String> lunchIngredientArray, ArrayList<String> lunchRecipeArray, ArrayList<String> dinnerIngredientArray, ArrayList<String> dinnerRecipeArray, int numOfPeople) {
+        this.mealPlanDate = mealPlanDate;
+        this.mealPlanName = mealPlanName;
+        this.breakfastIngredientArray = breakfastIngredientArray;
+        this.breakfastRecipeArray = breakfastRecipeArray;
+        this.lunchIngredientArray = lunchIngredientArray;
+        this.lunchRecipeArray = lunchRecipeArray;
+        this.dinnerIngredientArray = dinnerIngredientArray;
+        this.dinnerRecipeArray = dinnerRecipeArray;
+        this.numOfPeople = numOfPeople;
+        this.mealPlanHeading = "Meal Plan";
+    }
 
     public String getMealPlanHeading() {
         return mealPlanHeading;
@@ -31,31 +50,67 @@ public class MealPlan implements Serializable {
         this.mealPlanDate = mealPlanDate;
     }
 
-    public UUID getMealPlanId(){
-        return mealPlanId;
+    public String getMealPlanName() {
+        return mealPlanName;
     }
 
-    public void setBreakfastArray(ArrayList<String> breakfastArr){
-        this.breakfastArray = breakfastArr;
-    }
-    public void setLunchArray(ArrayList<String> lunchArr){
-        this.lunchArray = lunchArr;
-    }
-    public void setDinnerArray(ArrayList<String> dinnerArr){
-        this.dinnerArray = dinnerArr;
+    public void setMealPlanName(String mealPlanName) {
+        this.mealPlanName = mealPlanName;
     }
 
-    public ArrayList<String> getBreakfastArray(){ return this.breakfastArray; }
+    public ArrayList<String> getBreakfastIngredientArray() {
+        return breakfastIngredientArray;
+    }
 
-    public ArrayList<String> getLunchArray(){return this.lunchArray; }
+    public void setBreakfastIngredientArray(ArrayList<String> breakfastIngredientArray) {
+        this.breakfastIngredientArray = breakfastIngredientArray;
+    }
 
-    public ArrayList<String>  getDinner(){return this.dinnerArray; }
+    public ArrayList<String> getBreakfastRecipeArray() {
+        return breakfastRecipeArray;
+    }
 
-    public int getNumOfPeople() { return this.numOfPeople; }
+    public void setBreakfastRecipeArray(ArrayList<String> breakfastRecipeArray) {
+        this.breakfastRecipeArray = breakfastRecipeArray;
+    }
 
-    public void setNumOfPeople(int numPeople){this.numOfPeople = numPeople; }
+    public ArrayList<String> getLunchIngredientArray() {
+        return lunchIngredientArray;
+    }
 
+    public void setLunchIngredientArray(ArrayList<String> lunchIngredientArray) {
+        this.lunchIngredientArray = lunchIngredientArray;
+    }
 
+    public ArrayList<String> getLunchRecipeArray() {
+        return lunchRecipeArray;
+    }
 
+    public void setLunchRecipeArray(ArrayList<String> lunchRecipeArray) {
+        this.lunchRecipeArray = lunchRecipeArray;
+    }
 
+    public ArrayList<String> getDinnerIngredientArray() {
+        return dinnerIngredientArray;
+    }
+
+    public void setDinnerIngredientArray(ArrayList<String> dinnerIngredientArray) {
+        this.dinnerIngredientArray = dinnerIngredientArray;
+    }
+
+    public ArrayList<String> getDinnerRecipeArray() {
+        return dinnerRecipeArray;
+    }
+
+    public void setDinnerRecipeArray(ArrayList<String> dinnerRecipeArray) {
+        this.dinnerRecipeArray = dinnerRecipeArray;
+    }
+
+    public int getNumOfPeople() {
+        return numOfPeople;
+    }
+
+    public void setNumOfPeople(int numOfPeople) {
+        this.numOfPeople = numOfPeople;
+    }
 }

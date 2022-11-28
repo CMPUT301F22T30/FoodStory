@@ -130,6 +130,11 @@
         android:label="Add Meal Plan"
         tools:layout="@layout/add_meal_plan_fragment">
 
+        <action
+            android:id="@+id/action_AddMealPlanFragment_to_MealPlanFragment"
+            app:destination="@id/MealPlanFragment">
+        </action>
+
 
     </fragment>
 

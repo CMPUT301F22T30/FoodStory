@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 
 import com.example.foodstory.databinding.AddMealPlanFragmentBinding;
@@ -30,33 +31,34 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class AddMealPlanFragment extends Fragment {
 
     private AddMealPlanFragmentBinding binding;
-    DatePicker mealPlanDate;
 
     String TAG = "Sample";
     FirebaseFirestore dbAddMealPlan;
     ArrayList<MealPlan> mealplans;
     ArrayAdapter<MealPlan> mealPlan_Adapter;
 
-    TextView breakfast_recipe_select;
+
     String[] recipeArray ;
     RecipeClass recipefromdb;
     ArrayList<String> recipeNames;
 
-    TextView breakfast_ingredient_select;
-
     String[] ingredientArray;
     Ingredient ingredientfromdb;
     ArrayList<String> ingredientNames;
-    public AddMealPlanFragment(){
-    }
 
+    TextView breakfast_recipe_select;
+    TextView breakfast_ingredient_select;
     TextView lunch_recipe_select;
     TextView lunch_ingredient_select;
     TextView dinner_recipe_select;
@@ -69,6 +71,12 @@ public class AddMealPlanFragment extends Fragment {
     ArrayList<String> dinner_recipe_array = new ArrayList<>();
     ArrayList<String> dinner_ingredient_array = new ArrayList<>();
 
+    EditText numberOfServings;
+    EditText mealPlanName;
+    DatePicker mealPlanDate;
+
+    public AddMealPlanFragment(){
+    }
 
     @Override
     public View onCreateView(
@@ -86,7 +94,6 @@ public class AddMealPlanFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         dbAddMealPlan = FirebaseFirestore.getInstance();
-        CollectionReference mealplanReference = dbAddMealPlan.collection("MealPlans");
 
         breakfast_recipe_select = getView().findViewById(R.id.breakfast_recipe_select);
         breakfast_ingredient_select = getView().findViewById(R.id.breakfast_ingredient_select);
@@ -141,6 +148,54 @@ public class AddMealPlanFragment extends Fragment {
 
             }
         });
+
+        binding.saveMpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mealPlanName = getView().findViewById(R.id.meal_plan_name);
+                String mpName = mealPlanName.getText().toString();
+                numberOfServings = getView().findViewById(R.id.num_of_servings);
+                int numOfServings = Integer.valueOf(numberOfServings.getText().toString());
+                mealPlanDate = (DatePicker) getView().findViewById(R.id.meal_plan_datepicker);
+                int day = mealPlanDate.getDayOfMonth();
+                int month = mealPlanDate.getMonth() ;
+                int year = mealPlanDate.getYear();
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year,month,day);
+                UUID mealPlanId = UUID.randomUUID();
+                String mpDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
+                MealPlan newMealPlan = new MealPlan(mpName,mpDate,breakfast_ingredient_array,breakfast_recipe_array,lunch_ingredient_array,lunch_recipe_array,
+                        dinner_ingredient_array,dinner_recipe_array,numOfServings);
+
+                dbAddMealPlan.collection("MealPlans").document(mpName)
+                        .set(newMealPlan)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+                NavHostFragment.findNavController(AddMealPlanFragment.this)
+                        .navigate(R.id.action_AddMealPlanFragment_to_MealPlanFragment);
+
+            }
+        });
+
+        binding.cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddMealPlanFragment.this)
+                        .navigate(R.id.action_AddMealPlanFragment_to_MealPlanFragment);
+            }
+        });
+
+
 
 
 

@@ -53,7 +53,7 @@ public class MealPlanFragment extends Fragment {
         ListView mealPlanList = getView().findViewById(R.id.meal_plan_list);
         mealPlanList.setAdapter(mealPlan_Adapter);
         dbMealPlan = FirebaseFirestore.getInstance();
-        CollectionReference mealPlanReference = dbMealPlan.collection("MealPlan");
+        CollectionReference mealPlanReference = dbMealPlan.collection("MealPlans");
 
 
         binding.mealPlanList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,7 +65,7 @@ public class MealPlanFragment extends Fragment {
                 Bundle meal_plan = new Bundle();
 
                 meal_plan.putString("parentFragment", "ViewMealPlanFragment");
-                meal_plan.putString("mealPlanId", passedMealPlan.getMealPlanId().toString());
+                meal_plan.putString("mealPlanName", passedMealPlan.getMealPlanName());
                 getParentFragmentManager().setFragmentResult("callerKey", meal_plan);
                 NavHostFragment.findNavController(MealPlanFragment.this)
                         .navigate(R.id.action_MealPlanFragment_to_ViewMealPlanFragment);

@@ -8,6 +8,15 @@
     android:orientation="vertical"
     tools:context=".AddMealPlanFragment">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_plan_name"
+        android:gravity="center_horizontal"
+        android:text="Meal Plan Name">
+
+    </EditText>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,7 +157,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lunch"
+            android:text="Dinner"
             android:id="@+id/Dinner">
 
         </TextView>
@@ -180,6 +189,55 @@
                 app:drawableRightCompat="@android:drawable/arrow_down_float" />
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+<!--            <Button-->
+<!--                android:id="@+id/deleteIngrButton"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_marginLeft="10sp"-->
+<!--                android:layout_marginRight="5sp"-->
+<!--                android:text="Delete"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:visibility="invisible"-->
+<!--                android:layout_weight="1"/>-->
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="10sp"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_weight="1">
+            </Button>
+            <Button
+                android:id="@+id/saveMpButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="10sp"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_weight="1">
+            </Button>
         </LinearLayout>
 
     </LinearLayout>
