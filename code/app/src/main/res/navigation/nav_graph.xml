@@ -78,10 +78,10 @@
             android:id="@+id/action_ShoppingListFragment_to_HomeFragment"
             app:destination="@id/HomeFragment">
         </action>
-<!--        <action-->
-<!--            android:id="@+id/action_ShoppingListFragment_to_DisplayIngredientFragment"-->
-<!--            app:destination="@id/DisplayIngredientFragment">-->
-<!--        </action>-->
+        <action
+            android:id="@+id/action_ShoppingListFragment_to_IngredientFragment"
+            app:destination="@id/IngredientFragment">
+        </action>
 
 
     </fragment>
