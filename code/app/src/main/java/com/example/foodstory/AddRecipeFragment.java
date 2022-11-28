@@ -1,11 +1,16 @@
 package com.example.foodstory;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,37 +49,45 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class AddRecipeFragment extends Fragment{
     private AddRecipeFragmentBinding binding;
-    Button addIngredient;
-    EditText title_recipe;
-    EditText prep_time_recipe;
-    EditText category_recipe;
-    EditText servings_recipe;
-    EditText comments_recipe;
-    EditText photo_recipe;
-    ImageButton img_recipe;
-    ImageView img_view_recipe;
-    FirebaseFirestore recipeDb;
-    CollectionReference collectionReference;
-    DocumentReference docRef;
-    String TAG = "Sample";
-    ArrayList<Ingredient> ingredients;
-    ArrayAdapter<Ingredient> ingredient_Adapter;
-    ListView ingredientList;
-    Context context;
-    String rec_name = "";
-    String rec_prep = "";
-    String rec_serv = "";
-    int rec_serv2 = 0;
-    String rec_cate = "";
-    String rec_comm = "";
-    String rec_phot = "";
-    RecipeClass curr_Recipe;
+    private Button addIngredient;
+    private EditText title_recipe;
+    private EditText prep_time_recipe;
+    private EditText category_recipe;
+    private EditText servings_recipe;
+    private EditText comments_recipe;
+    private EditText photo_recipe;
+    private ImageButton img_recipe;
+    private ImageView img_view_recipe;
+    private ImageButton upload_image;
+    private FirebaseFirestore recipeDb;
+    private CollectionReference collectionReference;
+    private DocumentReference docRef;
+    private String TAG = "Sample";
+    private ArrayList<Ingredient> ingredients;
+    private ArrayAdapter<Ingredient> ingredient_Adapter;
+    private ListView ingredientList;
+    private Context context;
+    private String rec_name = "";
+    private String rec_prep = "";
+    private String rec_serv = "";
+    private int rec_serv2 = 0;
+    private String rec_cate = "";
+    private String rec_comm = "";
+    private String rec_phot = "";
+    private String img_def = "";
+    private RecipeClass curr_Recipe;
+    // Uri indicates, where the image will be picked from
+    private Uri filePath;
+    // request code
+    private final int PICK_IMAGE_REQUEST = 22;
 
     public AddRecipeFragment(){
 
@@ -94,12 +107,19 @@ public class AddRecipeFragment extends Fragment{
                 servings_recipe = getView().findViewById(R.id.recipe_num_servings_editText);
                 comments_recipe = getView().findViewById(R.id.recipe_comments_editText);
                 photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
+                img_recipe = getView().findViewById(R.id.imageButton);
+                img_view_recipe = getView().findViewById(R.id.recipe_image);
                 rec_name = curr_Recipe.getTitle();
                 rec_prep = curr_Recipe.getPrepTime();
                 rec_serv = curr_Recipe.getRecipeServingsStr();
                 rec_cate = curr_Recipe.getRecipeCategory();
                 rec_comm = curr_Recipe.getComments();
                 rec_phot = curr_Recipe.getPhoto();
+                if (curr_Recipe.getPhoto().length() > 0) {
+                    img_def = curr_Recipe.getPhoto();
+                    Bitmap bmp = StringToBitMap(curr_Recipe.getPhoto());
+                    img_view_recipe.setImageBitmap(bmp);
+                }
                 title_recipe.setText(rec_name);
                 prep_time_recipe.setText(rec_prep);
                 category_recipe.setText(rec_cate);
@@ -145,6 +165,7 @@ public class AddRecipeFragment extends Fragment{
         photo_recipe = getView().findViewById(R.id.recipe_photos_editText);
         img_recipe = getView().findViewById(R.id.imageButton);
         img_view_recipe = getView().findViewById(R.id.recipe_image);
+        upload_image = getView().findViewById(R.id.uploadimageButton);
 
         addIngredient = getView().findViewById(R.id.addIngrButton);
 
@@ -153,12 +174,16 @@ public class AddRecipeFragment extends Fragment{
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
+                        if (result.getResultCode() == RESULT_OK) {
                             if (result.getData() != null) {
                                 Bitmap bitMap;
                                 bitMap = (Bitmap) result.getData().getExtras().get("data");
                                 img_view_recipe.setImageBitmap(bitMap);
-
+                                String bmp = BitMapToString(bitMap);
+                                if (bmp != null) {
+                                    img_def = bmp;
+                                    // photo_recipe.setText(bmp);
+                                }
                             }
                         }
                     }
@@ -213,7 +238,7 @@ public class AddRecipeFragment extends Fragment{
                         curr_Recipe.setNumServings(rec_serv2);
                         curr_Recipe.setRecipeCategory(rec_cate);
                         curr_Recipe.setComments(rec_comm);
-                        curr_Recipe.setPhoto(rec_phot);
+                        curr_Recipe.setPhoto(img_def);
                         collectionReference.document(curr_Recipe.getTitle()).set(curr_Recipe);
                     }
                 }
@@ -265,7 +290,7 @@ public class AddRecipeFragment extends Fragment{
                         }
                         rec_cate = category_recipe.getText().toString();
                         rec_comm = comments_recipe.getText().toString();
-                        rec_phot = photo_recipe.getText().toString();
+                        rec_phot = img_def;
                         curr_Recipe = new RecipeClass(rec_name, rec_prep, rec_serv2,
                                 rec_cate, rec_comm, rec_phot);
                         caller.putSerializable("RecipeObj", curr_Recipe);
@@ -302,25 +327,25 @@ public class AddRecipeFragment extends Fragment{
     }
 
     // https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
-//    public Bitmap StringToBitMap(String encodedString) {
-//        try {
-//            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
-//                    encodeByte.length);
-//            return bitmap;
-//        } catch (Exception e) {
-//            e.getMessage();
-//            return null;
-//        }
-//    }
-//
-//    public String BitMapToString(Bitmap bitmap) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        byte[] b = baos.toByteArray();
-//        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-//        return temp;
-//    }
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                    encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
 
     @Override
     public void onDestroyView() {
