@@ -35,6 +35,7 @@ public class RecipeFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbRecipeDisp;
     public static String TAG = "";
+
     public RecipeFragment(){
     }
 
@@ -65,9 +66,7 @@ public class RecipeFragment extends Fragment {
 
                 RecipeClass passedRecipe = recipe_List.get(i);
                 Bundle recipe = new Bundle();
-                //bundle key = "recipe"
                 recipe.putSerializable("recipeObj", passedRecipe);
-                //request key = "recipeKey"
 
                 recipe.putString("recipeTitle", passedRecipe.getTitle());
                 getParentFragmentManager().setFragmentResult("recipeKey", recipe);
@@ -177,17 +176,8 @@ public class RecipeFragment extends Fragment {
                 recipe_List.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    //Log.d(TAG, String.valueOf(doc.getData().get("Province Name")));
                     RecipeClass recipe = doc.toObject(RecipeClass.class);
-                    //String title = doc.getId();
-                    //String prepTime = (String) doc.getData().get("prepTime");
-                    //String nServings = (String) doc.getData().get("recipeServingsStr");
-                    //int numServings = Integer.valueOf(nServings);
-                    //String recipeCategory = (String) doc.getData().get("recipeCategory");
-                    //String comments = (String) doc.getData().get("comments");
-                    //String photo = (String) doc.getData().get("photo");
                     recipe_List.add(recipe);
-                    //recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo));
                 }
                 recipe_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }

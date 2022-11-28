@@ -98,6 +98,12 @@ public class AddRecipeFragment extends Fragment{
 
         super.onCreate(savedInstanceState);
         getParentFragmentManager().setFragmentResultListener("recipeKey", this, new FragmentResultListener() {
+            /**
+             * Method to check if a bundle was passed by the calling fragment, and if there was:
+             * 1. Get the recipe object from the bundle
+             * 2. Set the fields of the view to attributes of the passed in recipe
+             * 3. Populate the ingredients list with the ingredients of the passed in recipe
+             **/
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 curr_Recipe = (RecipeClass) bundle.getSerializable("recipeObj");
@@ -169,6 +175,10 @@ public class AddRecipeFragment extends Fragment{
 
         addIngredient = getView().findViewById(R.id.addIngrButton);
 
+        /**
+         * Method to listen for results from the camera activity and set the Image view if
+         * image is captured
+         **/
         // https://developer.android.com/training/basics/intents/result
         ActivityResultLauncher<Intent> getPhoto = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -190,6 +200,9 @@ public class AddRecipeFragment extends Fragment{
                 }
         );
 
+        /**
+         * Method to start a camera activity upon clicking the image recipe button
+         **/
         // https://stackoverflow.com/questions/2314958/using-the-camera-activity-in-android
         img_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,6 +339,9 @@ public class AddRecipeFragment extends Fragment{
         });
     }
 
+    /**
+     * Method to convert a given string to Bitmap so that it can be displayed by the ImageView
+     **/
     // https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
     public Bitmap StringToBitMap(String encodedString) {
         try {
@@ -339,6 +355,9 @@ public class AddRecipeFragment extends Fragment{
         }
     }
 
+    /**
+     * Method to convert a given Bitmap to String so that it can be stored as an attribute of recipe Object
+     **/
     public String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

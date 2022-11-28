@@ -35,7 +35,7 @@ import java.util.Objects;
 public class IngredientsFragment extends Fragment {
     private IngredientFragmentBinding binding;
     FirebaseFirestore dbIngrDisp;
-    Ingredient ingredient;
+    private Ingredient ingredient;
 
     public IngredientsFragment(){
     }
@@ -67,10 +67,6 @@ public class IngredientsFragment extends Fragment {
                 Ingredient passedIngredient = ingredients_List.get(i);
 
                 Bundle caller = new Bundle();
-                //bundle key = "recipe"
-                //recipe.putSerializable("recipe", passedRecipe);
-                //request key = "recipeKey"
-                // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
                 caller.putString("parentFragment", "AddIngredientFragment");
                 caller.putSerializable("IngredientObj", passedIngredient);
                 caller.putString("ingredientName", passedIngredient.getName());
@@ -147,9 +143,6 @@ public class IngredientsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle caller = new Bundle();
-                //bundle key = "recipe"
-                //recipe.putSerializable("recipe", passedRecipe);
-                //request key = "recipeKey"
                 // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
                 caller.putString("parentFragment", "AddIngredientFragment");
                 caller.putString("ingredientName", "00000000");

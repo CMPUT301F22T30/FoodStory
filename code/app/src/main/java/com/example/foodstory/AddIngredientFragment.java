@@ -73,25 +73,25 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbAddIngr;
     public static String TAG = "";
-    EditText ingredientName;
-    EditText ingredientDescription;
-    EditText ingredientBestBefore;
-    EditText ingredientLocation;
+    private EditText ingredientName;
+    private EditText ingredientDescription;
+    private EditText ingredientBestBefore;
+    private EditText ingredientLocation;
 
-    EditText ingredientAmount;
-    EditText ingredientUnit;
-    EditText ingredientCategory;
-    String ingr_name;
-    String ingr_desc;
-    String ingr_bb;
-    String ingr_loca;
-    String ingr_amount;
-    String ingr_unit;
-    String ingr_cate;
-    int ingr_amt;
-    Date ingr_date;
-    RecipeClass recipe;
-    Ingredient ingredient;
+    private EditText ingredientAmount;
+    private EditText ingredientUnit;
+    private EditText ingredientCategory;
+    private String ingr_name;
+    private String ingr_desc;
+    private String ingr_bb;
+    private String ingr_loca;
+    private String ingr_amount;
+    private String ingr_unit;
+    private String ingr_cate;
+    private int ingr_amt;
+    private Date ingr_date;
+    private RecipeClass recipe;
+    private Ingredient ingredient;
 
     public AddIngredientFragment(){
     }
