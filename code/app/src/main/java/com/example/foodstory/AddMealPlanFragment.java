@@ -80,6 +80,7 @@ public class AddMealPlanFragment extends Fragment {
     EditText numberOfServings;
     EditText mealPlanName;
     DatePicker mealPlanDate;
+    TextView textview_for_date;
 
     public AddMealPlanFragment(){
     }
@@ -108,15 +109,9 @@ public class AddMealPlanFragment extends Fragment {
                     mealPlanName = getView().findViewById(R.id.meal_plan_name);
                     mealPlanName.setText(incomingMealPlan.getMealPlanName());
                     // set the date to the spinner
-//                    CalendarView cv = mealPlanDate.getCalendarView();
-//                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-//                    try {
-//                        Date date = format.parse(incomingMealPlan.getMealPlanDate());
-//                        cv.setDate(date);
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-
+                    textview_for_date= getView().findViewById(R.id.selected_date_mealplan);
+                    textview_for_date.setVisibility(View.VISIBLE);
+                    textview_for_date.setText(incomingMealPlan.getMealPlanDate());
 
                     // set servings number textview
                     numberOfServings = getView().findViewById(R.id.num_of_servings);

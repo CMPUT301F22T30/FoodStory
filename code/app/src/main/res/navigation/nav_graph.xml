@@ -142,10 +142,7 @@
             android:id="@+id/action_MealPlanFragment_to_AddMealPlanFragment"
             app:destination="@id/AddMealPlanFragment">
         </action>
-        <action
-            android:id="@+id/action_MealPlanFragment_to_ViewMealPlanFragment"
-            app:destination="@id/ViewMealPlanFragment">
-        </action>
+
 
     </fragment>
 
@@ -163,14 +160,6 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/ViewMealPlanFragment"
-        android:name="com.example.foodstory.ViewMealPlanFragment"
-        android:label="View Meal Plan"
-        tools:layout="@layout/view_meal_plan_fragment">
-
-
-    </fragment>
 
 <!--    <fragment-->
 <!--        android:id="@+id/DisplayIngredientFragment"-->
