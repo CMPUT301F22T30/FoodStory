@@ -61,7 +61,15 @@ public class IngredientsFragment extends Fragment {
         CollectionReference ingredientReference = dbIngrDisp.collection("Ingredients");
         Date date = new Date();
 
+
         binding.ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * @param i - the integer denoting the position of the ingredient in the listview
+             * This method passed the clicked upon ingredient from the ingredient list
+             *             to the AddIngredientFragment as a bundle.
+             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Ingredient passedIngredient = ingredients_List.get(i);
@@ -75,8 +83,14 @@ public class IngredientsFragment extends Fragment {
                         .navigate(R.id.action_IngredientFragment_to_AddIngredientFragment);
             }
         });
+
         Button Sort_title = getView().findViewById(R.id.sort_descButton);
         Sort_title.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of ingredients by title
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
@@ -91,6 +105,11 @@ public class IngredientsFragment extends Fragment {
 
         Button Sort_date = getView().findViewById(R.id.sort_dateButton);
         Sort_date.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of ingredients by date
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
@@ -105,6 +124,11 @@ public class IngredientsFragment extends Fragment {
 
         Button Sort_location = getView().findViewById(R.id.sort_locButton);
         Sort_location.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of ingredients by location
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
@@ -123,6 +147,11 @@ public class IngredientsFragment extends Fragment {
 
         Button Sort_category = getView().findViewById(R.id.sort_catButton);
         Sort_category.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of ingredients by category
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
@@ -140,6 +169,12 @@ public class IngredientsFragment extends Fragment {
         });
 
         binding.addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method passes a bundle with information that its the calling fragment
+             *             to the AddIngredientsFragment
+             */
             @Override
             public void onClick(View view) {
                 Bundle caller = new Bundle();
@@ -153,6 +188,11 @@ public class IngredientsFragment extends Fragment {
         });
 
         binding.IngredienttoHomeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method navigates to the home page
+             */
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(IngredientsFragment.this)
@@ -162,6 +202,11 @@ public class IngredientsFragment extends Fragment {
 
 
         ingredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            /**
+             *
+             * This method refreshes the list view of ingredients any time there is a change in the
+             * firestore database for the Ingredients collection
+             */
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {

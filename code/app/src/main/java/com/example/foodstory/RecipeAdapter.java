@@ -12,15 +12,32 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * This class allows displaying custom objects in a list view, in this case, it allows us to
+ * display recipes in the listview in RecipeFragment
+ */
 public class RecipeAdapter extends ArrayAdapter<RecipeClass> {
     private ArrayList<RecipeClass> recipes;
     private Context context;
+
+    /**
+     * Constructor for RecipeAdapter
+     * @param context - context
+     * @param recipes - The arraylist of recipes to display
+     */
     public RecipeAdapter(Context context, ArrayList<RecipeClass> recipes){
         super(context,0, recipes);
         this.recipes = recipes;
         this.context = context;
     }
 
+    /**
+     *
+     * @param convertView - the current view
+     * This method checks if the view is valid and if it is, sets the appropriate TextViews with
+     *                    information about the recipe attributes
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

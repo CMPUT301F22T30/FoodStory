@@ -8,6 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 
+/**
+ * This class is an extension of the DialogFragment which allows selection of the date
+ * from a visual calendar and returns the date to the calling fragment
+ */
 public class DatePickerFragment extends DialogFragment {
     @NonNull
     @Override

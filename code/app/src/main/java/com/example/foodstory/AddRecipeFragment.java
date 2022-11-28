@@ -99,6 +99,9 @@ public class AddRecipeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         getParentFragmentManager().setFragmentResultListener("recipeKey", this, new FragmentResultListener() {
             /**
+             *
+             * @param requestKey - Request key of the bundle to check against
+             * @param bundle - Passed bundle from the calling fragment
              * Method to check if a bundle was passed by the calling fragment, and if there was:
              * 1. Get the recipe object from the bundle
              * 2. Set the fields of the view to attributes of the passed in recipe
@@ -175,13 +178,14 @@ public class AddRecipeFragment extends Fragment{
 
         addIngredient = getView().findViewById(R.id.addIngrButton);
 
-        /**
-         * Method to listen for results from the camera activity and set the Image view if
-         * image is captured
-         **/
         // https://developer.android.com/training/basics/intents/result
         ActivityResultLauncher<Intent> getPhoto = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    /**
+                     * @param result - the result of an activity, in this case of a camera Intent
+                     * Method to listen for results from the camera activity and set the Image view if
+                     * image is captured
+                     **/
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK) {
@@ -200,11 +204,11 @@ public class AddRecipeFragment extends Fragment{
                 }
         );
 
-        /**
-         * Method to start a camera activity upon clicking the image recipe button
-         **/
         // https://stackoverflow.com/questions/2314958/using-the-camera-activity-in-android
         img_recipe.setOnClickListener(new View.OnClickListener() {
+            /** @param view - the current view
+             * Method to start a camera activity upon clicking the image recipe button
+             **/
             @Override
             public void onClick(View view) {
                 Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -214,6 +218,14 @@ public class AddRecipeFragment extends Fragment{
         });
 
         binding.saveRecipeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method parses the data entered in the entry fields and checks if a valid
+             *             recipe object can be constructed from it. If a valid recipe can
+             *             be constructed, it is stored in the Firestore collection named "Recipes"
+             *             After, it returns to the RecipeFragment.
+             */
             @Override
             public void onClick(View view) {
                 rec_name = title_recipe.getText().toString();
@@ -261,6 +273,12 @@ public class AddRecipeFragment extends Fragment{
         });
 
         binding.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method deletes the recipe from the firestore database and returns the user
+             *             to the  RecipeFragment.
+             */
             @Override
             public void onClick(View view) {
                 if (curr_Recipe != null){
@@ -285,6 +303,12 @@ public class AddRecipeFragment extends Fragment{
         });
 
         binding.addIngrButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method passed the current recipe as a bundle to the AddIngredientFragment
+             *             so that an ingredient can be added to the recipe
+             */
             @Override
             public void onClick(View view) {
                 title_recipe = getView().findViewById(R.id.recipe_title_editText);
@@ -321,6 +345,13 @@ public class AddRecipeFragment extends Fragment{
         });
 
         binding.recipeIngredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * @param i - the integer denoting the position of the ingredient in the listview
+             * This method passed the clicked upon ingredient from the ingredient list for a recipe
+             *             to the AddIngredientFragment as a bundle.
+             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Populate AddIngredientFragment with clicked upon item here
@@ -340,6 +371,7 @@ public class AddRecipeFragment extends Fragment{
     }
 
     /**
+     * @param encodedString - the String to convert to a bitmap
      * Method to convert a given string to Bitmap so that it can be displayed by the ImageView
      **/
     // https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
@@ -356,6 +388,7 @@ public class AddRecipeFragment extends Fragment{
     }
 
     /**
+     * @param bitmap - the bitmap to convert to String
      * Method to convert a given Bitmap to String so that it can be stored as an attribute of recipe Object
      **/
     public String BitMapToString(Bitmap bitmap) {

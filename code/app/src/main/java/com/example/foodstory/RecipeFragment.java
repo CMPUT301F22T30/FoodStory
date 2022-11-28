@@ -60,6 +60,13 @@ public class RecipeFragment extends Fragment {
         CollectionReference recipeReference = dbRecipeDisp.collection("Recipes");
 
         binding.recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * @param i - the integer denoting the position of the recipe in the listview
+             * This method passed the clicked upon recipe from the recipe list
+             *             to the AddRecipeFragment as a bundle.
+             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //https://developer.android.com/guide/fragments/communicate
@@ -77,6 +84,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_title = getView().findViewById(R.id.sort_titleButton);
         Sort_title.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by title
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -91,6 +103,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_Category = getView().findViewById(R.id.sort_categoryButton);
         Sort_Category.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by category
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -109,6 +126,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_prepTime = getView().findViewById(R.id.sort_PreptimeButton);
         Sort_prepTime.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by preptime
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -131,6 +153,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_servings = getView().findViewById(R.id.sort_ServingsButton);
         Sort_servings.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by number of servings
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -152,6 +179,12 @@ public class RecipeFragment extends Fragment {
         });
 
         binding.addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method passes a bundle with information that its the calling fragment
+             *             to the AddRecipeFragment
+             */
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(RecipeFragment.this)
@@ -160,6 +193,11 @@ public class RecipeFragment extends Fragment {
         });
 
         binding.RecipetoHomeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method navigates to the home page
+             */
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(RecipeFragment.this)
@@ -170,6 +208,11 @@ public class RecipeFragment extends Fragment {
 
         //This method refreshes the Recipe List soon as an event is recorded in the firestore data base
         recipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            /**
+             *
+             * This method refreshes the list view of recipes any time there is a change in the
+             * firestore database for the Recipes collection
+             */
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
