@@ -32,14 +32,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Fragment for the shopping list. This fragment displays the list of ingredient required for the
+ * meal plan. It gives the user option to sort the list by desc or category and also allows users to remove the shopped of ingredients in ingredient storage
+ */
 
 public class ShoppingListFragment extends Fragment {
     private ShoppingListFragmentBinding binding;
     FirebaseFirestore dbShopDisp;
     Ingredient shopping_ingredient;
     Ingredient ingredient;
-    Ingredient recipe_ingredient;
-    RecipeClass recipeClass;
     int currentPos = -1;
 
     public ShoppingListFragment(){
@@ -60,17 +62,11 @@ public class ShoppingListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<Ingredient> shopping_ingredients_List = new ArrayList<Ingredient>();
-        ArrayList<Ingredient> ingredients_List = new ArrayList<Ingredient>();
-        ArrayList<RecipeClass> recipe_List = new ArrayList<RecipeClass>();
-        ArrayList<Ingredient> recipe_ingredient_List = new ArrayList<Ingredient>();
-        ArrayList<Ingredient> recipe_allingredient_List = new ArrayList<Ingredient>();
         ArrayAdapter<Ingredient> shopping_ingredient_Adapter = new ShoppingAdapter(getActivity(),shopping_ingredients_List);
         ListView shoppingIngredientList = getView().findViewById(R.id.shopping_ingredient_list);
         shoppingIngredientList.setAdapter(shopping_ingredient_Adapter);
         dbShopDisp = FirebaseFirestore.getInstance();
         CollectionReference ShoppingListReference = dbShopDisp.collection("ShoppingList");
-        CollectionReference IngredientReference = dbShopDisp.collection("Ingredients");
-        CollectionReference RecipeReference = dbShopDisp.collection("Recipes");
 
 
         binding.ShoppingListtoHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +77,6 @@ public class ShoppingListFragment extends Fragment {
                         .navigate(R.id.action_ShoppingListFragment_to_HomeFragment);
             }
         });
-        int num = 4;
 
         ShoppingListReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -124,11 +119,13 @@ public class ShoppingListFragment extends Fragment {
                     shoppingIngredientList.setAdapter(shopping_ingredient_Adapter);
                     dbShopDisp.collection("Ingredients").document(shopping_ingredient.getName())
                             .set(shopping_ingredient);
+                    // opening a alert dialog to ask user to fill the details of the shopped for ingredients
                     AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
                     builder.setTitle("Notification");
                     builder.setMessage("Transferring to ingredients tab. Please fill the correct details for the shopped for ingredients. Click anywhere to continue");
                     builder.show();
                     currentPos = -1;
+                    // navigating to Ingredient fragment
                     NavHostFragment.findNavController(ShoppingListFragment.this)
                             .navigate(R.id.action_ShoppingListFragment_to_IngredientFragment);
                 }
@@ -137,7 +134,7 @@ public class ShoppingListFragment extends Fragment {
         });
 
 
-
+        // sorting based on category
         Button shopping_c = getView().findViewById(R.id.shopping_sort_c);
         shopping_c.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +152,7 @@ public class ShoppingListFragment extends Fragment {
                 shopping_ingredient_Adapter.notifyDataSetChanged();
             }
         });
-
+        // sorting based on description
         Button shopping_d = getView().findViewById(R.id.shopping_sort_d);
         shopping_d.setOnClickListener(new View.OnClickListener() {
             @Override

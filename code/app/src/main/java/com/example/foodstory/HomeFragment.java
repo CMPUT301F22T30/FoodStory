@@ -87,10 +87,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /**
+         * On clicking the shopping list button, we get the ingredients required for the meal plans
+         * then check if we have enough in storage, if we dont  then we add the required amount to the
+         * shopping list
+         */
+
 
         binding.ShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // getting list of ingredients
                 IngredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -102,6 +109,7 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+                // getting list of recipes
                 RecipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -113,6 +121,8 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+                // getting details of meal plan
+                // then we get the required ingredients, and then scale the recipe to get the required ingredeint for that recipe
                 MealPlanReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -189,8 +199,10 @@ public class HomeFragment extends Fragment {
                             }
 //
                         }
-                        Log.d("THIS", String.valueOf(shopping_ingredients_List.get(1).getName()));
 
+
+
+                        // Adding the shopping list ingredients to the shopping database
                         for (int i = 0; i < shopping_ingredients_List.size(); i++){
                             shopping_ingredients_List.get(i).setLocation("NULL");
                             Date date = new Date(0);
@@ -199,13 +211,9 @@ public class HomeFragment extends Fragment {
                                     .set(shopping_ingredients_List.get(i));
                         }
 
-
-
-
-
-
                     }
                 });
+                // navigating to shopping fragment
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_HomeFragment_to_ShoppingListFragment);
 
