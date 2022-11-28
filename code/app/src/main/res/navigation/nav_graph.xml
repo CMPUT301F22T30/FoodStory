@@ -172,16 +172,6 @@
 
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/DisplayIngredientFragment"-->
-<!--        android:name="com.example.foodstory.DisplayShoppingListFragment"-->
-<!--        android:label="Ingredients Details"-->
-<!--        tools:layout="@layout/display_shopping_list_fragment">-->
-<!--        <action-->
-<!--            android:id="@+id/action_DisplayIngredientFragment_to_ShoppingListFragment"-->
-<!--            app:destination="@id/ShoppingListFragment">-->
-<!--        </action>-->
-<!--    </fragment>-->
 
 
 </navigation>

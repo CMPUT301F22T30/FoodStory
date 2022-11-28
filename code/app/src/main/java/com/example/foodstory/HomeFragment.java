@@ -133,10 +133,8 @@ public class HomeFragment extends Fragment {
                             for (int i = 0; i<ing_name.size(); i++){
                                 for (int j = 0; j< ingredients_List.size(); j++){
                                     if (ingredients_List.get(j).getName().equals(ing_name.get(i))){
-                                        //ingredients_List.get(j).setAmount(meal_amount);
                                         meal_ingredient = new Ingredient(ingredients_List.get(j));
                                         meal_ingredient.setAmount(meal_amount);
-                                        Log.d(ingredients_List.get(j).getName(), String.valueOf(ingredients_List.get(j).getAmount()));
                                         if (meal_plan_ingredient.contains(meal_ingredient)){
                                             int index = meal_plan_ingredient.indexOf(meal_ingredient);
                                             meal_plan_ingredient.get(index).setAmount(meal_plan_ingredient.get(index).getAmount()+ meal_ingredient.getAmount());
@@ -144,50 +142,43 @@ public class HomeFragment extends Fragment {
                                         else{
                                             meal_plan_ingredient.add(meal_ingredient);
                                         }
-
                                     }
                                 }
                             }
-
 
                             for (int i = 0; i<rec_name.size(); i++){
                                 for (int j = 0; j < recipe_List.size(); j++){
                                     meal_recipe_ingredient_List.clear();
                                     if (recipe_List.get(j).getTitle().equals(rec_name.get(i))){
                                         int amount = (int)Math.ceil((double)meal_amount / recipe_List.get(j).getNumServings());
-                                        Log.d("chessss", String.valueOf(amount));
+                                        Log.d(recipe_List.get(j).getTitle(), String.valueOf(amount));
                                         meal_recipe_ingredient_List.addAll(recipe_List.get(j).getIngredients());
-                                        //meal_plan_ingredient.addAll(recipe_List.get(j).getIngredients());
+                                        Log.d("meal_recipe_ingredient", String.valueOf(meal_recipe_ingredient_List.get(0).getName()));
+
                                         for (int k = 0; k < meal_recipe_ingredient_List.size(); k++){
                                             meal_recipe_ingredient_List.get(k).setAmount(amount * meal_recipe_ingredient_List.get(k).getAmount());
-                                            if (meal_plan_ingredient.contains(meal_recipe_ingredient_List.get(k))){
-                                                int index = meal_plan_ingredient.indexOf(meal_recipe_ingredient_List.get(k));
-                                                meal_plan_ingredient.get(index).setAmount(meal_plan_ingredient.get(index).getAmount() + meal_recipe_ingredient_List.get(k).getAmount());
-                                            }
-                                            else{
-                                                meal_plan_ingredient.add(meal_recipe_ingredient_List.get(k));
-                                            }
+                                            Log.d("meal_recipe_ingredient", String.valueOf(meal_recipe_ingredient_List.get(0).getName()) + String.valueOf(meal_recipe_ingredient_List.get(0).getAmount()));
+                                            meal_plan_ingredient.add(meal_recipe_ingredient_List.get(k));
 
                                         }
                                     }
                                 }
                             }
                         }
-                        Log.d("Mealsize - Flour", String.valueOf(meal_plan_ingredient.get(0).getAmount()));
-                        Log.d("Meal", meal_plan_ingredient.get(1).getName());
+
+
                         shopping_ingredients_List.clear();
                         for (int i = 0; i < meal_plan_ingredient.size(); i++){
                             for (int j = 0; j < ingredients_List.size(); j++){
                                 if (ingredients_List.get(j).getName().equals(meal_plan_ingredient.get(i).getName())){
                                     int index = j;
-                                    //int index = ingredients_List.indexOf(meal_plan_ingredient.get(i));
-                                    Log.d(ingredients_List.get(index).getName(), String.valueOf(ingredients_List.get(index).getAmount()));
                                     int finalamount = meal_plan_ingredient.get(i).getAmount() - ingredients_List.get(index).getAmount();
-                                    Log.d("index", String.valueOf(finalamount));
                                     if(finalamount > 0 ){
                                         meal_plan_ingredient.get(i).setAmount(finalamount);
                                         shopping_ingredients_List.add(meal_plan_ingredient.get(i));
+
                                     }
+                                    break;
 
                                 }
                                 else{
@@ -196,15 +187,9 @@ public class HomeFragment extends Fragment {
 
 
                             }
-//                            if (ingredients_List.contains(meal_plan_ingredient.get(i))){
-
-                            //}
-//                            else{
-                                //shopping_ingredients_List.add(meal_plan_ingredient.get(i));
-                            //}
-
+//
                         }
-                        Log.d("THIS", String.valueOf(shopping_ingredients_List.size()));
+                        Log.d("THIS", String.valueOf(shopping_ingredients_List.get(1).getName()));
 
                         for (int i = 0; i < shopping_ingredients_List.size(); i++){
                             shopping_ingredients_List.get(i).setLocation("NULL");
@@ -221,53 +206,6 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
-
-
-
-
-
-
-
-
-
-                int num = 4;
-//                RecipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-//                        recipe_ingredient_List.clear();
-//                        for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-//                        {
-//                            recipeClass = doc.toObject(RecipeClass.class);
-//                            int amount = (int)Math.ceil((double)num / recipeClass.getNumServings());
-//                            recipe_ingredient_List.addAll(recipeClass.getIngredients());
-//                            recipe_List.add(recipeClass);
-//                            for (int i = 0; i < recipe_ingredient_List.size(); i++){
-//                                recipe_ingredient_List.get(i).setAmount(amount * recipe_ingredient_List.get(i).getAmount());
-//                            }
-//                        }
-//                        shopping_ingredients_List.clear();
-//                        for (int i = 0; i < recipe_ingredient_List.size(); i++){
-//                            if (ingredients_List.contains(recipe_ingredient_List.get(i))){
-//                                int index = ingredients_List.indexOf(recipe_ingredient_List.get(i));
-//                                int finalamount = recipe_ingredient_List.get(i).getAmount() - ingredients_List.get(index).getAmount();
-//                                if(finalamount > 0 ){
-//                                    shopping_ingredients_List.add(ingredients_List.get(index));
-//                                }
-//                            }
-//                            else{
-//                                shopping_ingredients_List.add(recipe_ingredient_List.get(i));
-//                            }
-//
-//                        }
-//                        for (int i = 0; i < shopping_ingredients_List.size(); i++){
-//                            shopping_ingredients_List.get(i).setLocation("NULL");
-//                            Date date = new Date(0);
-//                            shopping_ingredients_List.get(i).setBestBefore(date);
-//                            dbShopDisp.collection("ShoppingList").document(shopping_ingredients_List.get(i).getName())
-//                                    .set(shopping_ingredients_List.get(i));
-//                        }
-//                    }
-//                });
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_HomeFragment_to_ShoppingListFragment);
 
