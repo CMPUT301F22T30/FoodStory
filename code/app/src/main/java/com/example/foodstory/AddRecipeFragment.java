@@ -188,7 +188,7 @@ public class AddRecipeFragment extends Fragment{
                 rec_cate = category_recipe.getText().toString();
                 rec_comm = comments_recipe.getText().toString();
                 rec_phot = photo_recipe.getText().toString();
-                if (rec_name.length()>0) {
+                if (rec_name.length()>0 && rec_prep.length()>0 && rec_cate.length()>0 && rec_serv.length()>0) {
                     if (curr_Recipe == null) {
                         RecipeClass recipe = new RecipeClass(rec_name, rec_prep, rec_serv2,
                                 rec_cate, rec_comm, rec_phot);
