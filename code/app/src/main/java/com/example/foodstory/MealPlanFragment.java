@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -29,6 +30,7 @@ public class MealPlanFragment extends Fragment {
 
     private MealPlanFragmentBinding binding;
     FirebaseFirestore dbMealPlan;
+    MealPlan meal_plan;
 
     public MealPlanFragment(){
     }
@@ -61,14 +63,12 @@ public class MealPlanFragment extends Fragment {
 
                 MealPlan passedMealPlan = mealPlan_List.get(i);
                 Bundle meal_plan = new Bundle();
-                //bundle key = "recipe"
-                //recipe.putSerializable("recipe", passedRecipe);
-                //request key = "recipeKey"
 
-//                recipe.putString("recipeTitle", passedRecipe.getTitle());
-//                getParentFragmentManager().setFragmentResult("recipeKey", recipe);
-//                NavHostFragment.findNavController(RecipeFragment.this)
-//                        .navigate(R.id.action_RecipeFragment_to_AddRecipeFragment);
+                meal_plan.putString("parentFragment", "ViewMealPlanFragment");
+                meal_plan.putString("mealPlanId", passedMealPlan.getMealPlanId().toString());
+                getParentFragmentManager().setFragmentResult("callerKey", meal_plan);
+                NavHostFragment.findNavController(MealPlanFragment.this)
+                        .navigate(R.id.action_MealPlanFragment_to_ViewMealPlanFragment);
             }
         });
 
@@ -78,6 +78,28 @@ public class MealPlanFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(MealPlanFragment.this)
                         .navigate(R.id.action_MealPlanFragment_to_AddMealPlanFragment);
+            }
+        });
+
+        binding.MealPlanFragmenttoHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(MealPlanFragment.this)
+                        .navigate(R.id.action_MealPlanFragment_to_HomeFragment);
+            }
+        });
+
+        mealPlanReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                    FirebaseFirestoreException error) {
+                mealPlan_List.clear();
+                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                {
+                      meal_plan = doc.toObject(MealPlan.class);
+                      mealPlan_List.add(meal_plan);
+                }
+                mealPlan_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }
         });
 

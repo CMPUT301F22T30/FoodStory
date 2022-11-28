@@ -8,6 +8,17 @@
     android:orientation="vertical"
     tools:context=".MealPlanFragment">
 
+    <Button
+        android:id="@+id/MealPlanFragmenttoHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="start"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_weight="1"/>
+
     <ListView
         android:id="@+id/meal_plan_list"
         android:layout_width="match_parent"
