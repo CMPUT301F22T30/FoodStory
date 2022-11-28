@@ -72,6 +72,7 @@ public class IngredientsFragment extends Fragment {
                 //request key = "recipeKey"
                 // To communicate with the AddIngredientFragment that AddRecipeFragment is the caller.
                 caller.putString("parentFragment", "AddIngredientFragment");
+                caller.putSerializable("IngredientObj", passedIngredient);
                 caller.putString("ingredientName", passedIngredient.getName());
                 getParentFragmentManager().setFragmentResult("callerKey", caller);
                 NavHostFragment.findNavController(IngredientsFragment.this)
@@ -113,7 +114,11 @@ public class IngredientsFragment extends Fragment {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
                     @Override
                     public int compare(Ingredient ingredient, Ingredient t1) {
-                        return ingredient.getLocation().compareTo(t1.getLocation());
+                        if(ingredient.getLocation()==""||t1.getLocation()==""){
+                            return 0;
+                        } else{
+                            return ingredient.getLocation().compareTo(t1.getLocation());
+                        }
                     }
                 });
                 ingredient_Adapter.notifyDataSetChanged();
@@ -127,7 +132,11 @@ public class IngredientsFragment extends Fragment {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
                     @Override
                     public int compare(Ingredient ingredient, Ingredient t1) {
-                        return ingredient.getCategory().compareTo(t1.getCategory());
+                        if(ingredient.getCategory() == "" || t1.getCategory() == ""){
+                            return 0;
+                        } else {
+                            return ingredient.getCategory().compareTo(t1.getCategory());
+                        }
                     }
                 });
                 ingredient_Adapter.notifyDataSetChanged();
@@ -166,26 +175,7 @@ public class IngredientsFragment extends Fragment {
                 ingredients_List.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-//                    String ingr_name = doc.getId();
                     ingredient = doc.toObject(Ingredient.class);
-//                    String ingr_desc = (String) doc.getData().get("Ingredient Description");
-//                    String ingr_bb = (String) doc.getData().get("Ingredient BestBefore");
-//                    String ingr_loca = (String) doc.getData().get("Ingredient Location");
-//                    String nAmount = (String) doc.getData().get("Ingredient Amount");
-//                    int ingr_amount = 0;
-//                    if(Objects.equals(nAmount, "")) {
-//                    } else {
-//                        ingr_amount = Integer.valueOf(nAmount);
-//                    }
-//                    Date date= null;
-//                    try {
-//                        date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    String ingr_unit = (String) doc.getData().get("Ingredient Unit");
-//                    String ingr_cate = (String) doc.getData().get("Ingredient Category");
-                    // ingredients_List.add(new Ingredient(ingr_name, ingr_desc, date, ingr_loca, ingr_amount, ingr_unit, ingr_cate));
                     ingredients_List.add(ingredient);
                 }
                 ingredient_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud

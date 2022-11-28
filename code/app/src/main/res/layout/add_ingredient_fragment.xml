@@ -33,17 +33,6 @@
         />
 
     <EditText
-        android:id="@+id/ingredient_bb_editText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:textSize="15sp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Best Before Date"
-        android:layout_weight="1"
-        />
-
-    <EditText
         android:id="@+id/ingredient_location_editText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -84,14 +73,34 @@
         android:hint="Category"
         android:layout_weight="1"/>
 
+<!--    https://stackoverflow.com/questions/6384004/make-edittext-readonly-->
+    <EditText
+        android:id="@+id/ingredient_bb_editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:ems="10"
+        android:hint="Best Before Date"
+        android:inputType="none"
+        android:textIsSelectable="false"
+        android:focusable="false"
+        android:textSize="15sp" />
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_weight="1">
+
+<!--        https://www.geeksforgeeks.org/datepickerdialog-in-android/-->
+        <ImageButton
+            android:id="@+id/btPickDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@android:drawable/ic_menu_today" />
+
         <!--Have this button open a fragment to add an ingredient    -->
         <Button
             android:id="@+id/deleteIngrButton"

@@ -43,6 +43,22 @@ public class RecipeClass implements Serializable{
         return numServings;
     }
 
+    public void setPrepTime(String prepTime) {
+        this.prepTime = prepTime;
+    }
+
+    public void setNumServings(int numServings) {
+        this.numServings = numServings;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     public String getComments() {
         return comments;
     }
@@ -89,5 +105,9 @@ public class RecipeClass implements Serializable{
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
+    }
+
+    public void deleteIngredient(Ingredient ingredient) {
+        this.ingredients.remove(ingredient);
     }
 }

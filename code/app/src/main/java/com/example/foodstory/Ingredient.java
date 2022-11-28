@@ -5,6 +5,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Ingredient implements Serializable{
 
@@ -58,9 +59,15 @@ public class Ingredient implements Serializable{
     }
     
     public String getBBDString(){
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(this.getBestBefore());
+        if (bestBefore != null) {
+            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            return formatter.format(this.getBestBefore());
+        } else {
+            String placeHolder = "";
+            return placeHolder;
+        }
     }
+
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
     }
@@ -95,5 +102,17 @@ public class Ingredient implements Serializable{
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
