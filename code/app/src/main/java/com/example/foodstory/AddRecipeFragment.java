@@ -190,26 +190,6 @@ public class AddRecipeFragment extends Fragment{
                 }
         );
 
-        ActivityResultLauncher<Intent> selectPhoto = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            if (result.getData() != null) {
-                                Bitmap bitMap;
-                                bitMap = (Bitmap) result.getData().getExtras().get("data");
-                                img_view_recipe.setImageBitmap(bitMap);
-                                String bmp = BitMapToString(bitMap);
-                                if (bmp != null) {
-                                    img_def = bmp;
-                                    // photo_recipe.setText(bmp);
-                                }
-                            }
-                        }
-                    }
-                }
-        );
-
         // https://stackoverflow.com/questions/2314958/using-the-camera-activity-in-android
         img_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,21 +199,6 @@ public class AddRecipeFragment extends Fragment{
 
             }
         });
-
-        // https://www.geeksforgeeks.org/android-how-to-upload-an-image-on-firebase-storage/
-        upload_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Defining Implicit Intent to mobile gallery
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                selectPhoto.launch(Intent.createChooser(intent,
-                        "Select Image from here..."));
-            }
-        });
-
-
 
         binding.saveRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
