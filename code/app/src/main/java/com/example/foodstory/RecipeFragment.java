@@ -35,6 +35,7 @@ public class RecipeFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbRecipeDisp;
     public static String TAG = "";
+
     public RecipeFragment(){
     }
 
@@ -59,15 +60,20 @@ public class RecipeFragment extends Fragment {
         CollectionReference recipeReference = dbRecipeDisp.collection("Recipes");
 
         binding.recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * @param i - the integer denoting the position of the recipe in the listview
+             * This method passed the clicked upon recipe from the recipe list
+             *             to the AddRecipeFragment as a bundle.
+             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //https://developer.android.com/guide/fragments/communicate
 
                 RecipeClass passedRecipe = recipe_List.get(i);
                 Bundle recipe = new Bundle();
-                //bundle key = "recipe"
                 recipe.putSerializable("recipeObj", passedRecipe);
-                //request key = "recipeKey"
 
                 recipe.putString("recipeTitle", passedRecipe.getTitle());
                 getParentFragmentManager().setFragmentResult("recipeKey", recipe);
@@ -78,6 +84,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_title = getView().findViewById(R.id.sort_titleButton);
         Sort_title.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by title
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -92,6 +103,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_Category = getView().findViewById(R.id.sort_categoryButton);
         Sort_Category.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by category
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -110,6 +126,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_prepTime = getView().findViewById(R.id.sort_PreptimeButton);
         Sort_prepTime.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by preptime
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -132,6 +153,11 @@ public class RecipeFragment extends Fragment {
 
         Button Sort_servings = getView().findViewById(R.id.sort_ServingsButton);
         Sort_servings.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method sorts the list of recipes by number of servings
+             */
             @Override
             public void onClick(View view) {
                 Collections.sort(recipe_List, new Comparator<RecipeClass>() {
@@ -153,6 +179,12 @@ public class RecipeFragment extends Fragment {
         });
 
         binding.addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method passes a bundle with information that its the calling fragment
+             *             to the AddRecipeFragment
+             */
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(RecipeFragment.this)
@@ -161,6 +193,11 @@ public class RecipeFragment extends Fragment {
         });
 
         binding.RecipetoHomeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method navigates to the home page
+             */
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(RecipeFragment.this)
@@ -171,23 +208,19 @@ public class RecipeFragment extends Fragment {
 
         //This method refreshes the Recipe List soon as an event is recorded in the firestore data base
         recipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            /**
+             *
+             * This method refreshes the list view of recipes any time there is a change in the
+             * firestore database for the Recipes collection
+             */
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
                 recipe_List.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    //Log.d(TAG, String.valueOf(doc.getData().get("Province Name")));
                     RecipeClass recipe = doc.toObject(RecipeClass.class);
-                    //String title = doc.getId();
-                    //String prepTime = (String) doc.getData().get("prepTime");
-                    //String nServings = (String) doc.getData().get("recipeServingsStr");
-                    //int numServings = Integer.valueOf(nServings);
-                    //String recipeCategory = (String) doc.getData().get("recipeCategory");
-                    //String comments = (String) doc.getData().get("comments");
-                    //String photo = (String) doc.getData().get("photo");
                     recipe_List.add(recipe);
-                    //recipe_List.add(new RecipeClass(title, prepTime, numServings, recipeCategory, comments, photo));
                 }
                 recipe_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
             }

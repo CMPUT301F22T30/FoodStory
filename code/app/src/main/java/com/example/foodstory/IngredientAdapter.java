@@ -15,17 +15,32 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.text.DateFormat;
 
+/**
+ *
+ * This class allows displaying custom objects in a list view, in this case, it allows us to
+ * display ingredients in the listview in IngredientFragment
+ */
 public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     private ArrayList<Ingredient> ingredients;
     private Context context;
 
+    /**
+     * Constructor for IngredientAdapter
+     * @param context - context
+     * @param ingredients - The arraylist of ingredients to display
+     */
     public IngredientAdapter(Context context, ArrayList<Ingredient> ingredients) {
         super(context, 0, ingredients);
         this.ingredients = ingredients;
         this.context = context;
     }
 
-
+    /**
+     *
+     * @param convertView - the current view
+     * This method checks if the view is valid and if it is, sets the appropriate TextViews with
+     *                    information about the ingredient attributes
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

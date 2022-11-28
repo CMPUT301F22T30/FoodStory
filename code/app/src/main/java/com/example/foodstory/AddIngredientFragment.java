@@ -73,26 +73,29 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
     public static final String EXTRA_MESSAGE = "";
     FirebaseFirestore dbAddIngr;
     public static String TAG = "";
-    EditText ingredientName;
-    EditText ingredientDescription;
-    EditText ingredientBestBefore;
-    EditText ingredientLocation;
+    private EditText ingredientName;
+    private EditText ingredientDescription;
+    private EditText ingredientBestBefore;
+    private EditText ingredientLocation;
 
-    EditText ingredientAmount;
-    EditText ingredientUnit;
-    EditText ingredientCategory;
-    String ingr_name;
-    String ingr_desc;
-    String ingr_bb;
-    String ingr_loca;
-    String ingr_amount;
-    String ingr_unit;
-    String ingr_cate;
-    int ingr_amt;
-    Date ingr_date;
-    RecipeClass recipe;
-    Ingredient ingredient;
+    private EditText ingredientAmount;
+    private EditText ingredientUnit;
+    private EditText ingredientCategory;
+    private String ingr_name;
+    private String ingr_desc;
+    private String ingr_bb;
+    private String ingr_loca;
+    private String ingr_amount;
+    private String ingr_unit;
+    private String ingr_cate;
+    private int ingr_amt;
+    private Date ingr_date;
+    private RecipeClass recipe;
+    private Ingredient ingredient;
 
+    /**
+     * Empty constructor. Required in order to store custom objects in Firestore
+     */
     public AddIngredientFragment(){
     }
 
@@ -102,6 +105,15 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
         super.onCreate(savedInstanceState);
 
         getParentFragmentManager().setFragmentResultListener("callerKey", this, new FragmentResultListener() {
+            /**
+             *
+             * @param requestKey - Request key of the bundle to check against
+             * @param bundle - Passed bundle from the calling fragment
+             * This method checks to see who the caller fragment is.
+             *               Depending on who the caller is, it makes appropriate buttons visible
+             *               It also checks if an ingredient object was passed and sets the
+             *               fields of the view appropriately.
+             */
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 String fragCaller = bundle.getString("parentFragment");
@@ -167,6 +179,14 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
         ingredientCategory = getView().findViewById(R.id.ingredient_category_editText);
 
         binding.saveIngrButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method parses the data entered in the entry fields and checks if a valid
+             *             ingredient object can be constructed from it. If a valid ingredient can
+             *             be constructed, it is stored in the Firestore collection named "Ingredients"
+             *             After, it returns to the Ingredient Fragment.
+             */
             @Override
             public void onClick(View view) {
                 ingr_name = ingredientName.getText().toString();
@@ -235,6 +255,12 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
         });
 
         binding.deleteIngrButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method deletes the ingredient from the firestore database and returns the user
+             *             to the Ingredient Fragment.
+             */
             @Override
             public void onClick(View view) {
                 if (ingredient != null){
@@ -259,6 +285,13 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
         });
 
         binding.saveIngrRecButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method creates an ingredient object from the data entered on screen by the user
+             *             and adds it to the recipe object which was passed in the caller fragment
+             *             AddRecipeFragment. It then returns the recipe bundle to its caller.
+             */
             @Override
             public void onClick(View view) {
                 ingr_name = ingredientName.getText().toString();
@@ -298,7 +331,14 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
             }
         });
 
+
         binding.deleteIngrRecButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method deletes the ingredient from the passed in recipe bundle by the AddRecipeFragment.
+             *             It then passed the recipe as a bundle back to the caller fragment
+             */
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
@@ -312,6 +352,11 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
         ImageButton btPickDate = getView().findViewById(R.id.btPickDate);
         // https://www.geeksforgeeks.org/datepickerdialog-in-android/
         btPickDate.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view - the current view
+             * This method calls the DatePickerFragment to allow the user to select a date
+             */
             @Override
             public void onClick(View view) {
                 DialogFragment datePicker = new DatePickerFragment();
@@ -328,6 +373,15 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
         binding = null;
     }
 
+    /**
+     *
+     * @param datePicker - The DatePicker object
+     * @param year - Year selected from the datePicker
+     * @param month - selected from the datePicker
+     * @param dayOfMonth - selected from the datePicker
+     * This method sets the best before date of the ingredient upon return of a result from the
+     *                   DatePickerFragment
+     */
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         Calendar mCalendar = Calendar.getInstance();
