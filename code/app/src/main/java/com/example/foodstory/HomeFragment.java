@@ -64,6 +64,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        binding.MealPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_HomeFragment_to_MealPlanFragment);
+            }
+        });
+
+
         binding.ShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +127,7 @@ public class HomeFragment extends Fragment {
                 });
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_HomeFragment_to_ShoppingListFragment);
+
             }
         });
     }

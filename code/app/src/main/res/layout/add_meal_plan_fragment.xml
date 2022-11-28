@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddMealPlanFragment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_plan_name"
+        android:gravity="center_horizontal"
+        android:text="Meal Plan Name">
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <DatePicker
+            android:id="@+id/meal_plan_datepicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number of People you want to serve"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold">
+            </TextView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/num_of_servings">
+
+            </EditText>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Breakfast"
+            android:id="@+id/BreakFast">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/breakfast_recipe_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawablePadding="16dp"
+                android:hint="Select Recipe"
+                android:padding="12dp"
+                app:drawableRightCompat="@android:drawable/arrow_down_float" />
+
+
+            <TextView
+                android:id="@+id/breakfast_ingredient_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawablePadding="16dp"
+                android:hint="Select Ingredient"
+                android:padding="12dp"
+                app:drawableRightCompat="@android:drawable/arrow_down_float" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lunch"
+            android:id="@+id/Lunch">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lunch_recipe_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawablePadding="16dp"
+                android:hint="Select Recipe"
+                android:padding="12dp"
+                app:drawableRightCompat="@android:drawable/arrow_down_float" />
+
+
+            <TextView
+                android:id="@+id/lunch_ingredient_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawablePadding="16dp"
+                android:hint="Select Ingredient"
+                android:padding="12dp"
+                app:drawableRightCompat="@android:drawable/arrow_down_float" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dinner"
+            android:id="@+id/Dinner">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dinner_recipe_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawablePadding="16dp"
+                android:hint="Select Recipe"
+                android:padding="12dp"
+                app:drawableRightCompat="@android:drawable/arrow_down_float" />
+
+
+            <TextView
+                android:id="@+id/dinner_ingredient_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawablePadding="16dp"
+                android:hint="Select Ingredient"
+                android:padding="12dp"
+                app:drawableRightCompat="@android:drawable/arrow_down_float" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+<!--            <Button-->
+<!--                android:id="@+id/deleteIngrButton"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_marginLeft="10sp"-->
+<!--                android:layout_marginRight="5sp"-->
+<!--                android:text="Delete"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:visibility="invisible"-->
+<!--                android:layout_weight="1"/>-->
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="10sp"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_weight="1">
+            </Button>
+            <Button
+                android:id="@+id/saveMpButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="10sp"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_weight="1">
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
