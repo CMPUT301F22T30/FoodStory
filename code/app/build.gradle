@@ -30,6 +30,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+    testOptions{
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+    namespace 'com.example.foodstory'
 }
 
 dependencies {
@@ -37,12 +43,20 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
-    implementation 'androidx.navigation:navigation-ui:2.3.5'
-    testImplementation 'junit:junit:4.13.2'
+    implementation files('app')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.1'
+    //testImplementation 'org.testng:testng:6.9.6'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore'
+
+
+    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05"
+    implementation "androidx.navigation:navigation-ui-ktx:2.1.0-alpha05"
+
+
+
 }
