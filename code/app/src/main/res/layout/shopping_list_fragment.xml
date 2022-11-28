@@ -20,6 +20,61 @@
         android:textStyle="bold"
         android:layout_weight="1"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10sp"
+            android:textColor="@color/teal_700"
+            android:text="Name">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10sp"
+            android:textColor="@color/teal_700"
+            android:text="Desc">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10sp"
+            android:textColor="@color/teal_700"
+            android:text="Unit">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10sp"
+            android:textColor="@color/teal_700"
+            android:text="Cat">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10sp"
+            android:textColor="@color/teal_700"
+            android:text="amount">
+
+        </TextView>
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/shopping_ingredient_list"
         android:layout_width="match_parent"
