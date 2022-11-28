@@ -99,7 +99,14 @@ public class ShoppingListFragment extends Fragment {
         binding.shoppingIngredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                currentPos = i;
+                if (currentPos == i ){
+                    shoppingIngredientList.setAdapter(shopping_ingredient_Adapter);
+                    currentPos = -1;
+                }
+                else{
+                    currentPos = i;
+                }
+
             }
         });
         Button delete = getView().findViewById(R.id.shopping_delete_btn);
@@ -117,7 +124,6 @@ public class ShoppingListFragment extends Fragment {
                     shoppingIngredientList.setAdapter(shopping_ingredient_Adapter);
                     dbShopDisp.collection("Ingredients").document(shopping_ingredient.getName())
                             .set(shopping_ingredient);
-
                     AlertDialog builder = new AlertDialog.Builder(getActivity()).create();
                     builder.setTitle("Notification");
                     builder.setMessage("Please go to the ingredients tab to fill the correct details for the shopped for ingredients. Click anywhere to continue");
