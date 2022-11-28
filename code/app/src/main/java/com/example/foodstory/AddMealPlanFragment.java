@@ -38,27 +38,36 @@ public class AddMealPlanFragment extends Fragment {
 
     private AddMealPlanFragmentBinding binding;
     DatePicker mealPlanDate;
-    TextView breakfast_recipe_select;
 
+    String TAG = "Sample";
     FirebaseFirestore dbAddMealPlan;
     ArrayList<MealPlan> mealplans;
     ArrayAdapter<MealPlan> mealPlan_Adapter;
-    boolean[] selectedMealPlan;
-    ArrayList<Integer> selectedMpList = new ArrayList<>();
+
+    TextView breakfast_recipe_select;
     String[] recipeArray ;
-    String TAG = "Sample";
     RecipeClass recipefromdb;
     ArrayList<String> recipeNames;
 
     TextView breakfast_ingredient_select;
-    boolean[] selectedIngredient;
-    ArrayList<Integer> selectedIngList = new ArrayList<>();
+
     String[] ingredientArray;
     Ingredient ingredientfromdb;
     ArrayList<String> ingredientNames;
     public AddMealPlanFragment(){
     }
 
+    TextView lunch_recipe_select;
+    TextView lunch_ingredient_select;
+    TextView dinner_recipe_select;
+    TextView dinner_ingredient_select;
+
+    ArrayList<String> breakfast_recipe_array = new ArrayList<>();
+    ArrayList<String> breakfast_ingredient_array = new ArrayList<>();
+    ArrayList<String> lunch_recipe_array = new ArrayList<>();
+    ArrayList<String> lunch_ingredient_array = new ArrayList<>();
+    ArrayList<String> dinner_recipe_array = new ArrayList<>();
+    ArrayList<String> dinner_ingredient_array = new ArrayList<>();
 
 
     @Override
@@ -80,7 +89,15 @@ public class AddMealPlanFragment extends Fragment {
         CollectionReference mealplanReference = dbAddMealPlan.collection("MealPlans");
 
         breakfast_recipe_select = getView().findViewById(R.id.breakfast_recipe_select);
+        breakfast_ingredient_select = getView().findViewById(R.id.breakfast_ingredient_select);
+        lunch_recipe_select = getView().findViewById(R.id.lunch_recipe_select);
+        lunch_ingredient_select = getView().findViewById(R.id.lunch_ingredient_select);
+        dinner_recipe_select = getView().findViewById(R.id.dinner_recipe_select);
+        dinner_ingredient_select = getView().findViewById(R.id.dinner_ingredient_select);
+
         recipeNames = new ArrayList<>();
+        ingredientNames = new ArrayList<>();
+
         dbAddMealPlan.collection("Recipes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -88,10 +105,12 @@ public class AddMealPlanFragment extends Fragment {
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         recipefromdb = document.toObject(RecipeClass.class);
-                        Log.d(TAG, "recipename: " + recipefromdb.getTitle());
                         recipeNames.add(recipefromdb.getTitle());
                     }
-                    createRecipeDropdown(breakfast_recipe_select, recipeNames);
+                    breakfast_recipe_array = createRecipeDropdown(breakfast_recipe_select, recipeNames);
+                    lunch_recipe_array = createRecipeDropdown(lunch_recipe_select, recipeNames);
+                    dinner_recipe_array = createRecipeDropdown(dinner_recipe_select, recipeNames);
+
 
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -101,8 +120,8 @@ public class AddMealPlanFragment extends Fragment {
         });
 
 
-        breakfast_ingredient_select = getView().findViewById(R.id.breakfast_ingredient_select);
-        ingredientNames = new ArrayList<>();
+
+
         dbAddMealPlan.collection("Ingredients").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -110,11 +129,11 @@ public class AddMealPlanFragment extends Fragment {
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         ingredientfromdb = document.toObject(Ingredient.class);
-                        Log.d(TAG, "ingname: " + ingredientfromdb.getName());
                         ingredientNames.add(ingredientfromdb.getName());
                     }
-                    createIngredientDropdown(breakfast_ingredient_select, ingredientNames);
-
+                    breakfast_ingredient_array = createIngredientDropdown(breakfast_ingredient_select, ingredientNames);
+                    lunch_ingredient_array = createIngredientDropdown(lunch_ingredient_select, ingredientNames);
+                    dinner_ingredient_array = createIngredientDropdown(dinner_ingredient_select, ingredientNames);
 
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -122,12 +141,6 @@ public class AddMealPlanFragment extends Fragment {
 
             }
         });
-
-
-
-
-
-
 
 
 
@@ -139,13 +152,14 @@ public class AddMealPlanFragment extends Fragment {
         binding = null;
     }
 
-    public void createRecipeDropdown(TextView breakfast_recipe_select, ArrayList<String> recipeNames){
+    public ArrayList<String> createRecipeDropdown(TextView breakfast_recipe_select, ArrayList<String> recipeNames){
+        ArrayList<Integer> selectedRecList = new ArrayList<>();
         recipeArray = new String[recipeNames.size()];
         for (int i =0; i < recipeNames.size(); i++){
             recipeArray[i] = recipeNames.get(i);
         }
-        selectedMealPlan = new boolean[recipeArray.length];
-
+        boolean[] selectedRecipe = new boolean[recipeArray.length];
+        ArrayList<String> final_recipe_names = new ArrayList<>();
         breakfast_recipe_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,16 +173,16 @@ public class AddMealPlanFragment extends Fragment {
                 // set dialog non cancelable
                 builder.setCancelable(false);
 
-                builder.setMultiChoiceItems(recipeArray, selectedMealPlan, new DialogInterface.OnMultiChoiceClickListener() {
+                builder.setMultiChoiceItems(recipeArray, selectedRecipe, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
                         if (b) {
                             // when checkbox selected : Add position  in mpList
-                            selectedMpList.add(i);
-                            Collections.sort(selectedMpList);
+                            selectedRecList.add(i);
+                            Collections.sort(selectedRecList);
                         } else {
                             // when checkbox unselected:  Remove position from mpList
-                            selectedMpList.remove(Integer.valueOf(i));
+                            selectedRecList.remove(Integer.valueOf(i));
                         }
                     }
                 });
@@ -179,11 +193,12 @@ public class AddMealPlanFragment extends Fragment {
                         // Initialize string builder
                         StringBuilder stringBuilder = new StringBuilder();
                         // use for loop
-                        for (int j = 0; j < selectedMpList.size(); j++) {
+                        for (int j = 0; j < selectedRecList.size(); j++) {
                             // concat array value
-                            stringBuilder.append(recipeArray[selectedMpList.get(j)]);
+                            stringBuilder.append(recipeArray[selectedRecList.get(j)]);
+                            final_recipe_names.add(recipeArray[selectedRecList.get(j)]);
                             // check condition
-                            if (j != selectedMpList.size() - 1) {
+                            if (j != selectedRecList.size() - 1) {
                                 // When j value  not equal
                                 // to lang list size - 1
                                 // add comma
@@ -206,11 +221,11 @@ public class AddMealPlanFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // use for loop
-                        for (int j = 0; j < selectedMealPlan.length; j++) {
+                        for (int j = 0; j < selectedRecipe.length; j++) {
                             // remove all selection
-                            selectedMealPlan[j] = false;
+                            selectedRecipe[j] = false;
                             // clear language list
-                            selectedMpList.clear();
+                            selectedRecList.clear();
                             // clear text view value
                             breakfast_recipe_select.setText("");
                         }
@@ -221,18 +236,22 @@ public class AddMealPlanFragment extends Fragment {
             }
         });
 
+        return final_recipe_names;
+
+
+
 
     }
 
-    public void createIngredientDropdown(TextView breakfast_ingredient_select, ArrayList<String> ingredientNames ){
+    public ArrayList<String> createIngredientDropdown(TextView breakfast_ingredient_select, ArrayList<String> ingredientNames ){
         ingredientArray = new String[ingredientNames.size()];
         for (int i =0; i < ingredientNames.size(); i++){
-            Log.d(TAG, "title" + ingredientNames.get(i));
+
             ingredientArray[i] = ingredientNames.get(i);
         }
-        Log.d(TAG, "FINAL ARRAAY SIZE:  " + String.valueOf(ingredientArray.length));
-        selectedIngredient = new boolean[ingredientArray.length];
-
+        ArrayList<String> final_ingredient_names = new ArrayList<>();
+        boolean[] selectedIngredient = new boolean[ingredientArray.length];
+        ArrayList<Integer> selectedIngList = new ArrayList<>();
         breakfast_ingredient_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -269,6 +288,7 @@ public class AddMealPlanFragment extends Fragment {
                         for (int j = 0; j < selectedIngList.size(); j++) {
                             // concat array value
                             stringBuilder.append(ingredientArray[selectedIngList.get(j)]);
+                            final_ingredient_names.add(ingredientArray[selectedIngList.get(j)]);
                             // check condition
                             if (j != selectedIngList.size() - 1) {
                                 // When j value  not equal
@@ -306,7 +326,10 @@ public class AddMealPlanFragment extends Fragment {
                 // show dialog
                 builder.show();
             }
+
         });
+
+        return final_ingredient_names;
     }
 
 

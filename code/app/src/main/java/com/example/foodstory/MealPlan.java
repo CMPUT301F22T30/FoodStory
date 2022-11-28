@@ -16,6 +16,7 @@ public class MealPlan implements Serializable {
     private ArrayList<String> breakfastArray;
     private ArrayList<String> lunchArray;
     private ArrayList<String> dinnerArray;
+    private int numOfPeople;
 
 
     public String getMealPlanHeading() {
@@ -48,7 +49,12 @@ public class MealPlan implements Serializable {
 
     public ArrayList<String> getLunchArray(){return this.lunchArray; }
 
-    public ArrayList<String> getDinner(){return this.dinnerArray; }
+    public ArrayList<String>  getDinner(){return this.dinnerArray; }
+
+    public int getNumOfPeople() { return this.numOfPeople; }
+
+    public void setNumOfPeople(int numPeople){this.numOfPeople = numPeople; }
+
 
 
 
