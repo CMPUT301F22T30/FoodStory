@@ -1,5 +1,7 @@
 package com.example.foodstory;
 
+import static android.os.SystemClock.sleep;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +49,6 @@ public class HomeFragment extends Fragment {
         CollectionReference ShoppingListReference = dbShopDisp.collection("ShoppingList");
         CollectionReference IngredientReference = dbShopDisp.collection("Ingredients");
         CollectionReference RecipeReference = dbShopDisp.collection("Recipes");
-
-
-
         binding.Ingredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,11 +76,9 @@ public class HomeFragment extends Fragment {
                             ingredient = doc.toObject(Ingredient.class);
                             ingredients_List.add(ingredient);
                         }
-
                     }
                 });
                 int num = 4;
-
                 RecipeReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -95,20 +92,13 @@ public class HomeFragment extends Fragment {
                             for (int i = 0; i < recipe_ingredient_List.size(); i++){
                                 recipe_ingredient_List.get(i).setAmount(amount * recipe_ingredient_List.get(i).getAmount());
                             }
-
                         }
-                    }
-                });
-                ShoppingListReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-                            FirebaseFirestoreException error) {
                         shopping_ingredients_List.clear();
                         for (int i = 0; i < recipe_ingredient_List.size(); i++){
                             if (ingredients_List.contains(recipe_ingredient_List.get(i))){
                                 int index = ingredients_List.indexOf(recipe_ingredient_List.get(i));
-                                int amount = recipe_ingredient_List.get(i).getAmount() - ingredients_List.get(index).getAmount();
-                                if(amount > 0 ){
+                                int finalamount = recipe_ingredient_List.get(i).getAmount() - ingredients_List.get(index).getAmount();
+                                if(finalamount > 0 ){
                                     shopping_ingredients_List.add(ingredients_List.get(index));
                                 }
                             }
@@ -124,7 +114,6 @@ public class HomeFragment extends Fragment {
                             dbShopDisp.collection("ShoppingList").document(shopping_ingredients_List.get(i).getName())
                                     .set(shopping_ingredients_List.get(i));
                         }
-
                     }
                 });
                 NavHostFragment.findNavController(HomeFragment.this)

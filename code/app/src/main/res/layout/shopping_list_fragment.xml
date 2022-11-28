@@ -24,6 +24,8 @@
         android:id="@+id/shopping_ingredient_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/secondary_text_light"
         android:layout_weight="8">
 
     </ListView>
@@ -46,6 +48,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sort by Cat" />
+
+        <Button
+            android:id="@+id/shopping_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete Shopped Ingredient">
+
+        </Button>
+
     </LinearLayout>
 
 </LinearLayout>
