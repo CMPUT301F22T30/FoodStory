@@ -116,7 +116,11 @@ public class IngredientsFragment extends Fragment {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
                     @Override
                     public int compare(Ingredient ingredient, Ingredient t1) {
-                        return ingredient.getLocation().compareTo(t1.getLocation());
+                        if(ingredient.getLocation()==""||t1.getLocation()==""){
+                            return 0;
+                        } else{
+                            return ingredient.getLocation().compareTo(t1.getLocation());
+                        }
                     }
                 });
                 ingredient_Adapter.notifyDataSetChanged();
@@ -130,7 +134,11 @@ public class IngredientsFragment extends Fragment {
                 Collections.sort(ingredients_List, new Comparator<Ingredient>() {
                     @Override
                     public int compare(Ingredient ingredient, Ingredient t1) {
-                        return ingredient.getCategory().compareTo(t1.getCategory());
+                        if(ingredient.getCategory() == "" || t1.getCategory() == ""){
+                            return 0;
+                        } else {
+                            return ingredient.getCategory().compareTo(t1.getCategory());
+                        }
                     }
                 });
                 ingredient_Adapter.notifyDataSetChanged();

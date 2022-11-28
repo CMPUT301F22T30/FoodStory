@@ -80,6 +80,7 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
     EditText ingredientDescription;
     EditText ingredientBestBefore;
     EditText ingredientLocation;
+
     EditText ingredientAmount;
     EditText ingredientUnit;
     EditText ingredientCategory;
@@ -194,7 +195,7 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
                 ingr_unit = ingredientUnit.getText().toString();
                 ingr_cate = ingredientCategory.getText().toString();
                 ingr_date = new Date();
-                if (ingr_name.length()>0){
+                if (ingr_name.length()>0 && ingr_loca.length()>0 && ingr_cate.length()>0 && ingr_bb.length()>0){
                     try {
                         ingr_date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
                     } catch (ParseException e) {
@@ -287,7 +288,7 @@ public class AddIngredientFragment extends Fragment implements DatePickerDialog.
                 ingr_cate = ingredientCategory.getText().toString();
                 ingr_date = new Date();
                 Bundle bundle = new Bundle();
-                if (ingr_name.length()>0){
+                if (ingr_name.length()>0 && ingr_bb.length()>0 && ingr_cate.length()>0 && ingr_loca.length()>0){
                     try {
                         ingr_date = new SimpleDateFormat("yyyy/MM/dd").parse(ingr_bb);
                     } catch (ParseException e) {
